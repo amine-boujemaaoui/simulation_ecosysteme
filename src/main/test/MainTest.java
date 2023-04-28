@@ -1,11 +1,11 @@
-package main;
+package main.test;
 
 import java.awt.Color;
 import java.util.Random;
 
 import main.Grille.GrilleNature;
 
-public class main {
+public class MainTest {
 
 	public static void main(String[] args)
 	{
