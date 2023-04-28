@@ -1,18 +1,16 @@
-package main.Grille;
+package main.test;
 
-import javax.swing.JFrame;
-import java.util.Random;
 import java.awt.Color;
+import java.util.Random;
 
+import main.Grille.GrilleNature;
 
-public class MainExempleNature 
-{
+public class MainTest {
+
 	public static void main(String[] args)
 	{
-   	        int nbCasesL=5, nbCasesH=6;
-		// On crée une Grille "Logique"  objet ChampGraphique de 50 cases de large, et 60 de haut de 20 pixels de côté
+   	    int nbCasesL=5, nbCasesH=6;
 		GrilleNature grille = new GrilleNature(nbCasesL, nbCasesH, 100);
-		
 		Random r = new Random();
 		
 		int i,j;
@@ -54,4 +52,5 @@ public class MainExempleNature
 
         
 	}
+
 }

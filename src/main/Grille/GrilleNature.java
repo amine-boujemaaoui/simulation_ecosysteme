@@ -21,7 +21,7 @@ public class GrilleNature extends JPanel
 	 * @param nbCasesH La hauteur (en nombre de cases) de la grille.
 	 * @param nbPixelCoteCase Nb de Pixel d'une case de la grille
 	 **/
-        GrilleNature(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
+        public GrilleNature(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 	    int i,j;
 	    	this.nbCasesL = nbCasesL;
 		this.nbCasesH = nbCasesH;
