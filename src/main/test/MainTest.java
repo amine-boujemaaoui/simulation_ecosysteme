@@ -36,32 +36,21 @@ public class MainTest {
 		});
 
 		// AFFICHAGE GRAPHIQUE
-		int nbCasesL = 5, nbCasesH = 6;
+		int nbCasesL = 5, nbCasesH = 6, temp = 0;
 		GrilleNature grille = new GrilleNature(nbCasesL, nbCasesH, 80);
 
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
-				if (zones.get(i * nbCasesL + j).getTypeZone().getNomTypeZone().equals("Foret"))
+				if (zones.get(i * nbCasesH + j).getTypeZone().getNomTypeZone().equals("Foret"))
 					grille.colorieFond(i, j, Color.GREEN);
 				else
 					grille.colorieFond(i, j, Color.YELLOW);
-				grille.addDisque(i, j, zones.get(i * nbCasesL + j).getAnimaux().size()*2, Color.BLUE);
-				grille.addDisque(i, j, zones.get(i * nbCasesL + j).getVegeteaux().size()*2, Color.RED);
+				grille.addDisque(i, j, zones.get(i * nbCasesH + j).getAnimaux().size() * 2, Color.BLUE);
+				grille.addDisque(i, j, zones.get(i * nbCasesH + j).getVegeteaux().size() * 2, Color.RED);
+				System.out.print(zones.get(i * nbCasesH + j).toString());
 			}
+			System.out.print("\n");
 		}
 		grille.redessine();
-		
-		int k = 0, pos = 0;
-		for(int i = 0; i<zones.size(); i++) {
-			pos = i+k;
-			System.out.print(zones.get(i).toString());
-			System.out.format("", zones.get(i).toString());
-			if(k == nbCasesH-1) {
-				System.out.print("\n"); 
-				k = 0;
-			}
-			else k++;
-		}
 	}
-
 }

@@ -108,7 +108,7 @@ public class Zone {
 
 	@Override
 	public String toString() {
-		return "[e:" + eau + "," + " t:" + temperature + ",a:" + animaux.size() + ",v:" + vegeteaux.size() + ",n:" + typeZone.getNomTypeZone() +"]";
+		return "[e:" + eau + "," + " t:" + temperature + ",a:" + animaux.size() + ",v:" + vegeteaux.size() + ", n:" + typeZone.getNomTypeZone() +"]";
 	}
 
 	// EOF
