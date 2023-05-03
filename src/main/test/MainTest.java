@@ -1,56 +1,67 @@
 package main.test;
 
+import main.*;
+import main.TypeZones.*;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
-
 import main.Grille.GrilleNature;
 
 public class MainTest {
+	public static void main(String[] args) {
 
-	public static void main(String[] args)
-	{
-   	    int nbCasesL=5, nbCasesH=6;
-		GrilleNature grille = new GrilleNature(nbCasesL, nbCasesH, 100);
+		TypeZone typeZone_Foret = new Foret();
+		TypeZone typeZone_Plaine = new Plaine();
+		System.out.println("typeZone_Foret_id = " + typeZone_Foret.getId_typeZone() + "\ntypeZone_Plaine_id = "
+				+ typeZone_Plaine.getId_typeZone());
+
+		ArrayList<Zone> zones = new ArrayList<Zone>();
+
 		Random r = new Random();
-		
-		int i,j;
-	       	       
-		for(i=0; i<nbCasesL; i++)
-		    for (j=0;j<nbCasesH;j++) { 
-			if (i<j)
-			    grille.colorieFond(i,j,Color.GREEN);
-		        else
-			    grille.colorieFond(i,j,Color.BLUE);
-		
-		
-		    }
-		
+		for (int i = 0; i < 30; i++) {
+			if (r.nextBoolean()) {
+				zones.add(new Zone(15.2, 8.7));
+				zones.get(i).setTypeZone(typeZone_Foret);
+			} else {
+				zones.add(new Zone(5.6, 14.2));
+				zones.get(i).setTypeZone(typeZone_Plaine);
+			}
+		}
+
+		zones.forEach((z) -> {
+			for (int i = 0; i < r.nextInt(21); i++)
+				z.addAnimal(new Animal());
+			for (int i = 0; i < r.nextInt(21); i++)
+				z.addVegetal(new Vegetal());
+		});
+
+		// AFFICHAGE GRAPHIQUE
+		int nbCasesL = 5, nbCasesH = 6;
+		GrilleNature grille = new GrilleNature(nbCasesL, nbCasesH, 80);
+
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
+				if (zones.get(i * nbCasesL + j).getTypeZone().getNomTypeZone().equals("Foret"))
+					grille.colorieFond(i, j, Color.GREEN);
+				else
+					grille.colorieFond(i, j, Color.YELLOW);
+				grille.addDisque(i, j, zones.get(i * nbCasesL + j).getAnimaux().size()*2, Color.BLUE);
+				grille.addDisque(i, j, zones.get(i * nbCasesL + j).getVegeteaux().size()*2, Color.RED);
+			}
+		}
 		grille.redessine();
-
-	        //Puis, pause de 2s
-   	        try {Thread.sleep(500);} 
-		catch (InterruptedException e){e.printStackTrace();}
-
 		
-		for(i=0; i<nbCasesL; i++)
-		    for (j=0;j<nbCasesH;j++) {
-
-			// Place des disques au hasard
-
-			if (r.nextInt()%2==0)
-   			    grille.addDisque(i,j,20,Color.BLACK); 
- 		
-		        //Puis, pause de 2s
-	   	        try {Thread.sleep(500);} 
-         		catch (InterruptedException e){e.printStackTrace();}
-
-			grille.redessine();
-
-		    
- 	            }		
-         
-
-        
+		int k = 0, pos = 0;
+		for(int i = 0; i<zones.size(); i++) {
+			pos = i+k;
+			System.out.print(zones.get(i).toString());
+			System.out.format("", zones.get(i).toString());
+			if(k == nbCasesH-1) {
+				System.out.print("\n"); 
+				k = 0;
+			}
+			else k++;
+		}
 	}
 
 }
