@@ -3,12 +3,12 @@ package main.Grille;
 import java.awt.Color;
 import java.util.LinkedList;
 
-class CaseGrille {
+public class CaseGrille {
 
 	private Color c;
 	public LinkedList<Disque> lDisques;
 
-	CaseGrille() {
+	public CaseGrille() {
 		lDisques = new LinkedList<Disque>();
 	}
 

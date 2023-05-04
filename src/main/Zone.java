@@ -3,9 +3,11 @@ package main;
 //IMPORTS 
 //============================================================================
 import java.util.ArrayList;
-
+import java.awt.Color;
+import java.util.LinkedList;
 import main.Animaux.Animal;
 import main.Execeptions.*;
+import main.Grille.Disque;
 import main.TypeZones.TypeZone;
 
 public class Zone {
@@ -16,19 +18,16 @@ public class Zone {
 	private ArrayList<Animal> animaux = new ArrayList<Animal>();
 	private ArrayList<Vegetal> vegeteaux = new ArrayList<Vegetal>();
 	private TypeZone typeZone;
+	private Ecosysteme ecosysteme;
 
 	// CONSTRUCTORS
 	// =======================================================================
-	public Zone() {
-		super();
-		this.eau = 0.0;
-		this.temperature = 0.0;
-	}
 
-	public Zone(double eau, double temperature) {
+	public Zone(double eau, double temperature, Ecosysteme ecosysteme) {
 		super();
 		this.eau = eau;
 		this.temperature = temperature;
+		this.ecosysteme = ecosysteme;
 	}
 
 	// GETTERS
@@ -63,6 +62,10 @@ public class Zone {
 
 	public TypeZone getTypeZone() {
 		return typeZone;
+	}
+	
+	public Ecosysteme getEcosysteme() {
+		return ecosysteme;
 	}
 
 	// SETTERS
@@ -99,13 +102,24 @@ public class Zone {
 	public void addAnimal(Animal animal) {
 		this.animaux.add(animal);
 	}
+	
+	public void removeAnimal(Animal animal) {
+		this.animaux.remove(animal);
+	}
 
 	public void addVegetal(Vegetal vegetal) {
 		this.vegeteaux.add(vegetal);
 	}
+	
+	public void removeVegetal(Vegetal vegetal) {
+		this.vegeteaux.remove(vegetal);
+	}
 
 	public void verifierTypeZone() {
-		// TODO verifierTypeZone
+		this.ecosysteme.getTypeZones().forEach((typeZone) -> {
+			if(this.eau > typeZone.getEauMin() && this.eau < typeZone.getEauMax()) 
+				this.setTypeZone(typeZone);
+		});
 	}
 
 	@Override
