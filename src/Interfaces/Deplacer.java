@@ -1,5 +1,7 @@
 package Interfaces;
 
-public interface Deplacer {
+import main.Execeptions.SeDeplacerException;
 
+public interface Deplacer {
+	void seDeplacer(int x, int y) throws SeDeplacerException;
 }

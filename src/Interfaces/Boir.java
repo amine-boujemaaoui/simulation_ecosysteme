@@ -1,5 +1,7 @@
 package Interfaces;
 
-public interface Boir {
+import main.Execeptions.BoirException;
 
+public interface Boir {
+ void boir() throws BoirException;
 }
