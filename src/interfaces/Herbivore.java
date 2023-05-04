@@ -1,4 +1,4 @@
-package Interfaces;
+package interfaces;
 
 import main.Vivace;
 import main.Execeptions.MangerException;

@@ -1,6 +1,6 @@
-package Interfaces;
+package interfaces;
 
-import main.Animal;
+import main.Animaux.Animal;
 import main.Execeptions.MangerException;
 
 public interface Carnivore {

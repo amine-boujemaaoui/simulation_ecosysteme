@@ -1,8 +1,8 @@
-package Interfaces;
+package interfaces;
 
 import main.Vegetal;
 import main.Execeptions.ReproduireException;
 
 public interface ReproductionVegetal {
-	void seReproduire(Vegetal vegetal) throws ReproduireException;
+	Vegetal seReproduire() throws ReproduireException;
 }

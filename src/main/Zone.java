@@ -3,6 +3,8 @@ package main;
 //IMPORTS 
 //============================================================================
 import java.util.ArrayList;
+
+import main.Animaux.Animal;
 import main.Execeptions.*;
 import main.TypeZones.TypeZone;
 

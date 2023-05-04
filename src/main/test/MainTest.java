@@ -1,6 +1,7 @@
 package main.test;
 
 import main.*;
+import main.Animaux.Animal;
 import main.TypeZones.*;
 import java.awt.Color;
 import java.util.ArrayList;
