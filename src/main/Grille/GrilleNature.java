@@ -49,6 +49,10 @@ public class GrilleNature extends JPanel {
 	public void addDisque(int i, int j, int rayon, Color c) {
 		m[i][j].addDisque(rayon, c);
 	}
+	
+	public void resetlDisques(int i, int j) {
+		m[i][j].resetlDisques();
+	}
 
 	@Override
 	// Fonction d'affichage de la grille appelée par repaint

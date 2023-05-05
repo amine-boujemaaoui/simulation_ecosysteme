@@ -1,5 +1,7 @@
 package main.TypeZones;
 
+import java.awt.Color;
+
 public abstract class TypeZone {
 	// ATTRIBUTES
 	// =======================================================================
@@ -10,10 +12,11 @@ public abstract class TypeZone {
 	private final int id_typeZone;
 	public static int last_id_typeZone = 0;
 	private String nomTypeZone;
-	
+	private final Color c;
+
 	// CONSTRUCTORS
 	// =======================================================================
-	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, String nomTypeZone) {
+	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, String nomTypeZone, Color c) {
 		super();
 		this.eauMin = eauMin;
 		this.eauMax = eauMax;
@@ -22,6 +25,7 @@ public abstract class TypeZone {
 		this.id_typeZone = TypeZone.last_id_typeZone;
 		TypeZone.last_id_typeZone++;
 		this.nomTypeZone = nomTypeZone;
+		this.c = c;
 	}
 
 	// GETTERS
@@ -48,6 +52,10 @@ public abstract class TypeZone {
 
 	public String getNomTypeZone() {
 		return nomTypeZone;
+	}
+	
+	public Color getC() {
+		return c;
 	}
 
 	// SETTERS

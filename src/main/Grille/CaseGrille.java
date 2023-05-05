@@ -23,5 +23,9 @@ public class CaseGrille {
 	public void addDisque(int rayon, Color c) {
 		lDisques.add(new Disque(rayon, c));
 	}
+	
+	public void resetlDisques() {
+		lDisques = new LinkedList<Disque>();
+	}
 
 }

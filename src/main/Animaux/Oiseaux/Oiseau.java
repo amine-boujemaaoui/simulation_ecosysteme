@@ -1,14 +1,17 @@
-package main.Animaux.Oiseau;
+package main.Animaux.Oiseaux;
 
+import interfaces.Carnivore;
+import interfaces.ReproductionAnimal;
 import interfaces.Voler;
 import main.Zone;
 import main.Animaux.Animal;
+import main.Execeptions.MangerException;
 import main.Execeptions.VolerException;
 
-public abstract class Oiseau extends Animal implements Voler {
+public abstract class Oiseau extends Animal implements Voler, ReproductionAnimal {
 	
-	public Oiseau(Zone zone_actuel) {
-		super(zone_actuel, 0.2);
+	public Oiseau(Zone zone_actuel, int nbMortParCycle) {
+		super(zone_actuel, 0.2, nbMortParCycle);
 	}
 
 	@Override
