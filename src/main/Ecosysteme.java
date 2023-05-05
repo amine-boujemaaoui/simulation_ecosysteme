@@ -4,16 +4,13 @@ import main.Animaux.Animal;
 import main.Animaux.Insectes.Fourmi;
 import main.Animaux.Oiseaux.Pigeon;
 import main.Execeptions.BoirException;
-import main.Execeptions.ChangerEauException;
 import main.Execeptions.ChangerTemperatureException;
-import main.Execeptions.RemoveEntityException;
 import main.Execeptions.ReproduireException;
 import main.Grille.GrilleNature;
 import main.TypeZones.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
-import interfaces.Carnivore;
 
 public class Ecosysteme {
 	private int nbZonesH;

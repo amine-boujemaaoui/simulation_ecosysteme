@@ -12,7 +12,7 @@ import main.Execeptions.SeDeplacerException;
 
 public class Fourmi extends Animal implements Deplacer, ReproductionAnimal, Carnivore {
 
-	public Fourmi(Zone zone_actuel, double eauRequise, int nbMortParCycle) {
+	public Fourmi(Zone zone_actuel) {
 		super(zone_actuel, 0.2, 40);
 	}
 

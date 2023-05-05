@@ -1,12 +1,9 @@
 package main.Animaux.Insectes;
 
-import interfaces.Carnivore;
 import interfaces.Deplacer;
 import interfaces.ReproductionAnimal;
-import main.Vivace;
 import main.Zone;
 import main.Animaux.Animal;
-import main.Execeptions.MangerException;
 import main.Execeptions.SeDeplacerException;
 
 public abstract class Insecte extends Animal implements Deplacer, ReproductionAnimal {

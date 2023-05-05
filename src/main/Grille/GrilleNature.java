@@ -1,25 +1,16 @@
 package main.Grille;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class GrilleNature extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private int nbCasesL, nbCasesH;
 	private int nbPixelCoteCase;
 	private CaseGrille[][] m;
 
-	/**
-	 * Constructeur.
-	 * 
-	 * @param nbCasesL        La largeur (en nombre de cases) de la grille.
-	 * @param nbCasesH        La hauteur (en nombre de cases) de la grille.
-	 * @param nbPixelCoteCase Nb de Pixel d'une case de la grille
-	 **/
 	public GrilleNature(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 		int i, j;
 		this.nbCasesL = nbCasesL;

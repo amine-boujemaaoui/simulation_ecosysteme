@@ -1,11 +1,9 @@
 package main.Animaux.Oiseaux;
 
-import interfaces.Carnivore;
 import interfaces.ReproductionAnimal;
 import interfaces.Voler;
 import main.Zone;
 import main.Animaux.Animal;
-import main.Execeptions.MangerException;
 import main.Execeptions.VolerException;
 
 public abstract class Oiseau extends Animal implements Voler, ReproductionAnimal {
