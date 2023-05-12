@@ -11,6 +11,13 @@ public class GrilleNature extends JPanel {
 	private int nbPixelCoteCase;
 	private CaseGrille[][] m;
 
+	/**
+	 * Constructeur.
+	 * 
+	 * @param nbCasesL        La largeur (en nombre de cases) de la grille.
+	 * @param nbCasesH        La hauteur (en nombre de cases) de la grille.
+	 * @param nbPixelCoteCase Nb de Pixel d'une case de la grille
+	 **/
 	public GrilleNature(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 		int i, j;
 		this.nbCasesL = nbCasesL;
@@ -64,7 +71,7 @@ public class GrilleNature extends JPanel {
 				int x = 20;
 				for (Disque d : m[i][j].lDisques) {
 					g.setColor(d.getCouleur());
-					g.fillOval(cellX + 40 , cellY + 10 + x, d.getRayon(), d.getRayon());
+					g.fillOval(cellX + 10, cellY + x, d.getRayon(), d.getRayon());
 					x+=20;
 				}
 

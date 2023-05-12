@@ -6,24 +6,32 @@ import main.Zone;
 import main.Execeptions.BoirException;
 import main.Execeptions.ChangerEauException;
 
-public abstract class Animal implements Boir, ReproductionAnimal{
+public abstract class Animal implements Boir, ReproductionAnimal {
 	private Zone zone_actuel;
 	private double eauRequise;
 	private boolean dejaReproduiCeCycle;
-	private int nbMortParCycle;
+	private final int ageMax;
+	private int age;
+	private int nbCyclesSansEau;
+	private final int tauxDeReproduction;
 
-	public Animal(Zone zone_actuel, double eauRequise, int nbMortParCycle) {
+	public Animal(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction) {
 		super();
 		this.zone_actuel = zone_actuel;
 		this.eauRequise = eauRequise;
 		this.dejaReproduiCeCycle = false;
-		this.nbMortParCycle = nbMortParCycle;
+		this.ageMax = ageMax;
+		this.age = 0;
+		this.nbCyclesSansEau = 0;
+		this.tauxDeReproduction = tauxDeReproduction;
 	}
 
 	@Override
 	public void boir() throws BoirException {
-		if (this.getEauRequise() > this.zone_actuel.getEau())
+		if (this.getEauRequise() > this.zone_actuel.getEau()) {
+			this.augmenterNbCyclesSansEau();
 			throw new BoirException("ERREUR: pas assez d'eau");
+		}
 		else
 			try {
 				this.zone_actuel.changerEau(-this.getEauRequise());
@@ -56,12 +64,32 @@ public abstract class Animal implements Boir, ReproductionAnimal{
 		this.dejaReproduiCeCycle = dejaReproduiCeCycle;
 	}
 
-	public int getNbMortParCycle() {
-		return nbMortParCycle;
+	public int getAgeMax() {
+		return ageMax;
 	}
 
-	public void setNbMortParCycle(int nbMortParCycle) {
-		this.nbMortParCycle = nbMortParCycle;
+	public int getAge() {
+		return age;
 	}
 
+	public void vieillir() {
+		this.age++;
+	}
+
+	public int getNbCyclesSansEau() {
+		return nbCyclesSansEau;
+	}
+
+	public void augmenterNbCyclesSansEau() {
+		if (!((this.nbCyclesSansEau +1 ) < 0))
+			this.nbCyclesSansEau += 1;
+	}
+	
+	public void reduireNbCyclesSansEau() {
+		this.nbCyclesSansEau -=1;
+	}
+
+	public int getTauxDeReproduction() {
+		return tauxDeReproduction;
+	}
 }

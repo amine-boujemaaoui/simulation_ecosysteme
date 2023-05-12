@@ -8,8 +8,8 @@ import main.Execeptions.VolerException;
 
 public abstract class Oiseau extends Animal implements Voler, ReproductionAnimal {
 	
-	public Oiseau(Zone zone_actuel, int nbMortParCycle) {
-		super(zone_actuel, 0.2, nbMortParCycle);
+	public Oiseau(Zone zone_actuel, int ageMax, int tauxDeReproduction) {
+		super(zone_actuel, 0.04, ageMax, tauxDeReproduction);
 	}
 
 	@Override

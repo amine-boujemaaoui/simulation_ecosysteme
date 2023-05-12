@@ -99,6 +99,14 @@ public class Zone {
 	public int getY() {
 		return y;
 	}
+	
+	public int getNbOiseau() {
+		return this.oiseaux.size();
+	}
+	
+	public int getNbInsecte() {
+		return this.insectes.size();
+	}
 
 	// SETTERS
 	// =======================================================================
@@ -143,13 +151,23 @@ public class Zone {
 
 	public void removeAnimal(Animal animal) {
 		this.animaux.remove(animal);
+		if (animal instanceof Oiseau)
+			this.oiseaux.remove((Oiseau)animal);
+		else if (animal instanceof Insecte)
+			this.insectes.remove((Insecte)animal);
 	}
 
 	public void removeAnimal(int i) throws RemoveEntityException {
 		if (i < 0 || i >= this.animaux.size())
 			throw new RemoveEntityException("animaux size: " + this.animaux.size() + "pos: " + i);
-		else
+		else {
+			Animal animal = this.animaux.get(i);
+			if (animal instanceof Oiseau)
+				this.oiseaux.remove((Oiseau)animal);
+			else if (animal instanceof Insecte)
+				this.insectes.remove((Insecte)animal);
 			this.animaux.remove(i);
+		}
 	}
 
 	public void addVegetal(Vegetal vegetal) {

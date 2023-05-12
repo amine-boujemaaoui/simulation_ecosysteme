@@ -10,7 +10,7 @@ import main.Execeptions.ReproduireException;
 public class Pigeon extends Oiseau implements Herbivore {
 
 	public Pigeon(Zone zone_actuel) {
-		super(zone_actuel, 10);
+		super(zone_actuel, 6, 5);
 	}
 
 	@Override

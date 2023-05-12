@@ -8,8 +8,8 @@ import main.Execeptions.SeDeplacerException;
 
 public abstract class Insecte extends Animal implements Deplacer, ReproductionAnimal {
 	
-	public Insecte(Zone zone_actuel) {
-		super(zone_actuel, 0.2, 100);
+	public Insecte(Zone zone_actuel, int ageMax, int tauxDeReproduction) {
+		super(zone_actuel, 0.001, ageMax, tauxDeReproduction);
 	}
 
 	@Override
