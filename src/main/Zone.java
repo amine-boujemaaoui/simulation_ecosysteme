@@ -1,7 +1,5 @@
 package main;
 
-//IMPORTS 
-//============================================================================
 import java.util.ArrayList;
 import main.Animaux.Animal;
 import main.Animaux.Oiseaux.*;
@@ -10,8 +8,6 @@ import main.Execeptions.*;
 import main.TypeZones.TypeZone;
 
 public class Zone {
-	// ATTRIBUTES
-	// =======================================================================
 	private double eau;
 	private double temperature;
 	private ArrayList<Animal> animaux = new ArrayList<Animal>();
@@ -22,9 +18,6 @@ public class Zone {
 	private Ecosysteme ecosysteme;
 	private final int x, y;
 
-	// CONSTRUCTORS
-	// =======================================================================
-
 	public Zone(int x, int y, double eau, double temperature, Ecosysteme ecosysteme) {
 		super();
 		this.x = x;
@@ -34,8 +27,6 @@ public class Zone {
 		this.ecosysteme = ecosysteme;
 	}
 
-	// GETTERS
-	// =======================================================================
 	public double getEau() {
 		return this.eau;
 	}
@@ -53,7 +44,7 @@ public class Zone {
 	public Animal getAnimal(int i) {
 		return this.animaux.get(i);
 	}
-	
+
 	public ArrayList<Oiseau> getOiseaux() {
 		ArrayList<Oiseau> oiseaux_copie = new ArrayList<Oiseau>();
 		this.oiseaux.forEach((n) -> oiseaux_copie.add(n));
@@ -63,7 +54,7 @@ public class Zone {
 	public Animal getOiseau(int i) {
 		return this.oiseaux.get(i);
 	}
-	
+
 	public ArrayList<Insecte> getInsectes() {
 		ArrayList<Insecte> insectes_copie = new ArrayList<Insecte>();
 		this.insectes.forEach((n) -> insectes_copie.add(n));
@@ -99,17 +90,15 @@ public class Zone {
 	public int getY() {
 		return y;
 	}
-	
+
 	public int getNbOiseau() {
 		return this.oiseaux.size();
 	}
-	
+
 	public int getNbInsecte() {
 		return this.insectes.size();
 	}
 
-	// SETTERS
-	// =======================================================================
 	private void setEau(double eau) {
 		this.eau = Math.round(eau * 100.0) / 100.0;
 	}
@@ -118,13 +107,10 @@ public class Zone {
 		this.temperature = Math.round(temperature * 100.0) / 100.0;
 	}
 
-	// TODO definir setTypeZone en private des que verifierTypeZone est implementer
-	public void setTypeZone(TypeZone typeZone) {
+	private void setTypeZone(TypeZone typeZone) {
 		this.typeZone = typeZone;
 	}
 
-	// METHODS
-	// =======================================================================
 	public void changerEau(double eau) throws ChangerEauException {
 		if (this.getEau() + eau < 0)
 			throw new ChangerEauException(
@@ -144,17 +130,17 @@ public class Zone {
 	public void addAnimal(Animal animal) {
 		this.animaux.add(animal);
 		if (animal instanceof Oiseau)
-			this.oiseaux.add((Oiseau)animal);
+			this.oiseaux.add((Oiseau) animal);
 		else if (animal instanceof Insecte)
-			this.insectes.add((Insecte)animal);
+			this.insectes.add((Insecte) animal);
 	}
 
 	public void removeAnimal(Animal animal) {
 		this.animaux.remove(animal);
 		if (animal instanceof Oiseau)
-			this.oiseaux.remove((Oiseau)animal);
+			this.oiseaux.remove((Oiseau) animal);
 		else if (animal instanceof Insecte)
-			this.insectes.remove((Insecte)animal);
+			this.insectes.remove((Insecte) animal);
 	}
 
 	public void removeAnimal(int i) throws RemoveEntityException {
@@ -163,11 +149,33 @@ public class Zone {
 		else {
 			Animal animal = this.animaux.get(i);
 			if (animal instanceof Oiseau)
-				this.oiseaux.remove((Oiseau)animal);
+				this.oiseaux.remove((Oiseau) animal);
 			else if (animal instanceof Insecte)
-				this.insectes.remove((Insecte)animal);
+				this.insectes.remove((Insecte) animal);
 			this.animaux.remove(i);
 		}
+	}
+
+	public void removeOiseau(Oiseau oiseau) {
+		this.oiseaux.remove(oiseau);
+		this.animaux.remove((Animal) oiseau);
+	}
+
+	public void removeOiseau(int i) {
+		Animal animal = this.oiseaux.get(i);
+		this.oiseaux.remove(i);
+		this.animaux.remove((Animal) animal);
+	}
+
+	public void removeInsecte(Insecte insecte) {
+		this.insectes.remove(insecte);
+		this.animaux.remove((Animal) insecte);
+	}
+
+	public void removeInsecte(int i) {
+		Animal animal = this.insectes.get(i);
+		this.insectes.remove(i);
+		this.animaux.remove((Animal) animal);
 	}
 
 	public void addVegetal(Vegetal vegetal) {
@@ -197,7 +205,4 @@ public class Zone {
 		return "[e:" + eau + "," + " t:" + temperature + ",a:" + animaux.size() + ",v:" + vegeteaux.size() + ", n:"
 				+ typeZone.getNomTypeZone() + "]";
 	}
-
-	// EOF
-	// =======================================================================
 }

@@ -1,5 +1,7 @@
 package main.Animaux;
 
+import java.util.Random;
+
 import interfaces.Boir;
 import interfaces.ReproductionAnimal;
 import main.Zone;
@@ -7,6 +9,7 @@ import main.Execeptions.BoirException;
 import main.Execeptions.ChangerEauException;
 
 public abstract class Animal implements Boir, ReproductionAnimal {
+	public Random r = new Random();
 	private Zone zone_actuel;
 	private double eauRequise;
 	private boolean dejaReproduiCeCycle;
@@ -31,8 +34,7 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 		if (this.getEauRequise() > this.zone_actuel.getEau()) {
 			this.augmenterNbCyclesSansEau();
 			throw new BoirException("ERREUR: pas assez d'eau");
-		}
-		else
+		} else
 			try {
 				this.zone_actuel.changerEau(-this.getEauRequise());
 			} catch (ChangerEauException e) {
@@ -81,12 +83,12 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	}
 
 	public void augmenterNbCyclesSansEau() {
-		if (!((this.nbCyclesSansEau +1 ) < 0))
+		if (!((this.nbCyclesSansEau + 1) < 0))
 			this.nbCyclesSansEau += 1;
 	}
-	
+
 	public void reduireNbCyclesSansEau() {
-		this.nbCyclesSansEau -=1;
+		this.nbCyclesSansEau -= 1;
 	}
 
 	public int getTauxDeReproduction() {

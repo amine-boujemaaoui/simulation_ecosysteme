@@ -3,8 +3,6 @@ package main.TypeZones;
 import java.awt.Color;
 
 public abstract class TypeZone {
-	// ATTRIBUTES
-	// =======================================================================
 	private double eauMin;
 	private double eauMax;
 	private double temperatureMin;
@@ -14,9 +12,8 @@ public abstract class TypeZone {
 	private String nomTypeZone;
 	private final Color c;
 
-	// CONSTRUCTORS
-	// =======================================================================
-	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, String nomTypeZone, Color c) {
+	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, String nomTypeZone,
+			Color c) {
 		super();
 		this.eauMin = eauMin;
 		this.eauMax = eauMax;
@@ -28,8 +25,6 @@ public abstract class TypeZone {
 		this.c = c;
 	}
 
-	// GETTERS
-	// =======================================================================
 	public double getEauMin() {
 		return eauMin;
 	}
@@ -53,27 +48,15 @@ public abstract class TypeZone {
 	public String getNomTypeZone() {
 		return nomTypeZone;
 	}
-	
+
 	public Color getC() {
 		return c;
 	}
 
-	// SETTERS
-	// =======================================================================
-
-	// METHODS
-	// =======================================================================
 	@Override
 	public String toString() {
-		return "TypeZone :\n"
-				+ "  - eauMin = " + eauMin + ",\n"
-				+ "  - eauMax = " + eauMax + ",\n"
-				+ "  - temperatureMin = " + temperatureMin + ",\n"
-				+ "  - temperatureMax = " + temperatureMax + ",\n"
-				+ "  - id_typeZone = " + id_typeZone + ",\n"
-				+ "  - nomTypeZone = " + nomTypeZone + ",\n";
+		return "TypeZone :\n" + "  - eauMin = " + eauMin + ",\n" + "  - eauMax = " + eauMax + ",\n"
+				+ "  - temperatureMin = " + temperatureMin + ",\n" + "  - temperatureMax = " + temperatureMax + ",\n"
+				+ "  - id_typeZone = " + id_typeZone + ",\n" + "  - nomTypeZone = " + nomTypeZone + ",\n";
 	}
-	
-	// EOF
-	// =======================================================================
 }
