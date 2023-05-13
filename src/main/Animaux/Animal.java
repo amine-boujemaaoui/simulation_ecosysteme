@@ -1,12 +1,18 @@
 package main.Animaux;
 
+import java.awt.Image;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
 
 import interfaces.Boir;
 import interfaces.ReproductionAnimal;
 import main.Zone;
 import main.Execeptions.BoirException;
 import main.Execeptions.ChangerEauException;
+import main.Execeptions.SeDeplacerException;
+import main.Execeptions.VolerException;
+import main.TypeZones.TypeZone;
 
 public abstract class Animal implements Boir, ReproductionAnimal {
 	public Random r = new Random();
@@ -17,8 +23,10 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	private int age;
 	private int nbCyclesSansEau;
 	private final int tauxDeReproduction;
+	private final int ageMinReproduction;
+	private TypeZone zoneFavorable;
 
-	public Animal(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction) {
+	public Animal(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction, TypeZone zoneFavorable) {
 		super();
 		this.zone_actuel = zone_actuel;
 		this.eauRequise = eauRequise;
@@ -27,6 +35,8 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 		this.age = 0;
 		this.nbCyclesSansEau = 0;
 		this.tauxDeReproduction = tauxDeReproduction;
+		this.ageMinReproduction = ageMinReproduction;
+		this.zoneFavorable = zoneFavorable;
 	}
 
 	@Override
@@ -94,4 +104,14 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	public int getTauxDeReproduction() {
 		return tauxDeReproduction;
 	}
+
+	public int getAgeMinReproduction() {
+		return ageMinReproduction;
+	}
+
+	public TypeZone getZoneFavorable() {
+		return zoneFavorable;
+	}
+
+	public abstract void seDeplacer(int i, int j) throws VolerException, SeDeplacerException;
 }
