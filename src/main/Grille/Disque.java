@@ -2,7 +2,7 @@ package main.Grille;
 
 import java.awt.Color;
 
-class Disque {
+public class Disque {
 
 	private int rayon;
 	private Color c;
@@ -10,7 +10,7 @@ class Disque {
 	Disque() {
 	}
 
-	Disque(int rayon, Color c) {
+	public Disque(int rayon, Color c) {
 		this.rayon = rayon;
 		this.c = c;
 	}
