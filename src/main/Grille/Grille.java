@@ -1,6 +1,7 @@
 package main.Grille;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +11,7 @@ public class Grille extends JPanel {
 	private int nbCasesL, nbCasesH;
 	private int nbPixelCoteCase;
 	private CaseGrille[][] m;
+	private int cycle;
 
 	/**
 	 * Constructeur.
@@ -23,9 +25,10 @@ public class Grille extends JPanel {
 		this.nbCasesL = nbCasesL;
 		this.nbCasesH = nbCasesH;
 		this.nbPixelCoteCase = nbPixelCoteCase;
+		this.cycle = 0;
 
 		JFrame window = new JFrame();
-		window.setSize(nbCasesL * nbPixelCoteCase + 16, nbCasesH * nbPixelCoteCase + 39);
+		window.setSize(nbCasesL * nbPixelCoteCase + 16, nbCasesH * nbPixelCoteCase + 79);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(this);
 		window.setVisible(true);
@@ -52,18 +55,22 @@ public class Grille extends JPanel {
 		m[i][j].resetlDisques();
 	}
 
+	public void setCycle(int cycle) {
+		this.cycle = cycle;
+	}
+
 	@Override
 	// Fonction d'affichage de la grille appelée par repaint
 	protected void paintComponent(Graphics g) {
 		// Colorie les cases de casesAColorier
 		super.paintComponent(g);
 		int i, j;
+		g.setFont(new Font("Sans-serif", Font.BOLD, 20));
+		g.drawString("Cycle: " + cycle, 20, 25);
 		for (i = 0; i < nbCasesL; i++)
-			for (j = 0; j < nbCasesH; j++)
-
-			{
+			for (j = 0; j < nbCasesH; j++) {
 				int cellX = (i * nbPixelCoteCase);
-				int cellY = (j * nbPixelCoteCase);
+				int cellY = 40 + (j * nbPixelCoteCase);
 				g.setColor(m[i][j].getCouleur());
 				g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
 
@@ -74,7 +81,6 @@ public class Grille extends JPanel {
 					g.fillOval(cellX + 5, cellY + 5 + x, d.getRayon(), d.getRayon());
 					x += 15;
 				}
-
 			}
 
 		// Redessine la grille

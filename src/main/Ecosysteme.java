@@ -20,6 +20,7 @@ public class Ecosysteme {
 	private Zone[][] zones;
 	private ArrayList<TypeZone> typeZones = new ArrayList<TypeZone>();
 	private Random r = new Random();
+	private int cycle;
 	private int[][] defaultZones = { 
 			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 			{ 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
@@ -44,6 +45,7 @@ public class Ecosysteme {
 		this.nbZonesL = nbZonesL;
 		this.grille = new Grille(nbZonesL, nbZonesH, 60);
 		this.zones = new Zone[nbZonesL][nbZonesH];
+		this.cycle = 0;
 
 		// DEFAULTS typeZones
 		this.typeZones.add(new Riviere());
@@ -80,6 +82,14 @@ public class Ecosysteme {
 	public Grille getGrille() {
 		return grille;
 	}
+	
+	public int getCycle() {
+		return cycle;
+	}
+	
+	public void nextCycle() {
+		this.cycle++;
+	}
 
 	public void deplacerAnimal(Animal animal, int x, int y) {
 		animal.getZone_actuel().removeAnimal(animal);
@@ -89,6 +99,7 @@ public class Ecosysteme {
 	private void redessine() {
 		for (int i = 0; i < nbZonesL; i++) {
 			for (int j = 0; j < nbZonesH; j++) {
+				grille.setCycle(cycle);
 				grille.resetlDisques(i, j);
 				grille.colorieFond(i, j, zones[i][j].getTypeZone().getC());
 				grille.addDisque(i, j, zones[i][j].getNbInsecte() / 2, Color.BLUE);
@@ -151,7 +162,6 @@ public class Ecosysteme {
 	}
 
 	public void simulation() {
-		int cycle = 0;
 		while (true) {
 			this.redessine();
 			int i, j;
@@ -190,7 +200,7 @@ public class Ecosysteme {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			cycle += 1;
+			nextCycle();
 		}
 	}
 }
