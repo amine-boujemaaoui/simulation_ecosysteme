@@ -102,6 +102,7 @@ public class Ecosysteme {
 				grille.setCycle(cycle);
 				grille.resetlDisques(i, j);
 				grille.colorieFond(i, j, zones[i][j].getTypeZone().getC());
+				grille.iconFond(i, j, zones[i][j].getTypeZone().getTypeZoneIcon());
 				grille.addDisque(i, j, zones[i][j].getNbInsecte() / 2, Color.BLUE);
 				grille.addDisque(i, j, zones[i][j].getNbOiseau() / 2, Color.RED);
 			}

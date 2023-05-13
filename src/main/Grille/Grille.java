@@ -3,6 +3,9 @@ package main.Grille;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -46,7 +49,11 @@ public class Grille extends JPanel {
 	public void colorieFond(int i, int j, Color c) {
 		m[i][j].setCouleur(c);
 	}
-
+	
+	public void iconFond(int i, int j, Image icon) {
+		m[i][j].setIcon(icon);
+	}
+	
 	public void addDisque(int i, int j, int rayon, Color c) {
 		m[i][j].addDisque(rayon, c);
 	}
@@ -71,8 +78,10 @@ public class Grille extends JPanel {
 			for (j = 0; j < nbCasesH; j++) {
 				int cellX = (i * nbPixelCoteCase);
 				int cellY = 40 + (j * nbPixelCoteCase);
-				g.setColor(m[i][j].getCouleur());
-				g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
+				//g.setColor(m[i][j].getCouleur());
+				//g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
+				
+				g.drawImage(m[i][j].getIcon(),cellX,cellY, null);
 
 				// Place des disques
 				int x = 15;
