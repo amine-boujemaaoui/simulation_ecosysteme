@@ -1,6 +1,9 @@
 package main.TypeZones;
 
 import java.awt.Color;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 public abstract class TypeZone {
 	private double eauMin;
@@ -11,9 +14,9 @@ public abstract class TypeZone {
 	public static int last_id_typeZone = 0;
 	private String nomTypeZone;
 	private final Color c;
+	private Image typeZoneIcon;
 
-	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, String nomTypeZone,
-			Color c) {
+	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, String nomTypeZone, Color c, String iconPath) {
 		super();
 		this.eauMin = eauMin;
 		this.eauMax = eauMax;
@@ -23,6 +26,7 @@ public abstract class TypeZone {
 		TypeZone.last_id_typeZone++;
 		this.nomTypeZone = nomTypeZone;
 		this.c = c;
+		this.typeZoneIcon = new ImageIcon(iconPath).getImage();
 	}
 
 	public double getEauMin() {
@@ -58,5 +62,9 @@ public abstract class TypeZone {
 		return "TypeZone :\n" + "  - eauMin = " + eauMin + ",\n" + "  - eauMax = " + eauMax + ",\n"
 				+ "  - temperatureMin = " + temperatureMin + ",\n" + "  - temperatureMax = " + temperatureMax + ",\n"
 				+ "  - id_typeZone = " + id_typeZone + ",\n" + "  - nomTypeZone = " + nomTypeZone + ",\n";
+	}
+
+	public Image getTypeZoneIcon() {
+		return typeZoneIcon;
 	}
 }
