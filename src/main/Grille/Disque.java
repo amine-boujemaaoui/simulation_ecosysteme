@@ -12,9 +12,10 @@ public class Disque {
 	Disque() {
 	}
 
-	public Disque(int rayon, Color c) {
+	public Disque(int rayon, Color c, Image icon) {
 		this.rayon = rayon;
 		this.c = c;
+		this.icon = icon;
 	}
 
 	public int getRayon() {
@@ -31,6 +32,10 @@ public class Disque {
 
 	public void setCouleur(Color c) {
 		this.c = c;
+	}
+	
+	public void setIcon(Image icon) {
+		this.icon = icon;
 	}
 	
 	public Image getIcon() {

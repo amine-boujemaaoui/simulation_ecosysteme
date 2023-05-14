@@ -1,15 +1,13 @@
 package main.Animaux.Oiseaux;
 
-import interfaces.Herbivore;
 import interfaces.Vole;
 import main.Zone;
 import main.Animaux.Animal;
-import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.VolerException;
 import main.TypeZones.Plaine;
 
-public class Pigeon extends Oiseau implements Herbivore, Vole {
+public class Pigeon extends Oiseau implements Vole {
 
 	public Pigeon(Zone zone_actuel) {
 		super(zone_actuel, 0.06, 5, 15, 2, new Plaine());
@@ -32,19 +30,10 @@ public class Pigeon extends Oiseau implements Herbivore, Vole {
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				Herbivore pigeon  = new Pigeon(animal.getZone_actuel());
-				animal.getZone_actuel().addAnimal((Animal) pigeon);
-				animal.getZone_actuel().addHerbivore(pigeon);
+				animal.getZone_actuel().addAnimal((Animal) new Pigeon(animal.getZone_actuel()));
 			}
 		}
 	}
-
-	@Override
-	public void manger() throws MangerException {
-		for (int i = 0; i < r.nextInt(15); i++)
-			this.getZone_actuel().removeInsecte(0);
-	}
-	
 
 	@Override
 	public void seDeplacer(int x, int y) throws VolerException {

@@ -1,15 +1,13 @@
 package main.Animaux.Insectes;
 
-import interfaces.Carnivore;
 import interfaces.Marche;
 import main.Zone;
 import main.Animaux.Animal;
-import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
 import main.TypeZones.Plaine;
 
-public class Fourmi extends Insecte implements Carnivore, Marche {
+public class Fourmi extends Insecte implements Marche {
 
 	public Fourmi(Zone zone_actuel) {
 		super(zone_actuel, 0.002, 2, 60, 0, new Plaine());
@@ -32,16 +30,9 @@ public class Fourmi extends Insecte implements Carnivore, Marche {
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				Carnivore fourmi = new Fourmi(animal.getZone_actuel());
-				animal.getZone_actuel().addAnimal((Animal) fourmi);
-				animal.getZone_actuel().addCarnivore(fourmi);
+				animal.getZone_actuel().addAnimal((Animal) new Fourmi(animal.getZone_actuel()));
 			}
 		}
-	}
-
-	@Override
-	public void manger() throws MangerException {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
