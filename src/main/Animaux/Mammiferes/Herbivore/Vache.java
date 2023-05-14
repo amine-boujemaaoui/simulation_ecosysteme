@@ -1,25 +1,24 @@
-package main.Animaux.Mammiferes;
+package main.Animaux.Mammiferes.Herbivore;
 
-import interfaces.Carnivore;
 import interfaces.Marche;
 import main.Zone;
 import main.Animaux.Animal;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
-import main.TypeZones.Foret;
+import main.TypeZones.Plaine;
 
-public class Loup extends Mammifere implements Carnivore, Marche {
+public class Vache extends Herbivore implements Marche {
 
-	public Loup(Zone zone_actuel) {
-		super(zone_actuel, 0.3, 10, 15, 2, new Foret());
+	public Vache(Zone zone_actuel) {
+		super(zone_actuel, 0.8, 15, 20, 5, new Plaine());
 	}
 
 	@Override
 	public void seReproduire() throws ReproduireException {
 		if (this.getZone_actuel().getNbMammifere() > 0) {
 			Animal animal = this.getZone_actuel().getMammifere(r.nextInt(this.getZone_actuel().getNbMammifere()));
-			if (!(animal instanceof Loup))
+			if (!(animal instanceof Vache))
 				throw new ReproduireException(this.getClass() + " x " + animal.getClass());
 			else if (this.getZone_actuel() != animal.getZone_actuel())
 				throw new ReproduireException("different zones");
@@ -32,9 +31,7 @@ public class Loup extends Mammifere implements Carnivore, Marche {
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				Carnivore loup  = new Loup(animal.getZone_actuel());
-				animal.getZone_actuel().addAnimal((Animal) loup);
-				animal.getZone_actuel().addCarnivore(loup);
+				animal.getZone_actuel().addAnimal((Animal) new Vache(animal.getZone_actuel()));
 			}
 		}
 	}

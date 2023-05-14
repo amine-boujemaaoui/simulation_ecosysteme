@@ -1,15 +1,13 @@
 package main.Animaux.Oiseaux;
 
-import interfaces.Carnivore;
 import interfaces.Vole;
 import main.Zone;
 import main.Animaux.Animal;
-import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.VolerException;
 import main.TypeZones.Plaine;
 
-public class Corbeau extends Oiseau implements Carnivore, Vole {
+public class Corbeau extends Oiseau implements Vole {
 
 	public Corbeau(Zone zone_actuel) {
 		super(zone_actuel, 0.09, 8, 20, 2, new Plaine());
@@ -32,19 +30,10 @@ public class Corbeau extends Oiseau implements Carnivore, Vole {
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				Carnivore corbeau  = new Corbeau(animal.getZone_actuel());
-				animal.getZone_actuel().addAnimal((Animal) corbeau);
-				animal.getZone_actuel().addCarnivore(corbeau);
+				animal.getZone_actuel().addAnimal((Animal) new Corbeau(animal.getZone_actuel()));
 			}
 		}
 	}
-
-	@Override
-	public void manger() throws MangerException {
-		for (int i = 0; i < r.nextInt(15); i++)
-			this.getZone_actuel().removeInsecte(0);
-	}
-
 
 	@Override
 	public void seDeplacer(int x, int y) throws VolerException {

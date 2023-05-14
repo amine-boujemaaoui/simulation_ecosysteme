@@ -1,15 +1,13 @@
 package main.Animaux.Insectes;
 
-import interfaces.Herbivore;
 import interfaces.Vole;
 import main.Zone;
 import main.Animaux.Animal;
-import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.VolerException;
 import main.TypeZones.Foret;
 
-public class Abeille extends Insecte implements Herbivore, Vole {
+public class Abeille extends Insecte implements Vole {
 
 	public Abeille(Zone zone_actuel) {
 		super(zone_actuel, 0.04, 4, 40, 1, new Foret());
@@ -32,16 +30,9 @@ public class Abeille extends Insecte implements Herbivore, Vole {
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				Herbivore abeille  = new Abeille(animal.getZone_actuel());
-				animal.getZone_actuel().addAnimal((Animal) abeille);
-				animal.getZone_actuel().addHerbivore(abeille);
+				animal.getZone_actuel().addAnimal((Animal) new Abeille(animal.getZone_actuel()));
 			}
 		}
-	}
-
-	@Override
-	public void manger() throws MangerException {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

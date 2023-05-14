@@ -7,8 +7,6 @@ import main.Animaux.Oiseaux.*;
 import main.Animaux.Insectes.*;
 import main.Animaux.Mammiferes.*;
 import main.TypeZones.TypeZone;
-import interfaces.Carnivore;
-import interfaces.Herbivore;
 
 public class Zone {
 	private double eau;
@@ -18,8 +16,6 @@ public class Zone {
 	private ArrayList<Oiseau> oiseaux = new ArrayList<Oiseau>();
 	private ArrayList<Insecte> insectes = new ArrayList<Insecte>();
 	private ArrayList<Mammifere> mammiferes = new ArrayList<Mammifere>();
-	private ArrayList<Carnivore> carnivores = new ArrayList<Carnivore>();
-	private ArrayList<Herbivore> herbivores = new ArrayList<Herbivore>();
 	private TypeZone typeZone;
 	private Ecosysteme ecosysteme;
 	private final int x, y;
@@ -79,26 +75,6 @@ public class Zone {
 
 	public Animal getMammifere(int i) {
 		return this.mammiferes.get(i);
-	}
-
-	public ArrayList<Carnivore> getCarnivores() {
-		ArrayList<Carnivore> carnivores_copie = new ArrayList<Carnivore>();
-		carnivores_copie.addAll(this.carnivores);
-		return carnivores_copie;
-	}
-
-	public Carnivore getCarnivore(int i) {
-		return this.carnivores.get(i);
-	}
-
-	public ArrayList<Herbivore> getHerbivores() {
-		ArrayList<Herbivore> herbivores_copie = new ArrayList<Herbivore>();
-		herbivores_copie.addAll(this.herbivores);
-		return herbivores_copie;
-	}
-
-	public Herbivore getHerbivore(int i) {
-		return this.herbivores.get(i);
 	}
 
 	public ArrayList<Vegetal> getVegeteaux() {
@@ -175,18 +151,6 @@ public class Zone {
 			this.insectes.add((Insecte) animal);
 		else
 			this.mammiferes.add((Mammifere) animal);
-		if (animal instanceof Carnivore)
-			addCarnivore((Carnivore) animal);
-		else
-			addHerbivore((Herbivore) animal);
-	}
-
-	public void addCarnivore(Carnivore carnivore) {
-		this.carnivores.add(carnivore);
-	}
-
-	public void addHerbivore(Herbivore herbivore) {
-		this.herbivores.add(herbivore);
 	}
 
 	public void removeAnimal(Animal animal) {
@@ -197,10 +161,6 @@ public class Zone {
 			this.insectes.remove((Insecte) animal);
 		else
 			this.mammiferes.remove((Mammifere) animal);
-		if (animal instanceof Carnivore)
-			this.carnivores.remove((Carnivore) animal);
-		else
-			this.herbivores.remove((Herbivore) animal);
 	}
 
 	public void removeAnimal(int i) throws RemoveEntityException {
@@ -250,28 +210,6 @@ public class Zone {
 		this.mammiferes.remove(i);
 		this.animaux.remove(animal);
 	}
-	
-	public void removeCarnivore(Carnivore carnivore) {
-		this.carnivores.remove(carnivore);
-		this.animaux.remove((Animal) carnivore);
-	}
-
-	public void removeCarnivore(int i) {
-		Animal animal = (Animal) this.carnivores.get(i);
-		this.carnivores.remove(i);
-		this.animaux.remove(animal);
-	}
-
-	public void removeHerbivore(int i) {
-		Animal animal = (Animal) this.herbivores.get(i);
-		this.herbivores.remove(i);
-		this.animaux.remove(animal);
-	}
-	
-	public void removeHerbivore(Herbivore herbivore) {
-		this.herbivores.remove(herbivore);
-		this.animaux.remove((Animal) herbivore);
-	}
 
 	public void addVegetal(Vegetal vegetal) {
 		this.vegeteaux.add(vegetal);
@@ -288,7 +226,7 @@ public class Zone {
 			this.vegeteaux.remove(i);
 	}
 
-	//TODO modifier la methode verifier typezone pour utiliser la temperature
+	// TODO modifier la methode verifier typezone pour utiliser la temperature
 	public void verifierTypeZone() {
 		this.ecosysteme.getTypeZones().forEach((typeZone) -> {
 			if (this.eau > typeZone.getEauMin() && this.eau < typeZone.getEauMax())

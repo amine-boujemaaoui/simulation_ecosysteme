@@ -23,8 +23,8 @@ public class CaseGrille {
 		return c;
 	}
 
-	public void addDisque(int rayon, Color c) {
-		lDisques.add(new Disque(rayon, c));
+	public void addDisque(int rayon, Color c, Image icon) {
+		lDisques.add(new Disque(rayon, c, icon));
 	}
 	
 	public void resetlDisques() {
