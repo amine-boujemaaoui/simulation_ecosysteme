@@ -25,14 +25,22 @@ public class Ecosysteme {
 	private ArrayList<TypeZone> typeZones = new ArrayList<TypeZone>();
 	private Random r = new Random();
 	private int cycle;
-	private int[][] defaultZones = { { 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
-			{ 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }, { 1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
-			{ 1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2 }, { 1, 1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
-			{ 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2 }, { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2 },
-			{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 2, 2, 2, 2 }, { 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 2, 2, 2 },
-			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 2, 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 2 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }, };
+	private int[][] defaultZones = { 
+			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 },
+			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1 }, 
+			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1 },
+			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1 }, 
+			{ 2, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1 },
+			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
+			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 },
+			{ 2, 2, 2, 2, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1 }, 
+			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1 },
+			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1 }, 
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 }, };
 
 	public Ecosysteme(int nbZonesL, int nbZonesH, ArrayList<TypeZone> typeZones) {
 		super();
@@ -42,27 +50,26 @@ public class Ecosysteme {
 		this.zones = new Zone[nbZonesL][nbZonesH];
 		this.cycle = 0;
 
-		// DEFAULTS typeZones
 		this.typeZones.add(new Riviere());
 		this.typeZones.add(new Foret());
 		this.typeZones.add(new Plaine());
 		this.typeZones.add(new Desert());
 
-		// PARAMETER TYPE ZONES
-		/*
-		 * if (typeZones.size() > 0) { typeZones.forEach((tz) -> {
-		 * this.typeZones.add(tz); }); }
-		 */
-
 		initdefaultZones();
 		initRandomNbAnimaux();
 		/*
-		 * for (int nbFourmi = 0; nbFourmi < 20; nbFourmi++) { Carnivore fourmi = new
-		 * Fourmi(zones[2][12]); zones[2][12].addAnimal((Animal) fourmi);
-		 * zones[2][12].addCarnivore(fourmi); } for (int nbVache = 0; nbVache < 20;
-		 * nbVache++) { Herbivore vache = new Vache(zones[2][13]);
-		 * zones[2][13].addAnimal((Animal) vache); zones[2][13].addHerbivore(vache); }
-		 */
+		for (int nbCorbeau = 0; nbCorbeau < 40; nbCorbeau++) {
+			Carnivore corbeau = new Corbeau(zones[9][2]);
+			zones[9][2].addAnimal((Animal) corbeau);
+			zones[9][2].addCarnivore(corbeau);
+		}
+		
+		for (int nbCorbeau = 0; nbCorbeau < 40; nbCorbeau++) {
+			Carnivore corbeau = new Corbeau(zones[2][11]);
+			zones[2][11].addAnimal((Animal) corbeau);
+			zones[2][11].addCarnivore(corbeau);
+		}
+		*/
 	}
 
 	public ArrayList<TypeZone> getTypeZones() {
@@ -156,13 +163,7 @@ public class Ecosysteme {
 						nbCorbeauMax = 15;
 						break;
 					default:
-						nbFourmiMax = 0;
-						nbAbeilleMax = 0;
-						nbLoupMax = 0;
-						nbPigeonMax = 0;
-						nbVacheMax = 0;
-						nbCorbeauMax = 0;
-						break;
+						continue;
 					}
 					Zone z = zones[i][j];
 					if (z.getTypeZone() instanceof Riviere)
@@ -248,6 +249,125 @@ public class Ecosysteme {
 		});
 	}
 
+	public void deplacement(Zone z) {
+		z.getAnimaux().forEach((animal) -> {
+			int x = 0, y = 0, ax = z.getX(), ay = z.getY();
+			if (zones[ax + 0][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax + 0;
+				y = ay + 0;
+				System.out.println("-");
+			} else if (ax - 1 >= 0 && ay - 1 >= 0
+					&& zones[ax - 1][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax - 1;
+				y = ay - 1;
+				System.out.println("\\");
+			} else if (ax - 1 >= 0
+					&& zones[ax - 1][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax - 1;
+				y = ay + 0;
+				System.out.println("\\");
+			} else if (ax - 1 >= 0 && ay + 1 < nbZonesL
+					&& zones[ax - 1][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax - 1;
+				y = ay + 1;
+				System.out.println("\\");
+			} else if (ay - 1 >= 0
+					&& zones[ax + 0][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax + 0;
+				y = ay - 1;
+				System.out.println("\\");
+			} else if (ay + 1 < nbZonesL
+					&& zones[ax + 0][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax + 0;
+				y = ay + 1;
+				System.out.println("\\");
+			} else if (ax + 1 < nbZonesH && ay - 1 >= 0
+					&& zones[ax + 1][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax + 1;
+				y = ay - 1;
+				System.out.println("\\");
+			} else if (ax + 1 < nbZonesH
+					&& zones[ax + 1][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax + 1;
+				y = ay + 0;
+				System.out.println("\\");
+			} else if (ax + 1 < nbZonesH && ay + 1 < nbZonesL
+					&& zones[ax + 1][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
+				x = ax + 1;
+				y = ay + 1;
+				System.out.println("\\");
+			} else {
+				int rx = r.nextInt(-1, 2);
+				int ry = r.nextInt(-1, 2);
+				x = ax + rx;
+				y = ay + ry;
+				System.out.println("||");
+			}
+			try {
+				if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL && !(zones[x][y].getTypeZone() instanceof Riviere)) {
+					animal.seDeplacer(x, y);
+					System.out.println("YES");
+				}
+			} catch (VolerException | SeDeplacerException e) {
+			}
+		});
+
+	}
+
+	public void reproduction(Zone z) {
+		z.getInsectes().forEach((insecte) -> {
+			if (z.getNbInsecte() > 0) {
+				try {
+					if (insecte.getAge() >= insecte.getAgeMinReproduction() && !insecte.isDejaReproduiCecycle()
+							&& r.nextInt(100) <= insecte.getTauxDeReproduction()
+							&& insecte.getZoneFavorable().getClass() == z.getTypeZone().getClass())
+						insecte.seReproduire();
+				} catch (ReproduireException e) {
+				}
+			}
+		});
+		z.getOiseaux().forEach((oiseau) -> {
+			if (z.getNbOiseau() > 0) {
+				try {
+					if (oiseau.getAge() >= oiseau.getAgeMinReproduction() && !oiseau.isDejaReproduiCecycle()
+							&& r.nextInt(100) <= oiseau.getTauxDeReproduction())
+						oiseau.seReproduire();
+				} catch (ReproduireException e) {
+				}
+			}
+		});
+		z.getMammiferes().forEach((mammifere) -> {
+			if (z.getNbMammifere() > 0) {
+				try {
+					if (mammifere.getAge() >= mammifere.getAgeMinReproduction() && !mammifere.isDejaReproduiCecycle()
+							&& r.nextInt(100) <= mammifere.getTauxDeReproduction())
+						mammifere.seReproduire();
+				} catch (ReproduireException e) {
+				}
+			}
+		});
+	}
+
+	public void vieillissement(Zone z) {
+		z.getAnimaux().forEach((animal) -> {
+			if (animal.getAge() == animal.getAgeMax() || animal.getNbCyclesSansEau() == 3) {
+				z.removeAnimal(animal);
+			} else {
+				animal.setDejaReproduiCecycle(false);
+				animal.vieillir();
+			}
+		});
+	}
+
+	public void abreuvage(Zone z) {
+		z.getAnimaux().forEach((animal) -> {
+			try {
+				animal.boir();
+			} catch (BoirException e) {
+			}
+		});
+	}
+
 	public void simulation() {
 		while (true) {
 			this.redessine();
@@ -255,93 +375,22 @@ public class Ecosysteme {
 			for (i = 0; i < nbZonesL; i++) {
 				for (j = 0; j < nbZonesH; j++) {
 					Zone z = zones[i][j];
-
-					z.getAnimaux().forEach((animal) -> {
-						if (animal.getAge() == animal.getAgeMax() || animal.getNbCyclesSansEau() == 3) {
-							z.removeAnimal(animal);
-						}
-						try {
-							animal.boir();
-						} catch (BoirException e) {
-						}
-					});
-
-					z.getInsectes().forEach((insecte) -> {
-						if (z.getNbInsecte() > 0) {
-							try {
-								if (insecte.getAge() > 0 && !insecte.isDejaReproduiCecycle()
-										&& r.nextInt(100) <= insecte.getTauxDeReproduction()
-										&& insecte.getZoneFavorable().getClass() == z.getTypeZone().getClass())
-									insecte.seReproduire();
-							} catch (ReproduireException e) {
-							}
-						}
-					});
-					z.getOiseaux().forEach((oiseau) -> {
-						if (z.getNbOiseau() > 0) {
-							try {
-								if (oiseau.getAge() > 0 && !oiseau.isDejaReproduiCecycle()
-										&& r.nextInt(100) <= oiseau.getTauxDeReproduction())
-									oiseau.seReproduire();
-							} catch (ReproduireException e) {
-							}
-						}
-					});
-					z.getMammiferes().forEach((mammifere) -> {
-						if (z.getNbMammifere() > 0) {
-							try {
-								if (mammifere.getAge() > 0 && !mammifere.isDejaReproduiCecycle()
-										&& r.nextInt(100) <= mammifere.getTauxDeReproduction()
-										&& mammifere.getAge() >= mammifere.getAgeMinReproduction())
-									mammifere.seReproduire();
-							} catch (ReproduireException e) {
-							}
-						}
-					});
-					/*
-					 * z.getAnimaux().forEach((animal) -> { int x = 0, y = 0; int ax =
-					 * animal.getZone_actuel().getX(), ay = animal.getZone_actuel().getY(); if (ax -
-					 * 1 >= 0 && ay - 1 >= 0 && zones[ax - 1][ay - 1].getTypeZone().getClass() ==
-					 * animal.getZoneFavorable().getClass()) { x = -1; y = -1; } else if (ax - 1 >=
-					 * 0 && zones[ax - 1][ay + 0].getTypeZone().getClass() ==
-					 * animal.getZoneFavorable() .getClass()) { x = ax - 1; y = ay - 1; } else if
-					 * (ax - 1 >= 0 && ay + 1 < nbZonesL && zones[ax - 1][ay +
-					 * 1].getTypeZone().getClass() == animal.getZoneFavorable() .getClass()) { x =
-					 * ax - 1; y = ay - 1; } else if (ay - 1 >= 0 && zones[ax + 0][ay -
-					 * 1].getTypeZone().getClass() == animal.getZoneFavorable() .getClass()) { x =
-					 * ax - 1; y = ay - 1; } else if (zones[ax + 0][ay + 0].getTypeZone().getClass()
-					 * == animal.getZoneFavorable() .getClass()) { x = ax - 1; y = ay - 1; } else if
-					 * (ay + 1 < nbZonesL && zones[ax + 0][ay + 1].getTypeZone().getClass() ==
-					 * animal.getZoneFavorable() .getClass()) { x = ax - 1; y = ay - 1; } else if
-					 * (ax + 1 < nbZonesH && ay - 1 >= 0 && zones[ax + 1][ay -
-					 * 1].getTypeZone().getClass() == animal.getZoneFavorable() .getClass()) { x =
-					 * ax - 1; y = ay - 1; } else if (ax + 1 < nbZonesH && zones[ax + 1][ay +
-					 * 0].getTypeZone().getClass() == animal.getZoneFavorable() .getClass()) { x =
-					 * ax - 1; y = ay - 1; } else if (ax + 1 < nbZonesH && ay + 1 < nbZonesL &&
-					 * zones[ax + 1][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable()
-					 * .getClass()) { x = ax - 1; y = ay - 1; } else { int rx = r.nextInt(-1, 1);
-					 * int ry = r.nextInt(-1, 1); x = ax + rx; y = ay + ry; } try {
-					 * //if(!(zones[x][y].getTypeZone() instanceof Riviere)) animal.seDeplacer(x,
-					 * y); } catch (VolerException | SeDeplacerException e) { } });
-					 * 
-					 */
-					z.getAnimaux().forEach((animal) -> {
-						animal.setDejaReproduiCecycle(false);
-						animal.vieillir();
-					});
-					deplacementAleatoire(z);
+					z.verifierTypeZone();
 					try {
 						z.changerTemperature(1);
 					} catch (ChangerTemperatureException e) {
 					}
-					z.verifierTypeZone();
+
+					vieillissement(z);
+					abreuvage(z);
+					reproduction(z);
+					deplacementAleatoire(z);
+					//deplacement(z);
 				}
 			}
-
 			try {
-				Thread.sleep(800);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 			nextCycle();
 		}

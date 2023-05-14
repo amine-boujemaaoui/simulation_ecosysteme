@@ -288,6 +288,7 @@ public class Zone {
 			this.vegeteaux.remove(i);
 	}
 
+	//TODO modifier la methode verifier typezone pour utiliser la temperature
 	public void verifierTypeZone() {
 		this.ecosysteme.getTypeZones().forEach((typeZone) -> {
 			if (this.eau > typeZone.getEauMin() && this.eau < typeZone.getEauMax())

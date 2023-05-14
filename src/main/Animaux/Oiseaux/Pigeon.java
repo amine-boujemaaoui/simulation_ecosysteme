@@ -27,6 +27,8 @@ public class Pigeon extends Oiseau implements Herbivore, Vole {
 				throw new ReproduireException("sechress");
 			else if (!(animal.getAge() >= animal.getAgeMinReproduction()))
 				throw new ReproduireException("tentative de reproduction avec un nouveau-né");
+			else if (animal.getZoneFavorable().getClass() != this.getZone_actuel().getTypeZone().getClass())
+				throw new ReproduireException("environement non favorable");
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);

@@ -12,7 +12,7 @@ import main.TypeZones.Plaine;
 public class Fourmi extends Insecte implements Carnivore, Marche {
 
 	public Fourmi(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 3, 60, 0, new Plaine());
+		super(zone_actuel, 0.002, 2, 60, 0, new Plaine());
 	}
 
 	@Override
@@ -27,6 +27,8 @@ public class Fourmi extends Insecte implements Carnivore, Marche {
 				throw new ReproduireException("sechress");
 			else if (!(animal.getAge() >= animal.getAgeMinReproduction()))
 				throw new ReproduireException("tentative de reproduction avec un nouveau-né");
+			else if (animal.getZoneFavorable().getClass() != this.getZone_actuel().getTypeZone().getClass())
+				throw new ReproduireException("environement non favorable");
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
