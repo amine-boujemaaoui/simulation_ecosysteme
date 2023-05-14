@@ -1,8 +1,7 @@
 package interfaces;
 
-import main.Vegetal;
-import main.Execeptions.ReproduireException;
+import main.Execeptions.PropagerException;
 
 public interface ReproductionVegetal {
-	Vegetal seReproduire() throws ReproduireException;
+	void sePropager() throws PropagerException;
 }

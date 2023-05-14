@@ -10,7 +10,7 @@ import main.TypeZones.Plaine;
 public class Corbeau extends Oiseau implements Vole {
 
 	public Corbeau(Zone zone_actuel) {
-		super(zone_actuel, 0.09, 8, 20, 2, new Plaine());
+		super(zone_actuel, 0.09, 8, 25, 2, new Plaine());
 	}
 
 	@Override

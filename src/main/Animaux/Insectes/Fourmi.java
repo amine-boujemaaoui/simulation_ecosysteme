@@ -3,6 +3,7 @@ package main.Animaux.Insectes;
 import interfaces.Marche;
 import main.Zone;
 import main.Animaux.Animal;
+import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
 import main.TypeZones.Plaine;
@@ -10,7 +11,7 @@ import main.TypeZones.Plaine;
 public class Fourmi extends Insecte implements Marche {
 
 	public Fourmi(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 2, 60, 0, new Plaine());
+		super(zone_actuel, 0.002, 2, 70, 0, new Plaine());
 	}
 
 	@Override
@@ -42,5 +43,9 @@ public class Fourmi extends Insecte implements Marche {
 			throw new SeDeplacerException("ERREUR: tentative de deplacement en dehors de la grille");
 		else
 			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+	}
+
+	@Override
+	public void manger() throws MangerException {
 	}
 }

@@ -8,14 +8,13 @@ import main.Animaux.Mammiferes.Herbivore.Vache;
 import main.Animaux.Oiseaux.*;
 import main.Execeptions.BoirException;
 import main.Execeptions.ChangerTemperatureException;
+import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
 import main.Execeptions.VolerException;
 import main.Grille.Grille;
 import main.TypeZones.*;
 import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -32,7 +31,7 @@ public class Ecosysteme {
 			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1 },
 			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1 }, 
 			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1 },
-			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1 }, 
+			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1 },
 			{ 2, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 },
 			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
 			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
@@ -63,10 +62,15 @@ public class Ecosysteme {
 		initdefaultZones();
 		initRandomNbAnimaux();
 		/*
-		 * for (int nbCorbeau = 0; nbCorbeau < 40; nbCorbeau++) {
-		 * zones[9][2].addAnimal(new Corbeau(zones[9][2])); zones[2][11].addAnimal(new
-		 * Corbeau(zones[2][11])); }
-		 */
+		for (int nbCorbeau = 0; nbCorbeau < 40; nbCorbeau++) {
+			zones[9][2].addAnimal(new Corbeau(zones[9][2]));
+			zones[2][11].addAnimal(new Corbeau(zones[2][11]));
+		}
+		for (int nbFoumi = 0; nbFoumi < 80; nbFoumi++) {
+			zones[9][2].addAnimal(new Fourmi(zones[9][2]));
+			zones[2][11].addAnimal(new Fourmi(zones[2][11]));
+		}
+		*/
 	}
 
 	public ArrayList<TypeZone> getTypeZones() {
@@ -235,53 +239,43 @@ public class Ecosysteme {
 			if (zones[ax + 0][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax + 0;
 				y = ay + 0;
-				System.out.println("-");
 			} else if (ax - 1 >= 0 && ay - 1 >= 0
 					&& zones[ax - 1][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax - 1;
 				y = ay - 1;
-				System.out.println("\\");
 			} else if (ax - 1 >= 0
 					&& zones[ax - 1][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax - 1;
 				y = ay + 0;
-				System.out.println("\\");
 			} else if (ax - 1 >= 0 && ay + 1 < nbZonesL
 					&& zones[ax - 1][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax - 1;
 				y = ay + 1;
-				System.out.println("\\");
 			} else if (ay - 1 >= 0
 					&& zones[ax + 0][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax + 0;
 				y = ay - 1;
-				System.out.println("\\");
 			} else if (ay + 1 < nbZonesL
 					&& zones[ax + 0][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax + 0;
 				y = ay + 1;
-				System.out.println("\\");
 			} else if (ax + 1 < nbZonesH && ay - 1 >= 0
 					&& zones[ax + 1][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax + 1;
 				y = ay - 1;
-				System.out.println("\\");
 			} else if (ax + 1 < nbZonesH
 					&& zones[ax + 1][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax + 1;
 				y = ay + 0;
-				System.out.println("\\");
 			} else if (ax + 1 < nbZonesH && ay + 1 < nbZonesL
 					&& zones[ax + 1][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
 				x = ax + 1;
 				y = ay + 1;
-				System.out.println("\\");
 			} else {
 				int rx = r.nextInt(-1, 2);
 				int ry = r.nextInt(-1, 2);
 				x = ax + rx;
 				y = ay + ry;
-				System.out.println("||");
 			}
 			try {
 				if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
@@ -349,6 +343,15 @@ public class Ecosysteme {
 		});
 	}
 
+	public void nourrissage(Zone z) {
+		z.getAnimaux().forEach((animal) -> {
+			try {
+				animal.manger();
+			} catch (MangerException e) {
+			}
+		});
+	}
+
 	public void simulation() {
 		while (true) {
 			if (Ecosysteme.simulate) {
@@ -368,6 +371,7 @@ public class Ecosysteme {
 						reproduction(z);
 						deplacementAleatoire(z);
 						// deplacement(z);
+						nourrissage(z);
 					}
 				}
 				try {

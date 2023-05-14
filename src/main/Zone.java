@@ -2,6 +2,7 @@ package main;
 
 import main.Execeptions.*;
 import java.util.ArrayList;
+import main.Vegetaux.Vegetal;
 import main.Animaux.Animal;
 import main.Animaux.Oiseaux.*;
 import main.Animaux.Insectes.*;

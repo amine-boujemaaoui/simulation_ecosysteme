@@ -117,9 +117,12 @@ public class Grille extends JPanel {
 					// ICONE CENTRE g.drawImage(d.getIcon(), cellX
 					// +nbPixelCoteCase/2-d.getRayon()/2, cellY +nbPixelCoteCase/2-d.getRayon()/2,
 					// d.getRayon(), d.getRayon(), null);
+					
 					int rayon = d.getRayon();
+					/*
 					if (rayon > nbPixelCoteCase)
 						rayon = nbPixelCoteCase;
+					*/
 					g.drawImage(d.getIcon(), cellX + x - rayon / 2, cellY + x - rayon / 2, rayon, rayon, null);
 					x += 15;
 				}

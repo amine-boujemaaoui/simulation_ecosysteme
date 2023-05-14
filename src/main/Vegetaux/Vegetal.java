@@ -1,19 +1,15 @@
-package main.Animaux;
+package main.Vegetaux;
 
 import java.util.Random;
 
 import interfaces.Boir;
-import interfaces.ReproductionAnimal;
+import interfaces.ReproductionVegetal;
 import main.Zone;
 import main.Execeptions.BoirException;
 import main.Execeptions.ChangerEauException;
-import main.Execeptions.MangerException;
-import main.Execeptions.ReproduireException;
-import main.Execeptions.SeDeplacerException;
-import main.Execeptions.VolerException;
 import main.TypeZones.TypeZone;
 
-public abstract class Animal implements Boir, ReproductionAnimal {
+public abstract class Vegetal implements Boir, ReproductionVegetal {
 	public Random r = new Random();
 	private Zone zone_actuel;
 	private double eauRequise;
@@ -24,8 +20,12 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	private final int tauxDeReproduction;
 	private final int ageMinReproduction;
 	private TypeZone zoneFavorable;
+	private double minEauRequise;
+	private double maxEauRequise;
+	private double minTemperatureRequise;
+	private double maxTemperatureRequise;
 
-	public Animal(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction,
+	public Vegetal(Zone zone_actuel, double eauRequise, double minEauRequise, double maxEauRequise, double minTemperatureRequise, double maxTemperatureRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction,
 			TypeZone zoneFavorable) {
 		super();
 		this.zone_actuel = zone_actuel;
@@ -37,6 +37,10 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 		this.tauxDeReproduction = tauxDeReproduction;
 		this.ageMinReproduction = ageMinReproduction;
 		this.zoneFavorable = zoneFavorable;
+		this.setMinEauRequise(minEauRequise);
+		this.setMaxEauRequise(maxEauRequise);
+		this.setMinTemperatureRequise(minTemperatureRequise);
+		this.setMaxTemperatureRequise(maxTemperatureRequise);
 	}
 
 	@Override
@@ -113,11 +117,35 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 		return zoneFavorable;
 	}
 
-	public void seDeplacer(int x, int y) throws SeDeplacerException, VolerException {
-	}
-	
-	public void seReproduire() throws ReproduireException {
+	public double getMinEauRequise() {
+		return minEauRequise;
 	}
 
-	public abstract void manger() throws MangerException;
+	public void setMinEauRequise(double minEauRequise) {
+		this.minEauRequise = minEauRequise;
+	}
+
+	public double getMaxEauRequise() {
+		return maxEauRequise;
+	}
+
+	public void setMaxEauRequise(double maxEauRequise) {
+		this.maxEauRequise = maxEauRequise;
+	}
+
+	public double getMinTemperatureRequise() {
+		return minTemperatureRequise;
+	}
+
+	public void setMinTemperatureRequise(double minTemperatureRequise) {
+		this.minTemperatureRequise = minTemperatureRequise;
+	}
+
+	public double getMaxTemperatureRequise() {
+		return maxTemperatureRequise;
+	}
+
+	public void setMaxTemperatureRequise(double maxTemperatureRequise) {
+		this.maxTemperatureRequise = maxTemperatureRequise;
+	}
 }

@@ -3,6 +3,7 @@ package main.Animaux.Insectes;
 import interfaces.Vole;
 import main.Zone;
 import main.Animaux.Animal;
+import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.VolerException;
 import main.TypeZones.Foret;
@@ -42,5 +43,11 @@ public class Abeille extends Insecte implements Vole {
 			throw new VolerException("ERREUR: tentative de deplacement en dehors de la grille");
 		else
 			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+	}
+
+	@Override
+	public void manger() throws MangerException {
+		// TODO Auto-generated method stub
+		
 	}
 }
