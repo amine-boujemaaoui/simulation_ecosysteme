@@ -1,16 +1,16 @@
-package main.Animaux.Oiseaux;
+package main.Animaux.Mammiferes;
 
 import main.Zone;
 import main.Animaux.Animal;
 import main.Execeptions.ReproduireException;
 import main.TypeZones.TypeZone;
 
-public abstract class Oiseau extends Animal {
+public abstract class Mammifere extends Animal {
 
-	public Oiseau(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction, TypeZone zoneFavorable) {
+	public Mammifere(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction, TypeZone zoneFavorable) {
 		super(zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable);
 	}
-	
+
 	@Override
 	public void seReproduire() throws ReproduireException {
 	}

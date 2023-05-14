@@ -1,15 +1,18 @@
 package main.Animaux.Oiseaux;
 
-import interfaces.Carnivore;
+import interfaces.Herbivore;
+import interfaces.Vole;
 import main.Zone;
 import main.Animaux.Animal;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
+import main.Execeptions.VolerException;
+import main.TypeZones.Plaine;
 
-public class Pigeon extends Oiseau implements Carnivore {
+public class Pigeon extends Oiseau implements Herbivore, Vole {
 
 	public Pigeon(Zone zone_actuel) {
-		super(zone_actuel, 6, 5);
+		super(zone_actuel, 0.06, 5, 15, 2, new Plaine());
 	}
 
 	@Override
@@ -22,10 +25,16 @@ public class Pigeon extends Oiseau implements Carnivore {
 				throw new ReproduireException("different zones");
 			else if (this.getZone_actuel().getEau() < this.getEauRequise())
 				throw new ReproduireException("sechress");
+			else if (!(animal.getAge() >= animal.getAgeMinReproduction()))
+				throw new ReproduireException("tentative de reproduction avec un nouveau-né");
+			else if (animal.getZoneFavorable().getClass() != this.getZone_actuel().getTypeZone().getClass())
+				throw new ReproduireException("environement non favorable");
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				animal.getZone_actuel().addAnimal(new Pigeon(animal.getZone_actuel()));
+				Herbivore pigeon  = new Pigeon(animal.getZone_actuel());
+				animal.getZone_actuel().addAnimal((Animal) pigeon);
+				animal.getZone_actuel().addHerbivore(pigeon);
 			}
 		}
 	}
@@ -34,6 +43,16 @@ public class Pigeon extends Oiseau implements Carnivore {
 	public void manger() throws MangerException {
 		for (int i = 0; i < r.nextInt(15); i++)
 			this.getZone_actuel().removeInsecte(0);
+	}
+	
+
+	@Override
+	public void seDeplacer(int x, int y) throws VolerException {
+		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
+				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
+			throw new VolerException("ERREUR: tentative de deplacement en dehors de la grille");
+		else
+			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 
 }

@@ -1,7 +1,6 @@
 package main.test;
 
 import java.util.ArrayList;
-
 import main.Ecosysteme;
 import main.TypeZones.TypeZone;
 

@@ -1,11 +1,13 @@
 package main.Grille;
 
 import java.awt.Color;
+import java.awt.Image;
 
 public class Disque {
 
 	private int rayon;
 	private Color c;
+	private Image icon;
 
 	Disque() {
 	}
@@ -29,6 +31,10 @@ public class Disque {
 
 	public void setCouleur(Color c) {
 		this.c = c;
+	}
+	
+	public Image getIcon() {
+		return icon;
 	}
 
 }

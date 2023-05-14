@@ -1,4 +1,4 @@
-package main.Animaux.Insectes;
+package main.Animaux.Mammiferes;
 
 import interfaces.Carnivore;
 import interfaces.Marche;
@@ -7,19 +7,19 @@ import main.Animaux.Animal;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
-import main.TypeZones.Plaine;
+import main.TypeZones.Foret;
 
-public class Fourmi extends Insecte implements Carnivore, Marche {
+public class Loup extends Mammifere implements Carnivore, Marche {
 
-	public Fourmi(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 2, 60, 0, new Plaine());
+	public Loup(Zone zone_actuel) {
+		super(zone_actuel, 0.3, 10, 15, 2, new Foret());
 	}
 
 	@Override
 	public void seReproduire() throws ReproduireException {
-		if (this.getZone_actuel().getNbInsecte() > 0) {
-			Animal animal = this.getZone_actuel().getInsecte(r.nextInt(this.getZone_actuel().getNbInsecte()));
-			if (!(animal instanceof Fourmi))
+		if (this.getZone_actuel().getNbMammifere() > 0) {
+			Animal animal = this.getZone_actuel().getMammifere(r.nextInt(this.getZone_actuel().getNbMammifere()));
+			if (!(animal instanceof Loup))
 				throw new ReproduireException(this.getClass() + " x " + animal.getClass());
 			else if (this.getZone_actuel() != animal.getZone_actuel())
 				throw new ReproduireException("different zones");
@@ -32,18 +32,18 @@ public class Fourmi extends Insecte implements Carnivore, Marche {
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				Carnivore fourmi = new Fourmi(animal.getZone_actuel());
-				animal.getZone_actuel().addAnimal((Animal) fourmi);
-				animal.getZone_actuel().addCarnivore(fourmi);
+				Carnivore loup  = new Loup(animal.getZone_actuel());
+				animal.getZone_actuel().addAnimal((Animal) loup);
+				animal.getZone_actuel().addCarnivore(loup);
 			}
 		}
 	}
-
+	
 	@Override
 	public void manger() throws MangerException {
 		// TODO Auto-generated method stub
 	}
-
+	
 	@Override
 	public void seDeplacer(int x, int y) throws SeDeplacerException {
 		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
@@ -52,4 +52,5 @@ public class Fourmi extends Insecte implements Carnivore, Marche {
 		else
 			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
+	
 }

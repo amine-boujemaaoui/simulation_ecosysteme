@@ -1,23 +1,21 @@
 package main.Animaux.Insectes;
 
-import interfaces.Deplacer;
-import interfaces.ReproductionAnimal;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import main.Zone;
 import main.Animaux.Animal;
-import main.Execeptions.SeDeplacerException;
+import main.Execeptions.ReproduireException;
+import main.TypeZones.TypeZone;
 
-public abstract class Insecte extends Animal implements Deplacer, ReproductionAnimal {
+public abstract class Insecte extends Animal {
+	public static final Image insecteIcon = new ImageIcon("src/assets/biomes/insecte.png").getImage();
 
-	public Insecte(Zone zone_actuel, int ageMax, int tauxDeReproduction) {
-		super(zone_actuel, 0.01, ageMax, tauxDeReproduction);
+	public Insecte(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction,
+			TypeZone zoneFavorable) {
+		super(zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable);
 	}
-
+	
 	@Override
-	public void seDeplacer(int x, int y) throws SeDeplacerException {
-		if (x > this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
-				|| y > this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
-			throw new SeDeplacerException("ERREUR: tentative de deplacement en dehors de la grille");
-		else
-			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+	public void seReproduire() throws ReproduireException {
 	}
 }

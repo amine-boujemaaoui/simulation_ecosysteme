@@ -1,11 +1,14 @@
 package main;
 
+import main.Execeptions.*;
 import java.util.ArrayList;
 import main.Animaux.Animal;
 import main.Animaux.Oiseaux.*;
 import main.Animaux.Insectes.*;
-import main.Execeptions.*;
+import main.Animaux.Mammiferes.*;
 import main.TypeZones.TypeZone;
+import interfaces.Carnivore;
+import interfaces.Herbivore;
 
 public class Zone {
 	private double eau;
@@ -14,6 +17,9 @@ public class Zone {
 	private ArrayList<Vegetal> vegeteaux = new ArrayList<Vegetal>();
 	private ArrayList<Oiseau> oiseaux = new ArrayList<Oiseau>();
 	private ArrayList<Insecte> insectes = new ArrayList<Insecte>();
+	private ArrayList<Mammifere> mammiferes = new ArrayList<Mammifere>();
+	private ArrayList<Carnivore> carnivores = new ArrayList<Carnivore>();
+	private ArrayList<Herbivore> herbivores = new ArrayList<Herbivore>();
 	private TypeZone typeZone;
 	private Ecosysteme ecosysteme;
 	private final int x, y;
@@ -37,7 +43,7 @@ public class Zone {
 
 	public ArrayList<Animal> getAnimaux() {
 		ArrayList<Animal> animaux_copie = new ArrayList<Animal>();
-		this.animaux.forEach((n) -> animaux_copie.add(n));
+		animaux_copie.addAll(this.animaux);
 		return animaux_copie;
 	}
 
@@ -47,7 +53,7 @@ public class Zone {
 
 	public ArrayList<Oiseau> getOiseaux() {
 		ArrayList<Oiseau> oiseaux_copie = new ArrayList<Oiseau>();
-		this.oiseaux.forEach((n) -> oiseaux_copie.add(n));
+		oiseaux_copie.addAll(this.oiseaux);
 		return oiseaux_copie;
 	}
 
@@ -57,12 +63,42 @@ public class Zone {
 
 	public ArrayList<Insecte> getInsectes() {
 		ArrayList<Insecte> insectes_copie = new ArrayList<Insecte>();
-		this.insectes.forEach((n) -> insectes_copie.add(n));
+		insectes_copie.addAll(this.insectes);
 		return insectes_copie;
 	}
 
 	public Animal getInsecte(int i) {
 		return this.insectes.get(i);
+	}
+
+	public ArrayList<Mammifere> getMammiferes() {
+		ArrayList<Mammifere> mammiferes_copie = new ArrayList<Mammifere>();
+		mammiferes_copie.addAll(this.mammiferes);
+		return mammiferes_copie;
+	}
+
+	public Animal getMammifere(int i) {
+		return this.mammiferes.get(i);
+	}
+
+	public ArrayList<Carnivore> getCarnivores() {
+		ArrayList<Carnivore> carnivores_copie = new ArrayList<Carnivore>();
+		carnivores_copie.addAll(this.carnivores);
+		return carnivores_copie;
+	}
+
+	public Carnivore getCarnivore(int i) {
+		return this.carnivores.get(i);
+	}
+
+	public ArrayList<Herbivore> getHerbivores() {
+		ArrayList<Herbivore> herbivores_copie = new ArrayList<Herbivore>();
+		herbivores_copie.addAll(this.herbivores);
+		return herbivores_copie;
+	}
+
+	public Herbivore getHerbivore(int i) {
+		return this.herbivores.get(i);
 	}
 
 	public ArrayList<Vegetal> getVegeteaux() {
@@ -99,6 +135,10 @@ public class Zone {
 		return this.insectes.size();
 	}
 
+	public int getNbMammifere() {
+		return this.mammiferes.size();
+	}
+
 	private void setEau(double eau) {
 		this.eau = Math.round(eau * 100.0) / 100.0;
 	}
@@ -107,7 +147,7 @@ public class Zone {
 		this.temperature = Math.round(temperature * 100.0) / 100.0;
 	}
 
-	private void setTypeZone(TypeZone typeZone) {
+	public void setTypeZone(TypeZone typeZone) {
 		this.typeZone = typeZone;
 	}
 
@@ -133,6 +173,20 @@ public class Zone {
 			this.oiseaux.add((Oiseau) animal);
 		else if (animal instanceof Insecte)
 			this.insectes.add((Insecte) animal);
+		else
+			this.mammiferes.add((Mammifere) animal);
+		if (animal instanceof Carnivore)
+			addCarnivore((Carnivore) animal);
+		else
+			addHerbivore((Herbivore) animal);
+	}
+
+	public void addCarnivore(Carnivore carnivore) {
+		this.carnivores.add(carnivore);
+	}
+
+	public void addHerbivore(Herbivore herbivore) {
+		this.herbivores.add(herbivore);
 	}
 
 	public void removeAnimal(Animal animal) {
@@ -141,6 +195,12 @@ public class Zone {
 			this.oiseaux.remove((Oiseau) animal);
 		else if (animal instanceof Insecte)
 			this.insectes.remove((Insecte) animal);
+		else
+			this.mammiferes.remove((Mammifere) animal);
+		if (animal instanceof Carnivore)
+			this.carnivores.remove((Carnivore) animal);
+		else
+			this.herbivores.remove((Herbivore) animal);
 	}
 
 	public void removeAnimal(int i) throws RemoveEntityException {
@@ -152,6 +212,8 @@ public class Zone {
 				this.oiseaux.remove((Oiseau) animal);
 			else if (animal instanceof Insecte)
 				this.insectes.remove((Insecte) animal);
+			else if (animal instanceof Mammifere)
+				this.mammiferes.remove((Mammifere) animal);
 			this.animaux.remove(i);
 		}
 	}
@@ -164,7 +226,7 @@ public class Zone {
 	public void removeOiseau(int i) {
 		Animal animal = this.oiseaux.get(i);
 		this.oiseaux.remove(i);
-		this.animaux.remove((Animal) animal);
+		this.animaux.remove(animal);
 	}
 
 	public void removeInsecte(Insecte insecte) {
@@ -175,7 +237,40 @@ public class Zone {
 	public void removeInsecte(int i) {
 		Animal animal = this.insectes.get(i);
 		this.insectes.remove(i);
-		this.animaux.remove((Animal) animal);
+		this.animaux.remove(animal);
+	}
+
+	public void removeMammifere(Mammifere mammifere) {
+		this.mammiferes.remove(mammifere);
+		this.animaux.remove((Animal) mammifere);
+	}
+
+	public void removeMammifere(int i) {
+		Animal animal = this.mammiferes.get(i);
+		this.mammiferes.remove(i);
+		this.animaux.remove(animal);
+	}
+	
+	public void removeCarnivore(Carnivore carnivore) {
+		this.carnivores.remove(carnivore);
+		this.animaux.remove((Animal) carnivore);
+	}
+
+	public void removeCarnivore(int i) {
+		Animal animal = (Animal) this.carnivores.get(i);
+		this.carnivores.remove(i);
+		this.animaux.remove(animal);
+	}
+
+	public void removeHerbivore(int i) {
+		Animal animal = (Animal) this.herbivores.get(i);
+		this.herbivores.remove(i);
+		this.animaux.remove(animal);
+	}
+	
+	public void removeHerbivore(Herbivore herbivore) {
+		this.herbivores.remove(herbivore);
+		this.animaux.remove((Animal) herbivore);
 	}
 
 	public void addVegetal(Vegetal vegetal) {
@@ -193,6 +288,7 @@ public class Zone {
 			this.vegeteaux.remove(i);
 	}
 
+	//TODO modifier la methode verifier typezone pour utiliser la temperature
 	public void verifierTypeZone() {
 		this.ecosysteme.getTypeZones().forEach((typeZone) -> {
 			if (this.eau > typeZone.getEauMin() && this.eau < typeZone.getEauMax())
