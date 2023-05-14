@@ -20,12 +20,14 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	private final int tauxDeReproduction;
 	private final int ageMinReproduction;
 	private TypeZone zoneFavorable;
+	/*
 	private double minEauRequise;
 	private double maxEauRequise;
 	private double minTemperatureRequise;
 	private double maxTemperatureRequise;
+	*/
 
-	public Vegetal(Zone zone_actuel, double eauRequise, double minEauRequise, double maxEauRequise, double minTemperatureRequise, double maxTemperatureRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction,
+	public Vegetal(Zone zone_actuel, double eauRequise, /*double minEauRequise, double maxEauRequise, double minTemperatureRequise, double maxTemperatureRequise,*/ int ageMax, int tauxDeReproduction, int ageMinReproduction,
 			TypeZone zoneFavorable) {
 		super();
 		this.zone_actuel = zone_actuel;
@@ -37,10 +39,12 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 		this.tauxDeReproduction = tauxDeReproduction;
 		this.ageMinReproduction = ageMinReproduction;
 		this.zoneFavorable = zoneFavorable;
+		/*
 		this.setMinEauRequise(minEauRequise);
 		this.setMaxEauRequise(maxEauRequise);
 		this.setMinTemperatureRequise(minTemperatureRequise);
 		this.setMaxTemperatureRequise(maxTemperatureRequise);
+		*/
 	}
 
 	@Override
@@ -117,6 +121,7 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 		return zoneFavorable;
 	}
 
+	/*
 	public double getMinEauRequise() {
 		return minEauRequise;
 	}
@@ -148,4 +153,5 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	public void setMaxTemperatureRequise(double maxTemperatureRequise) {
 		this.maxTemperatureRequise = maxTemperatureRequise;
 	}
+	*/
 }

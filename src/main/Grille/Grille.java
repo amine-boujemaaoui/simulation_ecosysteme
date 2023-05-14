@@ -69,8 +69,12 @@ public class Grille extends JPanel {
 		m[i][j].setIcon(icon);
 	}
 
-	public void addDisque(Image icon, int i, int j, int rayon, Color c) {
-		m[i][j].addDisque(rayon, c, icon);
+	public void addDisqueAnimaux(Image icon, int i, int j, int rayon, Color c) {
+		m[i][j].addDisqueAnimaux(rayon, c, icon);
+	}
+
+	public void addDisqueVegetaux(Image icon, int i, int j, int rayon, Color c) {
+		m[i][j].addDisqueVegetaux(rayon, c, icon);
 	}
 
 	public void resetlDisques(int i, int j) {
@@ -80,7 +84,7 @@ public class Grille extends JPanel {
 	public void setCycle(int cycle) {
 		this.cycle = cycle;
 	}
-	
+
 	public JFrame getWindow() {
 		return window;
 	}
@@ -110,21 +114,27 @@ public class Grille extends JPanel {
 				g.drawImage(m[i][j].getIcon(), cellX, cellY, null);
 
 				// Place des disques
-				int x = 15;
-				for (Disque d : m[i][j].lDisques) {
+				int x = 0;
+				for (Disque d : m[i][j].lAnimaux) {
 					// g.setColor(d.getCouleur());
 					// g.fillOval(cellX + 5, cellY + 5 + x, d.getRayon(), d.getRayon());
 					// ICONE CENTRE g.drawImage(d.getIcon(), cellX
 					// +nbPixelCoteCase/2-d.getRayon()/2, cellY +nbPixelCoteCase/2-d.getRayon()/2,
 					// d.getRayon(), d.getRayon(), null);
-					
+
 					int rayon = d.getRayon();
 					/*
-					if (rayon > nbPixelCoteCase)
-						rayon = nbPixelCoteCase;
-					*/
-					g.drawImage(d.getIcon(), cellX + x - rayon / 2, cellY + x - rayon / 2, rayon, rayon, null);
-					x += 15;
+					 * if (rayon > nbPixelCoteCase) rayon = nbPixelCoteCase;
+					 */
+					g.drawImage(d.getIcon(), cellX + nbPixelCoteCase / 2 - rayon / 2 - 16,
+							cellY + x + nbPixelCoteCase / 2 - rayon / 2 - 16, rayon, rayon, null);
+					x += nbPixelCoteCase / (m[i][j].lAnimaux.size() + 1);
+				}
+				x = 0;
+				for (Disque d : m[i][j].lVegetaux) {
+					int rayon = d.getRayon();
+					g.drawImage(d.getIcon(), cellX, cellY, rayon, rayon, null);
+					x += nbPixelCoteCase / (m[i][j].lAnimaux.size() + 1);
 				}
 			}
 

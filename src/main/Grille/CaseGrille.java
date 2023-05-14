@@ -8,12 +8,13 @@ public class CaseGrille {
 
 	private Color c;
 	private Image icon;
-	public LinkedList<Disque> lDisques;
+	public LinkedList<Disque> lAnimaux;
+	public LinkedList<Disque> lVegetaux;
 
 	public CaseGrille() {
-		lDisques = new LinkedList<Disque>();
+		lAnimaux = new LinkedList<Disque>();
+		lVegetaux = new LinkedList<Disque>();
 	}
-	
 
 	public void setCouleur(Color c) {
 		this.c = c;
@@ -23,21 +24,30 @@ public class CaseGrille {
 		return c;
 	}
 
-	public void addDisque(int rayon, Color c, Image icon) {
-		lDisques.add(new Disque(rayon, c, icon));
+	public void addDisqueAnimaux(int rayon, Color c, Image icon) {
+		lAnimaux.add(new Disque(rayon, c, icon));
 	}
-	
+
+	public void addDisqueVegetaux(int rayon, Color c, Image icon) {
+		lVegetaux.add(new Disque(rayon, c, icon));
+	}
+
+	public void resetlDisquesAnimaux() {
+		lAnimaux = new LinkedList<Disque>();
+	}
+
+	public void resetlDisquesVegetaux() {
+		lVegetaux = new LinkedList<Disque>();
+	}
+
 	public void resetlDisques() {
-		lDisques = new LinkedList<Disque>();
+		lAnimaux = new LinkedList<Disque>();
+		lVegetaux = new LinkedList<Disque>();
 	}
-
-
 
 	public Image getIcon() {
 		return icon;
 	}
-
-
 
 	public void setIcon(Image icon) {
 		this.icon = icon;

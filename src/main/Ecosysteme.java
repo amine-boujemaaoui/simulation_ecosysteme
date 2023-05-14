@@ -14,6 +14,9 @@ import main.Execeptions.SeDeplacerException;
 import main.Execeptions.VolerException;
 import main.Grille.Grille;
 import main.TypeZones.*;
+import main.Vegetaux.Arbres.Arbre;
+import main.Vegetaux.Arbres.Sapin;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,29 +31,25 @@ public class Ecosysteme {
 	private int cycle;
 	public static boolean simulate = true;
 	private int[][] defaultZones = { 
-			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1 },
-			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1 }, 
-			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1 },
-			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1 },
-			{ 2, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 },
-			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
-			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
-			{ 2, 2, 2, 2, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1 }, 
-			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1 },
-			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 }, 
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1 }, 
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1 },
-			{ 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 }, 
-			{ 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
-			{ 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 } 
+			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
+			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 }, 
+			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
+			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 1 }, 
+			{ 2, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1 },
+			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 1, 1 }, 
+			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1, 1 },
+			{ 2, 2, 2, 2, 1, 1, 0, 1, 1, 0, 0, 1 }, 
+			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0 },
+			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0 }, 
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 }
 			};
 
-	public Ecosysteme(int nbZonesL, int nbZonesH, ArrayList<TypeZone> typeZones) {
+	public Ecosysteme(ArrayList<TypeZone> typeZones) {
 		super();
-		this.nbZonesH = nbZonesH;
-		this.nbZonesL = nbZonesL;
-		this.grille = new Grille(nbZonesL, nbZonesH, 64, true);
+		this.nbZonesH = 12;
+		this.nbZonesL = 12;
+		this.grille = new Grille(nbZonesL, nbZonesH, 96, true);
 		this.zones = new Zone[nbZonesL][nbZonesH];
 		this.cycle = 0;
 
@@ -61,16 +60,15 @@ public class Ecosysteme {
 
 		initdefaultZones();
 		initRandomNbAnimaux();
+		initRandomNbVegetaux();
 		/*
-		for (int nbCorbeau = 0; nbCorbeau < 40; nbCorbeau++) {
-			zones[9][2].addAnimal(new Corbeau(zones[9][2]));
-			zones[2][11].addAnimal(new Corbeau(zones[2][11]));
-		}
-		for (int nbFoumi = 0; nbFoumi < 80; nbFoumi++) {
-			zones[9][2].addAnimal(new Fourmi(zones[9][2]));
-			zones[2][11].addAnimal(new Fourmi(zones[2][11]));
-		}
-		*/
+		 * for (int i = 0; i < 20; i++) { zones[9][2].addAnimal(new
+		 * Corbeau(zones[9][2])); zones[9][2].addAnimal(new Vache(zones[9][2]));
+		 * zones[9][2].addAnimal(new Fourmi (zones[9][2])); }
+		 */
+		/*
+		 * for (int i = 0; i < 20; i++) zones[9][2].addVegetal(new Sapin(zones[9][2]));
+		 */
 	}
 
 	public ArrayList<TypeZone> getTypeZones() {
@@ -117,9 +115,18 @@ public class Ecosysteme {
 				grille.colorieFond(i, j, zones[i][j].getTypeZone().getC());
 				grille.iconFond(i, j, zones[i][j].getTypeZone().getTypeZoneIcon());
 				// grille.addDisque(i, j, zones[i][j].getNbInsecte(), Color.BLUE);
-				grille.addDisque(Insecte.icon, i, j, zones[i][j].getNbInsecte(), Color.BLUE);
-				grille.addDisque(Oiseau.icon, i, j, zones[i][j].getNbOiseau(), Color.RED);
-				grille.addDisque(Mammifere.icon, i, j, zones[i][j].getNbMammifere(), new Color(107, 42, 0));
+				for (int k = 0; k < zones[i][j].getNbInsecte() / 16; k++)
+					grille.addDisqueAnimaux(Insecte.icon, i, j, 16, Color.BLUE);
+				grille.addDisqueAnimaux(Insecte.icon, i, j, zones[i][j].getNbInsecte() % 16, Color.BLUE);
+				for (int k = 0; k < zones[i][j].getNbOiseau() / 16; k++)
+					grille.addDisqueAnimaux(Oiseau.icon, i, j, 16, Color.RED);
+				grille.addDisqueAnimaux(Oiseau.icon, i, j, zones[i][j].getNbOiseau() % 16, Color.RED);
+				for (int k = 0; k < zones[i][j].getNbMammifere() / 16; k++)
+					grille.addDisqueAnimaux(Mammifere.icon, i, j, 16, Color.YELLOW);
+				grille.addDisqueAnimaux(Mammifere.icon, i, j, zones[i][j].getNbMammifere() % 16, Color.YELLOW);
+				for (int k = 0; k < zones[i][j].getNbArbre() / 16; k++)
+					grille.addDisqueVegetaux(Arbre.icon, i, j, 16, Color.BLACK);
+				grille.addDisqueVegetaux(Arbre.icon, i, j, zones[i][j].getNbArbre() % 16, Color.BLACK);
 			}
 		}
 		grille.redessine();
@@ -182,6 +189,28 @@ public class Ecosysteme {
 						z.addAnimal(new Pigeon(z));
 					for (int nbCorbeau = 0; nbCorbeau < r.nextInt(nbCorbeauMax); nbCorbeau++)
 						z.addAnimal(new Corbeau(z));
+				}
+			}
+		}
+	}
+
+	public void initRandomNbVegetaux() {
+		for (int i = 0; i < nbZonesL; i++) {
+			for (int j = 0; j < nbZonesH; j++) {
+				if (r.nextInt(100) <= 30) {
+					int nbSapinMax;
+					switch (defaultZones[i][j]) {
+					case 1:
+						nbSapinMax = 80;
+						break;
+					default:
+						continue;
+					}
+					Zone z = zones[i][j];
+					if (z.getTypeZone() instanceof Riviere)
+						continue;
+					for (int nbSapin = 0; nbSapin < r.nextInt(nbSapinMax); nbSapin++)
+						z.addVegetal(new Sapin(z));
 				}
 			}
 		}
@@ -375,7 +404,7 @@ public class Ecosysteme {
 					}
 				}
 				try {
-					Thread.sleep(200);
+					Thread.sleep(300);
 				} catch (InterruptedException e) {
 				}
 				nextCycle();

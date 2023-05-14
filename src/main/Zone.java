@@ -3,6 +3,7 @@ package main;
 import main.Execeptions.*;
 import java.util.ArrayList;
 import main.Vegetaux.Vegetal;
+import main.Vegetaux.Arbres.*;
 import main.Animaux.Animal;
 import main.Animaux.Oiseaux.*;
 import main.Animaux.Insectes.*;
@@ -13,13 +14,15 @@ public class Zone {
 	private double eau;
 	private double temperature;
 	private ArrayList<Animal> animaux = new ArrayList<Animal>();
-	private ArrayList<Vegetal> vegeteaux = new ArrayList<Vegetal>();
+	private ArrayList<Vegetal> vegetaux = new ArrayList<Vegetal>();
 	private ArrayList<Oiseau> oiseaux = new ArrayList<Oiseau>();
 	private ArrayList<Insecte> insectes = new ArrayList<Insecte>();
 	private ArrayList<Mammifere> mammiferes = new ArrayList<Mammifere>();
+	private ArrayList<Arbre> arbres = new ArrayList<Arbre>();
 	private TypeZone typeZone;
 	private Ecosysteme ecosysteme;
 	private final int x, y;
+	
 
 	public Zone(int x, int y, double eau, double temperature, Ecosysteme ecosysteme) {
 		super();
@@ -80,12 +83,22 @@ public class Zone {
 
 	public ArrayList<Vegetal> getVegeteaux() {
 		ArrayList<Vegetal> vegeteaux_copie = new ArrayList<Vegetal>();
-		this.vegeteaux.forEach((n) -> vegeteaux_copie.add(n));
+		this.vegetaux.forEach((n) -> vegeteaux_copie.add(n));
 		return vegeteaux_copie;
 	}
 
 	public Vegetal getVegetal(int i) {
-		return this.vegeteaux.get(i);
+		return this.vegetaux.get(i);
+	}
+	
+	public ArrayList<Arbre> getArbres() {
+		ArrayList<Arbre> arbres_copie = new ArrayList<Arbre>();
+		this.arbres.forEach((n) -> arbres_copie.add(n));
+		return arbres_copie;
+	}
+
+	public Arbre getArbre(int i) {
+		return this.arbres.get(i);
 	}
 
 	public TypeZone getTypeZone() {
@@ -114,6 +127,10 @@ public class Zone {
 
 	public int getNbMammifere() {
 		return this.mammiferes.size();
+	}
+	
+	public int getNbArbre() {
+		return this.arbres.size();
 	}
 
 	private void setEau(double eau) {
@@ -213,18 +230,31 @@ public class Zone {
 	}
 
 	public void addVegetal(Vegetal vegetal) {
-		this.vegeteaux.add(vegetal);
+		this.vegetaux.add(vegetal);
+		if (vegetal instanceof Arbre)
+			this.arbres.add((Arbre) vegetal);
 	}
 
 	public void removeVegetal(Vegetal vegetal) {
-		this.vegeteaux.remove(vegetal);
+		this.vegetaux.remove(vegetal);
 	}
 
 	public void removeVegetal(int i) throws RemoveEntityException {
-		if (i < 0 || i >= this.vegeteaux.size())
-			throw new RemoveEntityException("animaux size: " + this.vegeteaux.size() + "pos: " + i);
+		if (i < 0 || i >= this.vegetaux.size())
+			throw new RemoveEntityException("animaux size: " + this.vegetaux.size() + "pos: " + i);
 		else
-			this.vegeteaux.remove(i);
+			this.vegetaux.remove(i);
+	}
+	
+	public void removeArbre(Arbre arbre) {
+		this.arbres.remove(arbre);
+		this.vegetaux.remove((Vegetal) arbre);
+	}
+
+	public void removeArbre(int i) {
+		Arbre arbre = this.arbres.get(i);
+		this.arbres.remove(i);
+		this.vegetaux.remove(arbre);
 	}
 
 	// TODO modifier la methode verifier typezone pour utiliser la temperature
@@ -237,7 +267,7 @@ public class Zone {
 
 	@Override
 	public String toString() {
-		return "[e:" + eau + "," + " t:" + temperature + ",a:" + animaux.size() + ",v:" + vegeteaux.size() + ", n:"
+		return "[e:" + eau + "," + " t:" + temperature + ",a:" + animaux.size() + ",v:" + vegetaux.size() + ", n:"
 				+ typeZone.getNomTypeZone() + "]";
 	}
 }
