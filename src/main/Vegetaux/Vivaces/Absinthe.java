@@ -7,7 +7,7 @@ import main.TypeZones.Plaine;
 public class Absinthe extends Vivace {
 
 	public Absinthe(Zone zone_actuel) {
-		super(zone_actuel, 0.0098, 6, 40, 2, new Plaine());
+		super(zone_actuel, 0.0098, 6, 20, 2, new Plaine());
 	}
 
 	@Override

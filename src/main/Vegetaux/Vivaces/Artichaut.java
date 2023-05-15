@@ -7,7 +7,7 @@ import main.TypeZones.Plaine;
 public class Artichaut extends Vivace {
 
 	public Artichaut(Zone zone_actuel) {
-		super(zone_actuel, 0.009, 9, 30, 3, new Plaine());
+		super(zone_actuel, 0.009, 9, 25, 3, new Plaine());
 	}
 
 	@Override

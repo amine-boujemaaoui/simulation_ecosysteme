@@ -6,12 +6,13 @@ import main.Animaux.Animal;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.VolerException;
+import main.TypeZones.Desert;
 import main.TypeZones.Foret;
 
 public class Abeille extends Insecte implements Vole {
 
 	public Abeille(Zone zone_actuel) {
-		super(zone_actuel, 0.004, 3, 60, 1, new Foret());
+		super(zone_actuel, 0.004, 3, 50, 1, new Foret());
 	}
 
 	@Override
@@ -42,12 +43,22 @@ public class Abeille extends Insecte implements Vole {
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new VolerException("ERREUR: tentative de deplacement en dehors de la grille");
 		else
-			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
+				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 
 	@Override
 	public void manger() throws MangerException {
-		// TODO Auto-generated method stub
-		
+		Zone z = this.getZone_actuel();
+		if (z.getNbVivace() > 0) {
+			for (int i = 0; i < r.nextInt(2); i++) {
+				if (z.getNbVivace() == 0)
+					break;
+				else
+					z.removeVivace(r.nextInt(z.getNbVivace()));
+			}
+			this.setNbCyclesSansManger(0);
+		} else
+			this.augmenterNbCyclesSansManger();
 	}
 }

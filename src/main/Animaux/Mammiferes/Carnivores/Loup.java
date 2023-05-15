@@ -7,12 +7,13 @@ import main.Animaux.Insectes.Insecte;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
+import main.TypeZones.Desert;
 import main.TypeZones.Foret;
 
 public class Loup extends Carnivore implements Marche {
 
 	public Loup(Zone zone_actuel) {
-		super(zone_actuel, 0.3, 10, 20, 2, new Foret());
+		super(zone_actuel, 0.3, 12, 17, 2, new Foret());
 	}
 
 	@Override
@@ -62,7 +63,8 @@ public class Loup extends Carnivore implements Marche {
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new SeDeplacerException("ERREUR: tentative de deplacement en dehors de la grille");
 		else
-			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
+				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 	
 }

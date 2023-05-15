@@ -7,7 +7,7 @@ import main.TypeZones.Foret;
 public class Chene extends Arbre {
 
 	public Chene(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 23, 8, 7, new Foret());
+		super(zone_actuel, 0.002, 23, 10, 7, new Foret());
 	}
 
 	@Override

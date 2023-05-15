@@ -6,12 +6,13 @@ import main.Animaux.Animal;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
+import main.TypeZones.Desert;
 import main.TypeZones.Plaine;
 
 public class Vache extends Herbivore implements Marche {
 
 	public Vache(Zone zone_actuel) {
-		super(zone_actuel, 0.8, 17, 35, 5, new Plaine());
+		super(zone_actuel, 0.8, 17, 35, 3, new Plaine());
 	}
 
 	@Override
@@ -57,7 +58,8 @@ public class Vache extends Herbivore implements Marche {
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new SeDeplacerException("ERREUR: tentative de deplacement en dehors de la grille");
 		else
-			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
+				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 
 }
