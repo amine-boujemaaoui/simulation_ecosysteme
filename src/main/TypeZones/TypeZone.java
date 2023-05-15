@@ -15,13 +15,15 @@ public abstract class TypeZone {
 	private String nomTypeZone;
 	private final Color c;
 	private Image typeZoneIcon;
+	private final int nbVegetauxMin;
 
-	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, String nomTypeZone, Color c, String iconPath) {
+	public TypeZone(double eauMin, double eauMax, double temperatureMin, double temperatureMax, int nbVegetauxMin, String nomTypeZone, Color c, String iconPath) {
 		super();
 		this.eauMin = eauMin;
 		this.eauMax = eauMax;
 		this.temperatureMin = temperatureMin;
 		this.temperatureMax = temperatureMax;
+		this.nbVegetauxMin = nbVegetauxMin;
 		this.id_typeZone = TypeZone.last_id_typeZone;
 		TypeZone.last_id_typeZone++;
 		this.nomTypeZone = nomTypeZone;
@@ -66,5 +68,9 @@ public abstract class TypeZone {
 
 	public Image getTypeZoneIcon() {
 		return typeZoneIcon;
+	}
+
+	public int getNbVegetauxMin() {
+		return nbVegetauxMin;
 	}
 }

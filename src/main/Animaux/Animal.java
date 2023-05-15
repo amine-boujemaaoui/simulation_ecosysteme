@@ -7,6 +7,7 @@ import interfaces.ReproductionAnimal;
 import main.Zone;
 import main.Execeptions.BoirException;
 import main.Execeptions.ChangerEauException;
+import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
 import main.Execeptions.VolerException;
@@ -20,6 +21,7 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	private final int ageMax;
 	private int age;
 	private int nbCyclesSansEau;
+	private int nbCyclesSansManger;
 	private final int tauxDeReproduction;
 	private final int ageMinReproduction;
 	private TypeZone zoneFavorable;
@@ -33,6 +35,7 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 		this.ageMax = ageMax;
 		this.age = 0;
 		this.nbCyclesSansEau = 0;
+		this.nbCyclesSansManger = 0;
 		this.tauxDeReproduction = tauxDeReproduction;
 		this.ageMinReproduction = ageMinReproduction;
 		this.zoneFavorable = zoneFavorable;
@@ -46,6 +49,7 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 		} else
 			try {
 				this.zone_actuel.changerEau(-this.getEauRequise());
+				this.nbCyclesSansEau = 0;
 			} catch (ChangerEauException e) {
 				e.printStackTrace();
 			}
@@ -92,12 +96,14 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	}
 
 	public void augmenterNbCyclesSansEau() {
-		if (!((this.nbCyclesSansEau + 1) < 0))
-			this.nbCyclesSansEau += 1;
+		this.nbCyclesSansEau += 1;
 	}
 
 	public void reduireNbCyclesSansEau() {
-		this.nbCyclesSansEau -= 1;
+		if (this.nbCyclesSansEau - 1 < 0)
+			this.nbCyclesSansEau = 0;
+		else
+			this.nbCyclesSansEau -= 1;
 	}
 
 	public int getTauxDeReproduction() {
@@ -114,7 +120,21 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 
 	public void seDeplacer(int x, int y) throws SeDeplacerException, VolerException {
 	}
-	
+
 	public void seReproduire() throws ReproduireException {
+	}
+
+	public abstract void manger() throws MangerException;
+
+	public int getNbCyclesSansManger() {
+		return nbCyclesSansManger;
+	}
+
+	public void setNbCyclesSansManger(int nbCyclesSansManger) {
+		this.nbCyclesSansManger = nbCyclesSansManger;
+	}
+
+	public void augmenterNbCyclesSansManger() {
+		this.nbCyclesSansManger += 1;
 	}
 }

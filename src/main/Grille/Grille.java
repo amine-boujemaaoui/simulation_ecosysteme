@@ -1,14 +1,18 @@
 package main.Grille;
 
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import main.Ecosysteme;
 
@@ -20,34 +24,45 @@ public class Grille extends JPanel {
 	private int cycle;
 	private boolean contoure;
 	private JFrame window;
+	public Random r = new Random();
+	private Ecosysteme ecosysteme;
 
-	/**
-	 * Constructeur.
-	 * 
-	 * @param nbCasesL        La largeur (en nombre de cases) de la grille.
-	 * @param nbCasesH        La hauteur (en nombre de cases) de la grille.
-	 * @param nbPixelCoteCase Nb de Pixel d'une case de la grille
-	 **/
-	public Grille(int nbCasesL, int nbCasesH, int nbPixelCoteCase, boolean contoure) {
+	public Grille(int nbCasesL, int nbCasesH, int nbPixelCoteCase, boolean contoure, Ecosysteme ecosysteme) {
 		int i, j;
 		this.nbCasesL = nbCasesL;
 		this.nbCasesH = nbCasesH;
 		this.nbPixelCoteCase = nbPixelCoteCase;
 		this.cycle = 0;
+		this.ecosysteme = ecosysteme;
 		this.setContoure(false);
 
 		window = new JFrame();
-		window.setSize(nbCasesL * nbPixelCoteCase, nbCasesH * nbPixelCoteCase + nbPixelCoteCase);
+		window.setSize(nbCasesL * nbPixelCoteCase + 16, nbCasesH * nbPixelCoteCase + 119);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(this);
+		window.setTitle("Simulation ecosysteme");
+		window.setLocationRelativeTo(null);
+		// window.setResizable(false);
 		window.setVisible(true);
 		window.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				int keyCode = e.getKeyCode();
 				if (keyCode == KeyEvent.VK_SPACE)
 					Ecosysteme.simulate = !Ecosysteme.simulate;
-				if (keyCode == KeyEvent.VK_S)
+				if (keyCode == KeyEvent.VK_S) {
 					setContoure(!isContoure());
+					ecosysteme.redessine();
+				}
+				if (keyCode == KeyEvent.VK_ENTER)
+					ecosysteme.nextCycle();
+				if (keyCode == KeyEvent.VK_UP) {
+					ecosysteme.augmenterVistesseSimulation();
+					ecosysteme.redessine();
+				}
+				if (keyCode == KeyEvent.VK_DOWN) {
+					ecosysteme.diminuerVistesseSimulation();
+					ecosysteme.redessine();
+				}
 			}
 		});
 
@@ -69,8 +84,12 @@ public class Grille extends JPanel {
 		m[i][j].setIcon(icon);
 	}
 
-	public void addDisque(Image icon, int i, int j, int rayon, Color c) {
-		m[i][j].addDisque(rayon, c, icon);
+	public void addDisqueAnimaux(Image icon, int i, int j, int rayon, Color c) {
+		m[i][j].addDisqueAnimaux(rayon, c, icon);
+	}
+
+	public void addDisqueVegetaux(Image icon, int i, int j, int rayon, Color c) {
+		m[i][j].addDisqueVegetaux(rayon, c, icon);
 	}
 
 	public void resetlDisques(int i, int j) {
@@ -80,60 +99,78 @@ public class Grille extends JPanel {
 	public void setCycle(int cycle) {
 		this.cycle = cycle;
 	}
-	
+
 	public JFrame getWindow() {
 		return window;
 	}
 
 	@Override
-	// Fonction d'affichage de la grille appelée par repaint
 	protected void paintComponent(Graphics g) {
-		// Colorie les cases de casesAColorier
 		super.paintComponent(g);
 		int i, j;
-		g.setFont(new Font("Sans-serif", Font.BOLD, 20));
-		g.drawString("Cycle: " + cycle, 20, 25);
-		g.drawString("Grille (Appuyer sur S): " + contoure, 700, 25);
-		String etat = "";
-		if (Ecosysteme.simulate)
-			etat += "▶ en cours";
-		else
-			etat += "⏸ en pause";
-		g.drawString("Etat (Appuyer sur espace): " + etat, 200, 25);
+
+		g.setColor(new Color(137, 165, 255));
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 2));
+		String etat = (Ecosysteme.simulate) ? "⏸" : "▶";
+		g.drawString(etat, 25, 47);
+
+		g.setColor(new Color(255, 124, 124));
+		g.fillRect(80, 0, 220, 80);
+		g.setColor(Color.BLACK);
+		g.drawString("Cycle: " + cycle, 115, 49);
+
+		g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 5));
+		g.drawString("Cycle suivant (Appuyer sur Entrer)", 320, 20);
+		String sGrille = (contoure) ? "Masquer" : "Afficher";
+		g.drawString("Grille (Appuyer sur S): " + sGrille, 320, 40);
+		g.drawString("Vitesse (Appuyer sur ↑ ↓): " + ecosysteme.getVitesseSimulation(), 320, 60);
+
 		for (i = 0; i < nbCasesL; i++)
 			for (j = 0; j < nbCasesH; j++) {
 				int cellX = (i * nbPixelCoteCase);
-				int cellY = nbPixelCoteCase / 2 + (j * nbPixelCoteCase);
-				// g.setColor(m[i][j].getCouleur());
-				// g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
-
-				g.drawImage(m[i][j].getIcon(), cellX, cellY, null);
-
-				// Place des disques
-				int x = 15;
-				for (Disque d : m[i][j].lDisques) {
-					// g.setColor(d.getCouleur());
-					// g.fillOval(cellX + 5, cellY + 5 + x, d.getRayon(), d.getRayon());
-					// ICONE CENTRE g.drawImage(d.getIcon(), cellX
-					// +nbPixelCoteCase/2-d.getRayon()/2, cellY +nbPixelCoteCase/2-d.getRayon()/2,
-					// d.getRayon(), d.getRayon(), null);
+				int cellY = 80 + (j * nbPixelCoteCase);
+				g.drawImage(m[i][j].getIcon(), cellX, cellY, nbPixelCoteCase, nbPixelCoteCase, null);
+				for (Disque d : m[i][j].lAnimaux) {
 					int rayon = d.getRayon();
-					if (rayon > nbPixelCoteCase)
-						rayon = nbPixelCoteCase;
-					g.drawImage(d.getIcon(), cellX + x - rayon / 2, cellY + x - rayon / 2, rayon, rayon, null);
-					x += 15;
+					g.drawImage(d.getIcon(),
+							cellX + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							cellY + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							rayon, rayon, null);
+				}
+				for (Disque d : m[i][j].lVegetaux) {
+					int rayon = d.getRayon();
+					g.drawImage(d.getIcon(),
+							cellX + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							cellY + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							rayon, rayon, null);
+					;
 				}
 			}
-
-		// Redessine la grille
+		g.setColor(Color.BLACK);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(3));
+		g.drawLine(0, 80, nbCasesH * nbPixelCoteCase, 80);
+		g2.setStroke(new BasicStroke(1));
 		if (contoure) {
 			for (i = 0; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
-				g.drawLine(i, nbPixelCoteCase / 2, i, nbCasesH * nbPixelCoteCase + nbPixelCoteCase / 2);
+				g.drawLine(i, 80, i, nbCasesH * nbPixelCoteCase + 80);
 			}
 			for (j = 0; j <= nbCasesH * nbPixelCoteCase; j += nbPixelCoteCase) {
-				g.drawLine(0, j + nbPixelCoteCase / 2, nbCasesL * nbPixelCoteCase, j + nbPixelCoteCase / 2);
+				g.drawLine(0, j + 80, nbCasesL * nbPixelCoteCase, j + 80);
 			}
 		}
+		
+		if(!Ecosysteme.simulate) {
+			g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase));
+			g.drawString("EN PAUSE", nbCasesL/2 * nbPixelCoteCase- 160, nbCasesH/2 * nbPixelCoteCase +100);
+		}
+	 
 	}
 
 	public boolean isContoure() {

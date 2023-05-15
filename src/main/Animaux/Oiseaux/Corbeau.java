@@ -5,12 +5,13 @@ import main.Zone;
 import main.Animaux.Animal;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.VolerException;
-import main.TypeZones.Plaine;
+import main.TypeZones.Desert;
+import main.TypeZones.Foret;
 
 public class Corbeau extends Oiseau implements Vole {
 
 	public Corbeau(Zone zone_actuel) {
-		super(zone_actuel, 0.09, 8, 20, 2, new Plaine());
+		super(zone_actuel, 0.09, 8, 32, 1, new Foret());
 	}
 
 	@Override
@@ -41,7 +42,8 @@ public class Corbeau extends Oiseau implements Vole {
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new VolerException("ERREUR: tentative de deplacement en dehors de la grille");
 		else
-			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
+				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 }
 
