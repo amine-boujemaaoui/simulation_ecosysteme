@@ -11,7 +11,7 @@ import main.TypeZones.Foret;
 public class Abeille extends Insecte implements Vole {
 
 	public Abeille(Zone zone_actuel) {
-		super(zone_actuel, 0.04, 4, 40, 1, new Foret());
+		super(zone_actuel, 0.004, 3, 60, 1, new Foret());
 	}
 
 	@Override

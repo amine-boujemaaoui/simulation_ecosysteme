@@ -3,6 +3,7 @@ package main.Animaux.Mammiferes.Carnivores;
 import interfaces.Marche;
 import main.Zone;
 import main.Animaux.Animal;
+import main.Animaux.Insectes.Insecte;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
@@ -11,7 +12,7 @@ import main.TypeZones.Foret;
 public class Loup extends Carnivore implements Marche {
 
 	public Loup(Zone zone_actuel) {
-		super(zone_actuel, 0.3, 10, 15, 2, new Foret());
+		super(zone_actuel, 0.3, 10, 20, 2, new Foret());
 	}
 
 	@Override
@@ -38,7 +39,21 @@ public class Loup extends Carnivore implements Marche {
 	
 	@Override
 	public void manger() throws MangerException {
-		// TODO Auto-generated method stub
+		Zone z = this.getZone_actuel();
+		if (z.getNbAnimaux() > 0) {
+			for (int i = 0; i < r.nextInt(4); i++) {
+				if (z.getNbAnimaux() == 0)
+					break;
+				else { 
+					Animal animal = z.getAnimal(r.nextInt(z.getNbAnimaux()));
+					if (r.nextInt(100) < 30)
+					if (!(animal instanceof Loup) && !(animal instanceof Insecte))
+						z.removeAnimal(animal);
+				}
+			}
+			this.setNbCyclesSansManger(0);
+		} else
+			this.augmenterNbCyclesSansManger();
 	}
 	
 	@Override

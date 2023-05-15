@@ -3,5 +3,5 @@ package interfaces;
 import main.Execeptions.PropagerException;
 
 public interface ReproductionVegetal {
-	void sePropager() throws PropagerException;
+	void sePropager(int x, int y) throws PropagerException;
 }

@@ -11,7 +11,7 @@ import main.TypeZones.Plaine;
 public class Vache extends Herbivore implements Marche {
 
 	public Vache(Zone zone_actuel) {
-		super(zone_actuel, 0.8, 15, 20, 5, new Plaine());
+		super(zone_actuel, 0.8, 17, 35, 5, new Plaine());
 	}
 
 	@Override
@@ -35,12 +35,22 @@ public class Vache extends Herbivore implements Marche {
 			}
 		}
 	}
-	
+
 	@Override
 	public void manger() throws MangerException {
-		// TODO Auto-generated method stub
+		Zone z = this.getZone_actuel();
+		if (z.getNbVivace() > 0) {
+			for (int i = 0; i < r.nextInt(6); i++) {
+				if (z.getNbVivace() == 0)
+					break;
+				else
+					z.removeVivace(r.nextInt(z.getNbVivace()));
+			}
+			this.setNbCyclesSansManger(0);
+		} else
+			this.augmenterNbCyclesSansManger();
 	}
-	
+
 	@Override
 	public void seDeplacer(int x, int y) throws SeDeplacerException {
 		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
@@ -49,5 +59,5 @@ public class Vache extends Herbivore implements Marche {
 		else
 			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
-	
+
 }

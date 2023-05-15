@@ -5,12 +5,12 @@ import main.Zone;
 import main.Animaux.Animal;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.VolerException;
-import main.TypeZones.Plaine;
+import main.TypeZones.Foret;
 
 public class Corbeau extends Oiseau implements Vole {
 
 	public Corbeau(Zone zone_actuel) {
-		super(zone_actuel, 0.09, 8, 25, 2, new Plaine());
+		super(zone_actuel, 0.09, 8, 48, 2, new Foret());
 	}
 
 	@Override

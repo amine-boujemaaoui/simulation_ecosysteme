@@ -6,10 +6,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import main.Ecosysteme;
 
 public class Grille extends JPanel {
@@ -20,14 +19,8 @@ public class Grille extends JPanel {
 	private int cycle;
 	private boolean contoure;
 	private JFrame window;
+	public Random r = new Random();
 
-	/**
-	 * Constructeur.
-	 * 
-	 * @param nbCasesL        La largeur (en nombre de cases) de la grille.
-	 * @param nbCasesH        La hauteur (en nombre de cases) de la grille.
-	 * @param nbPixelCoteCase Nb de Pixel d'une case de la grille
-	 **/
 	public Grille(int nbCasesL, int nbCasesH, int nbPixelCoteCase, boolean contoure) {
 		int i, j;
 		this.nbCasesL = nbCasesL;
@@ -37,7 +30,7 @@ public class Grille extends JPanel {
 		this.setContoure(false);
 
 		window = new JFrame();
-		window.setSize(nbCasesL * nbPixelCoteCase, nbCasesH * nbPixelCoteCase + nbPixelCoteCase);
+		window.setSize(nbCasesL * nbPixelCoteCase + 8, nbCasesH * nbPixelCoteCase + 25 + 35);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(this);
 		window.setVisible(true);
@@ -90,55 +83,43 @@ public class Grille extends JPanel {
 	}
 
 	@Override
-	// Fonction d'affichage de la grille appelée par repaint
 	protected void paintComponent(Graphics g) {
-		// Colorie les cases de casesAColorier
 		super.paintComponent(g);
 		int i, j;
 		g.setFont(new Font("Sans-serif", Font.BOLD, 20));
 		g.drawString("Cycle: " + cycle, 20, 25);
-		g.drawString("Grille (Appuyer sur S): " + contoure, 700, 25);
+		g.drawString("Grille (Appuyer sur S): " + contoure, 600, 25);
 		String etat = "";
 		if (Ecosysteme.simulate)
 			etat += "▶ en cours";
 		else
 			etat += "⏸ en pause";
-		g.drawString("Etat (Appuyer sur espace): " + etat, 200, 25);
+		g.drawString("Etat (Appuyer sur espace): " + etat, 150, 25);
 		for (i = 0; i < nbCasesL; i++)
 			for (j = 0; j < nbCasesH; j++) {
 				int cellX = (i * nbPixelCoteCase);
 				int cellY = nbPixelCoteCase / 2 + (j * nbPixelCoteCase);
-				// g.setColor(m[i][j].getCouleur());
-				// g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
-
-				g.drawImage(m[i][j].getIcon(), cellX, cellY, null);
-
-				// Place des disques
-				int x = 0;
+				g.drawImage(m[i][j].getIcon(), cellX, cellY, nbPixelCoteCase, nbPixelCoteCase, null);
 				for (Disque d : m[i][j].lAnimaux) {
-					// g.setColor(d.getCouleur());
-					// g.fillOval(cellX + 5, cellY + 5 + x, d.getRayon(), d.getRayon());
-					// ICONE CENTRE g.drawImage(d.getIcon(), cellX
-					// +nbPixelCoteCase/2-d.getRayon()/2, cellY +nbPixelCoteCase/2-d.getRayon()/2,
-					// d.getRayon(), d.getRayon(), null);
-
 					int rayon = d.getRayon();
-					/*
-					 * if (rayon > nbPixelCoteCase) rayon = nbPixelCoteCase;
-					 */
-					g.drawImage(d.getIcon(), cellX + nbPixelCoteCase / 2 - rayon / 2 - 16,
-							cellY + x + nbPixelCoteCase / 2 - rayon / 2 - 16, rayon, rayon, null);
-					x += nbPixelCoteCase / (m[i][j].lAnimaux.size() + 1);
+					g.drawImage(d.getIcon(),
+							cellX + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							cellY + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							rayon, rayon, null);
 				}
-				x = 0;
 				for (Disque d : m[i][j].lVegetaux) {
 					int rayon = d.getRayon();
-					g.drawImage(d.getIcon(), cellX, cellY, rayon, rayon, null);
-					x += nbPixelCoteCase / (m[i][j].lAnimaux.size() + 1);
+					g.drawImage(d.getIcon(),
+							cellX + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							cellY + nbPixelCoteCase / 2 - rayon / 2
+									+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+							rayon, rayon, null);
+					;
 				}
 			}
-
-		// Redessine la grille
 		if (contoure) {
 			for (i = 0; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
 				g.drawLine(i, nbPixelCoteCase / 2, i, nbCasesH * nbPixelCoteCase + nbPixelCoteCase / 2);

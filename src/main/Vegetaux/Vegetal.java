@@ -13,12 +13,12 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	public Random r = new Random();
 	private Zone zone_actuel;
 	private double eauRequise;
-	private boolean dejaReproduiCeCycle;
+	private boolean dejaPropagerCeCycle;
 	private final int ageMax;
 	private int age;
-	private int nbCyclesSansEau;
-	private final int tauxDeReproduction;
-	private final int ageMinReproduction;
+	private int nbCycleTypeZoneNonFavorable;
+	private final int tauxDePropagation;
+	private final int ageMinPropagation;
 	private TypeZone zoneFavorable;
 	/*
 	private double minEauRequise;
@@ -27,17 +27,17 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	private double maxTemperatureRequise;
 	*/
 
-	public Vegetal(Zone zone_actuel, double eauRequise, /*double minEauRequise, double maxEauRequise, double minTemperatureRequise, double maxTemperatureRequise,*/ int ageMax, int tauxDeReproduction, int ageMinReproduction,
+	public Vegetal(Zone zone_actuel, double eauRequise, /*double minEauRequise, double maxEauRequise, double minTemperatureRequise, double maxTemperatureRequise,*/ int ageMax, int tauxDePropagation, int ageMinPropagation,
 			TypeZone zoneFavorable) {
 		super();
 		this.zone_actuel = zone_actuel;
 		this.eauRequise = eauRequise;
-		this.dejaReproduiCeCycle = false;
+		this.dejaPropagerCeCycle = false;
 		this.ageMax = ageMax;
 		this.age = 0;
-		this.nbCyclesSansEau = 0;
-		this.tauxDeReproduction = tauxDeReproduction;
-		this.ageMinReproduction = ageMinReproduction;
+		this.nbCycleTypeZoneNonFavorable = 0;
+		this.tauxDePropagation = tauxDePropagation;
+		this.ageMinPropagation = ageMinPropagation;
 		this.zoneFavorable = zoneFavorable;
 		/*
 		this.setMinEauRequise(minEauRequise);
@@ -50,7 +50,7 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	@Override
 	public void boir() throws BoirException {
 		if (this.getEauRequise() > this.zone_actuel.getEau()) {
-			this.augmenterNbCyclesSansEau();
+			this.augmenterNbCycleTypeZoneNonFavorable();
 			throw new BoirException("ERREUR: pas assez d'eau");
 		} else
 			try {
@@ -76,12 +76,12 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 		this.eauRequise = eauRequise;
 	}
 
-	public boolean isDejaReproduiCecycle() {
-		return dejaReproduiCeCycle;
+	public boolean isDejaPropagerCecycle() {
+		return dejaPropagerCeCycle;
 	}
 
-	public void setDejaReproduiCecycle(boolean dejaReproduiCeCycle) {
-		this.dejaReproduiCeCycle = dejaReproduiCeCycle;
+	public void setDejaPropagerCecycle(boolean dejaPropagerCeCycle) {
+		this.dejaPropagerCeCycle = dejaPropagerCeCycle;
 	}
 
 	public int getAgeMax() {
@@ -96,25 +96,29 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 		this.age++;
 	}
 
-	public int getNbCyclesSansEau() {
-		return nbCyclesSansEau;
+	public int getNbCycleTypeZoneNonFavorable() {
+		return nbCycleTypeZoneNonFavorable;
+	}
+	
+	public void setNbCycleTypeZoneNonFavorable(int nbCycleTypeZoneNonFavorable) {
+		this.nbCycleTypeZoneNonFavorable = nbCycleTypeZoneNonFavorable;
 	}
 
-	public void augmenterNbCyclesSansEau() {
-		if (!((this.nbCyclesSansEau + 1) < 0))
-			this.nbCyclesSansEau += 1;
+	public void augmenterNbCycleTypeZoneNonFavorable() {
+		if (!((this.nbCycleTypeZoneNonFavorable + 1) < 0))
+			this.nbCycleTypeZoneNonFavorable += 1;
 	}
 
-	public void reduireNbCyclesSansEau() {
-		this.nbCyclesSansEau -= 1;
+	public void reduireNbCycleTypeZoneNonFavorable() {
+		this.nbCycleTypeZoneNonFavorable -= 1;
 	}
 
-	public int getTauxDeReproduction() {
-		return tauxDeReproduction;
+	public int getTauxDePropagation() {
+		return tauxDePropagation;
 	}
 
-	public int getAgeMinReproduction() {
-		return ageMinReproduction;
+	public int getAgeMinPropagation() {
+		return ageMinPropagation;
 	}
 
 	public TypeZone getZoneFavorable() {

@@ -10,7 +10,7 @@ import main.TypeZones.Plaine;
 public class Pigeon extends Oiseau implements Vole {
 
 	public Pigeon(Zone zone_actuel) {
-		super(zone_actuel, 0.06, 5, 30, 2, new Plaine());
+		super(zone_actuel, 0.06, 6, 26, 1, new Plaine());
 	}
 
 	@Override

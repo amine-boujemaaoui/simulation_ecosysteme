@@ -11,7 +11,7 @@ import main.TypeZones.Plaine;
 public class Fourmi extends Insecte implements Marche {
 
 	public Fourmi(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 2, 70, 0, new Plaine());
+		super(zone_actuel, 0.002, 2, 65, 1, new Plaine());
 	}
 
 	@Override

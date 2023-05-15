@@ -4,6 +4,7 @@ import main.Execeptions.*;
 import java.util.ArrayList;
 import main.Vegetaux.Vegetal;
 import main.Vegetaux.Arbres.*;
+import main.Vegetaux.Vivaces.*;
 import main.Animaux.Animal;
 import main.Animaux.Oiseaux.*;
 import main.Animaux.Insectes.*;
@@ -19,6 +20,7 @@ public class Zone {
 	private ArrayList<Insecte> insectes = new ArrayList<Insecte>();
 	private ArrayList<Mammifere> mammiferes = new ArrayList<Mammifere>();
 	private ArrayList<Arbre> arbres = new ArrayList<Arbre>();
+	private ArrayList<Vivace> vivaces = new ArrayList<Vivace>();
 	private TypeZone typeZone;
 	private Ecosysteme ecosysteme;
 	private final int x, y;
@@ -81,10 +83,10 @@ public class Zone {
 		return this.mammiferes.get(i);
 	}
 
-	public ArrayList<Vegetal> getVegeteaux() {
-		ArrayList<Vegetal> vegeteaux_copie = new ArrayList<Vegetal>();
-		this.vegetaux.forEach((n) -> vegeteaux_copie.add(n));
-		return vegeteaux_copie;
+	public ArrayList<Vegetal> getVegetaux() {
+		ArrayList<Vegetal> vegetaux_copie = new ArrayList<Vegetal>();
+		vegetaux_copie.addAll(this.vegetaux);
+		return vegetaux_copie;
 	}
 
 	public Vegetal getVegetal(int i) {
@@ -93,12 +95,22 @@ public class Zone {
 	
 	public ArrayList<Arbre> getArbres() {
 		ArrayList<Arbre> arbres_copie = new ArrayList<Arbre>();
-		this.arbres.forEach((n) -> arbres_copie.add(n));
+		arbres_copie.addAll(this.arbres);
 		return arbres_copie;
 	}
 
 	public Arbre getArbre(int i) {
 		return this.arbres.get(i);
+	}
+	
+	public ArrayList<Vivace> getVivaces() {
+		ArrayList<Vivace> vivaces_copie = new ArrayList<Vivace>();
+		vivaces_copie.addAll(this.vivaces);
+		return vivaces_copie;
+	}
+
+	public Vivace getVivaces(int i) {
+		return this.vivaces.get(i);
 	}
 
 	public TypeZone getTypeZone() {
@@ -116,6 +128,14 @@ public class Zone {
 	public int getY() {
 		return y;
 	}
+	
+	public int getNbAnimaux() {
+		return this.animaux.size();
+	}
+	
+	public int getNbVegetaux() {
+		return this.vegetaux.size();
+	}
 
 	public int getNbOiseau() {
 		return this.oiseaux.size();
@@ -131,6 +151,10 @@ public class Zone {
 	
 	public int getNbArbre() {
 		return this.arbres.size();
+	}
+	
+	public int getNbVivace() {
+		return this.vivaces.size();
 	}
 
 	private void setEau(double eau) {
@@ -233,22 +257,35 @@ public class Zone {
 		this.vegetaux.add(vegetal);
 		if (vegetal instanceof Arbre)
 			this.arbres.add((Arbre) vegetal);
+		else
+			this.vivaces.add((Vivace) vegetal);
 	}
 
 	public void removeVegetal(Vegetal vegetal) {
 		this.vegetaux.remove(vegetal);
+		if (vegetal instanceof Arbre)
+			this.arbres.remove((Arbre) vegetal);
+		else
+			this.vivaces.remove((Vivace) vegetal);
+		
 	}
 
 	public void removeVegetal(int i) throws RemoveEntityException {
 		if (i < 0 || i >= this.vegetaux.size())
 			throw new RemoveEntityException("animaux size: " + this.vegetaux.size() + "pos: " + i);
-		else
+		else {
+			Vegetal vegetal = this.vegetaux.get(i);
+			if (vegetal instanceof Arbre)
+				this.arbres.remove((Arbre) vegetal);
+			else
+				this.vivaces.remove((Vivace) vegetal);
 			this.vegetaux.remove(i);
+		}
 	}
 	
 	public void removeArbre(Arbre arbre) {
 		this.arbres.remove(arbre);
-		this.vegetaux.remove((Vegetal) arbre);
+		this.vegetaux.remove(arbre);
 	}
 
 	public void removeArbre(int i) {
@@ -256,12 +293,26 @@ public class Zone {
 		this.arbres.remove(i);
 		this.vegetaux.remove(arbre);
 	}
+	
+	public void removeVivace(Vivace vivace) {
+		this.vivaces.remove(vivace);
+		this.vegetaux.remove(vivace);
+	}
+
+	public void removeVivace(int i) {
+		Vivace vivace = this.vivaces.get(i);
+		this.vivaces.remove(i);
+		this.vegetaux.remove(vivace);
+	}
 
 	// TODO modifier la methode verifier typezone pour utiliser la temperature
 	public void verifierTypeZone() {
 		this.ecosysteme.getTypeZones().forEach((typeZone) -> {
-			if (this.eau > typeZone.getEauMin() && this.eau < typeZone.getEauMax())
+			if (this.eau >= typeZone.getEauMin() && this.eau <= typeZone.getEauMax()/* && this.getNbVegetaux() >= typeZone.getNbVegetauxMin()*/) {
 				this.setTypeZone(typeZone);
+				this.setTemperature(this.eau/10*0.4);
+			}
+			
 		});
 	}
 
@@ -270,4 +321,6 @@ public class Zone {
 		return "[e:" + eau + "," + " t:" + temperature + ",a:" + animaux.size() + ",v:" + vegetaux.size() + ", n:"
 				+ typeZone.getNomTypeZone() + "]";
 	}
+
+
 }

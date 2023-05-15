@@ -4,10 +4,10 @@ import main.Zone;
 import main.Execeptions.PropagerException;
 import main.TypeZones.Foret;
 
-public class Sapin extends Arbre {
+public class Chene extends Arbre {
 
-	public Sapin(Zone zone_actuel) {
-		super(zone_actuel, 0.004, 28, 5, 9, new Foret());
+	public Chene(Zone zone_actuel) {
+		super(zone_actuel, 0.002, 23, 8, 7, new Foret());
 	}
 
 	@Override
@@ -15,7 +15,8 @@ public class Sapin extends Arbre {
 		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new PropagerException("ERREUR: tentative de propagation en dehors de la grille");
-		else
-			this.getZone_actuel().getEcosysteme().propagerVegetal(new Sapin(this.getZone_actuel()), x, y);
+		else {
+			this.getZone_actuel().getEcosysteme().propagerVegetal(new Chene(this.getZone_actuel()), x, y);
+		}
 	}
 }
