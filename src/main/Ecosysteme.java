@@ -38,12 +38,20 @@ public class Ecosysteme {
 	public static boolean simulate = false;
 	private int vitesseSimulation;
 
-	private int[][] defaultZones = { { 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 }, { 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
-			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2 }, { 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 1 },
-			{ 2, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 2 }, { 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 2, 2 },
-			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2 }, { 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2 },
-			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 } };
+	private int[][] defaultZones = { 
+			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
+			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
+			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1 },
+			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1 },
+			{ 2, 2, 0, 0, 2, 2, 2, 1, 1, 1, 1, 2 }, 
+			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 2, 2 },
+			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2 },
+			{ 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2 },
+			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2 }, 
+			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 }
+			};
 
 	/*
 	 * private int[][] defaultZones = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 2,
@@ -64,27 +72,19 @@ public class Ecosysteme {
 		this.cycle = 0;
 		this.vitesseSimulation = 100;
 
-		this.typeZones.add(new Riviere());
-		this.typeZones.add(new Foret());
-		this.typeZones.add(new Plaine());
-		this.typeZones.add(new Desert());
+		if (typeZones.size() > 0) {
+			this.typeZones.addAll(typeZones);
+		}
 
+	}
+
+	public void initSimulation() {
+		Ecosysteme.simulate = false;
+		this.zones = new Zone[nbZonesL][nbZonesH];
+		this.cycle = 0;
 		initdefaultZones();
 		initRandomNbAnimaux();
 		initRandomNbVegetaux();
-
-		/*
-		 * for (int i = 0; i < 10; i++) zones[9][2].addAnimal(new Corbeau(zones[9][2]));
-		 * for (int i = 0; i < 10; i++) zones[5][1].addAnimal(new Vache(zones[9][2]));
-		 * for (int i = 0; i < 300; i++) zones[9][2].addAnimal(new
-		 * Abeille(zones[9][2]));
-		 * 
-		 * for (int i = 0; i < 30; i++) { zones[9][2].addVegetal(new
-		 * Sapin(zones[9][2])); zones[9][2].addVegetal(new Chene(zones[9][2]));
-		 * zones[5][1].addVegetal(new Artichaut(zones[5][1]));
-		 * zones[5][1].addVegetal(new Absinthe(zones[5][1])); }
-		 */
-
 	}
 
 	public ArrayList<TypeZone> getTypeZones() {
@@ -325,14 +325,18 @@ public class Ecosysteme {
 				}
 				try {
 					if (END)
-						if (!(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
-								&& zones[x][y].getTypeZone() instanceof Desert))
+						if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
+								&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
+										&& zones[x][y].getTypeZone() instanceof Desert)
+								&& !(zones[x][y].getTypeZone() instanceof Riviere))
 							animal.seDeplacer(x, y);
 						else {
 							x = ax + r.nextInt(-1, 2);
 							y = ay + r.nextInt(-1, 2);
-							if (!(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
-									&& zones[x][y].getTypeZone() instanceof Desert))
+							if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
+									&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
+											&& zones[x][y].getTypeZone() instanceof Desert)
+									&& !(zones[x][y].getTypeZone() instanceof Riviere))
 								animal.seDeplacer(x, y);
 						}
 				} catch (VolerException | SeDeplacerException e) {
@@ -342,7 +346,7 @@ public class Ecosysteme {
 				int y = z.getY() + r.nextInt(-1, 2);
 				if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
 						&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
-						&& zones[x][y].getTypeZone() instanceof Desert))
+								&& zones[x][y].getTypeZone() instanceof Desert))
 					try {
 						animal.seDeplacer(x, y);
 					} catch (SeDeplacerException | VolerException e) {
@@ -561,6 +565,7 @@ public class Ecosysteme {
 	}
 
 	public void simulation() {
+		initSimulation();
 		this.redessine();
 		boolean b = true;
 		while (true) {

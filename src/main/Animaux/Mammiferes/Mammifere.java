@@ -10,7 +10,7 @@ import main.Execeptions.ReproduireException;
 import main.TypeZones.TypeZone;
 
 public abstract class Mammifere extends Animal {
-	public static final Image  icon = new ImageIcon("src/assets/animals/mammifere.png").getImage();
+	public static final Image  icon = new ImageIcon(System.getProperty("user.dir")+"/src/assets/animals/mammifere.png").getImage();
 
 	public Mammifere(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction,
 			TypeZone zoneFavorable) {
