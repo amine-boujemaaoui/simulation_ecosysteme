@@ -499,7 +499,7 @@ public class Ecosysteme {
 	public void vieillissement(Zone z) {
 		z.getAnimaux().forEach((animal) -> {
 			if (animal.getAge() == animal.getAgeMax() || animal.getNbCyclesSansEau() >= 4
-					|| animal.getNbCyclesSansManger() >= 7) {
+					|| animal.getNbCyclesSansManger() >= 20) {
 				z.removeAnimal(animal);
 			} else {
 				animal.setDejaReproduiCecycle(false);

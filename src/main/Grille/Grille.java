@@ -81,7 +81,6 @@ public class Grille extends JPanel {
 				if (mouseCode == MouseEvent.BUTTON1) {
 					caseX = e.getX() / nbPixelCoteCase;
 					caseY = e.getY() / nbPixelCoteCase - 128 / nbPixelCoteCase;
-					System.out.println(caseX + " " + caseY);
 					showCase = !showCase;
 					ecosysteme.redessine();
 				}
@@ -207,6 +206,11 @@ public class Grille extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(3));
 		g.drawLine(0, decalageAffichage, nbCasesH * nbPixelCoteCase, decalageAffichage);
+		g.drawLine( nbCasesH * nbPixelCoteCase + decalageAffichage, 0, nbCasesH * nbPixelCoteCase, 0);
+		
+		
+		
+		
 		g2.setStroke(new BasicStroke(1));
 		if (contoure) {
 			for (i = 0; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {

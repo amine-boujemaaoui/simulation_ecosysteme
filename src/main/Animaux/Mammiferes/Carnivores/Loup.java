@@ -1,4 +1,4 @@
-package main.Animaux.Mammiferes.Carnivores;
+ package main.Animaux.Mammiferes.Carnivores;
 
 import interfaces.Marche;
 import main.Zone;
