@@ -44,6 +44,7 @@ public class Main {
 		ArrayList<Event> events = new ArrayList<Event>();
 		events.add(new Event(null, 40, 8, 9, new Abeille(null), 400, new Absinthe(null), 400, 100, 30));
 		events.add(new Event(null, 42, 2, 11, new Guepard(null), 200, null, 0, 100, 30));
+		events.add(new Event(null, 400, 5, 1, null, 0, new Chene(null), 200, 100, 30));
 
 		Ecosysteme e = new Ecosysteme(typeZones, typeAnimaux, typeVegetaux, events);
 		e.simulation();

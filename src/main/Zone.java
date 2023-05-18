@@ -10,6 +10,7 @@ import main.Animaux.Oiseaux.*;
 import main.Animaux.Insectes.*;
 import main.Animaux.Mammiferes.*;
 import main.TypeZones.TypeZone;
+import main.TypeZones.Riviere;
 
 public class Zone {
 	private double eau;
@@ -307,10 +308,15 @@ public class Zone {
 
 	// TODO modifier la methode verifier typezone pour utiliser la temperature
 	public void verifierTypeZone() {
+		TypeZone riviere = new Riviere();
 		this.ecosysteme.getTypeZones().forEach((typeZone) -> {
 			if (this.eau >= typeZone.getEauMin() && this.eau <= typeZone.getEauMax()/* && this.getNbVegetaux() >= typeZone.getNbVegetauxMin()*/) {
 				this.setTypeZone(typeZone);
 				this.setTemperature(this.eau/10*0.4);
+			}
+			
+			if(this.getNbArbre()> 70 && this.eau + 1 < riviere.getEauMin()) {
+				this.eau += 1;
 			}
 			
 		});
