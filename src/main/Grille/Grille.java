@@ -104,6 +104,10 @@ public class Grille extends JPanel {
 			for (j = 0; j < nbCasesH; j++)
 				m[i][j] = new CaseGrille();
 	}
+	
+	public int nextIntBounds(int min, int max) {
+		return r.nextInt(max - min) + min;
+	}
 
 	public void redessine() {
 		repaint();
@@ -179,18 +183,18 @@ public class Grille extends JPanel {
 						int rayon = d.getRayon();
 						g.drawImage(d.getIcon().getImage(),
 								cellX + nbPixelCoteCase / 2 - rayon / 2
-										+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+										+nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
 								cellY + nbPixelCoteCase / 2 - rayon / 2
-										+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
 								rayon, rayon, null);
 					}
 					for (Disque d : m[i][j].lVegetaux) {
 						int rayon = d.getRayon();
 						g.drawImage(d.getIcon().getImage(),
 								cellX + nbPixelCoteCase / 2 - rayon / 2
-										+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
 								cellY + nbPixelCoteCase / 2 - rayon / 2
-										+ r.nextInt(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
 								rayon, rayon, null);
 						;
 					}
@@ -206,18 +210,18 @@ public class Grille extends JPanel {
 				int rayon = d.getRayon() * nbCasesL;
 				g.drawImage(d.getIcon().getImage(),
 						cellX + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ r.nextInt(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
+								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
 						cellY + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ r.nextInt(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
+								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
 						rayon, rayon, null);
 			}
 			for (Disque d : m[caseX][caseY].lVegetaux) {
 				int rayon = d.getRayon() * nbCasesL;
 				g.drawImage(d.getIcon().getImage(),
 						cellX + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ r.nextInt(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
+								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
 						cellY + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ r.nextInt(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
+								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
 						rayon, rayon, null);
 				;
 			}
