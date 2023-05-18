@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import javax.swing.ImageIcon;
 
 public class Ecosysteme {
 	private int nbZonesH;
@@ -42,7 +43,8 @@ public class Ecosysteme {
 			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2 }, { 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2 },
 			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2 },
 			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 } };
-
+	
+	// Zones par defaut du sujet
 	/*
 	 * private int[][] defaultZones = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 2,
 	 * 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, {
@@ -154,44 +156,33 @@ public class Ecosysteme {
 		int taillePaquets = 32, tailleRestant = 0;
 		for (int i = 0; i < nbZonesL; i++) {
 			for (int j = 0; j < nbZonesH; j++) {
+				Zone z = zones[i][j];
 				grille.setCycle(cycle);
 				grille.resetlDisques(i, j);
-				grille.colorieFond(i, j, zones[i][j].getTypeZone().getC());
-				grille.iconFond(i, j, zones[i][j].getTypeZone().getTypeZoneIcon());
-				for (int k = 0; k < zones[i][j].getNbInsecte() / taillePaquets; k++) {
-					tailleRestant = (zones[i][j].getNbInsecte() > 0) ? 0 : taillePaquets / 2;
-					grille.addDisqueAnimaux(Insecte.icon, i, j, taillePaquets, Color.BLUE);
-				}
-				grille.addDisqueAnimaux(Insecte.icon, i, j, zones[i][j].getNbInsecte() % taillePaquets + tailleRestant,
-						Color.BLUE);
+				grille.iconFond(i, j, z.getTypeZone().getTypeZoneIcon());
 
-				for (int k = 0; k < zones[i][j].getNbOiseau() / taillePaquets; k++) {
-					tailleRestant = (zones[i][j].getNbOiseau() > 0) ? 0 : taillePaquets / 2;
-					grille.addDisqueAnimaux(Oiseau.icon, i, j, taillePaquets, Color.RED);
-				}
-				grille.addDisqueAnimaux(Oiseau.icon, i, j, zones[i][j].getNbOiseau() % taillePaquets + tailleRestant,
-						Color.RED);
+				int[] nbAnimaux = { z.getNbInsecte(), z.getNbOiseau(), z.getNbMammifere() };
+				ImageIcon[] animauxIcons = { Insecte.icon, Oiseau.icon, Mammifere.icon };
+				int[] nbVegetaux = { z.getNbVivace(), z.getNbArbre() };
+				ImageIcon[] vegetauxIcons = { Vivace.icon, Arbre.icon };
 
-				for (int k = 0; k < zones[i][j].getNbMammifere() / taillePaquets; k++) {
-					tailleRestant = (zones[i][j].getNbMammifere() > 0) ? 0 : taillePaquets / 2;
-					grille.addDisqueAnimaux(Mammifere.icon, i, j, taillePaquets, Color.YELLOW);
+				for (int l = 0; l < 3; l++) {
+					for (int k = 0; k < nbAnimaux[l] / taillePaquets; k++) {
+						tailleRestant = (nbAnimaux[l] > 0) ? 0 : taillePaquets / 2;
+						grille.addDisqueAnimaux(animauxIcons[l], i, j, taillePaquets, Color.BLUE);
+					}
+					grille.addDisqueAnimaux(animauxIcons[l], i, j, nbAnimaux[l] % taillePaquets + tailleRestant,
+							Color.BLUE);
 				}
-				grille.addDisqueAnimaux(Mammifere.icon, i, j,
-						zones[i][j].getNbMammifere() % taillePaquets + tailleRestant, Color.YELLOW);
 
-				for (int k = 0; k < zones[i][j].getNbArbre() / taillePaquets; k++) {
-					tailleRestant = (zones[i][j].getNbArbre() > 0) ? 0 : taillePaquets / 2;
-					grille.addDisqueVegetaux(Arbre.icon, i, j, taillePaquets, Color.BLACK);
+				for (int l = 0; l < 2; l++) {
+					for (int k = 0; k < nbVegetaux[l] / taillePaquets; k++) {
+						tailleRestant = (nbVegetaux[l] > 0) ? 0 : taillePaquets / 2;
+						grille.addDisqueVegetaux(vegetauxIcons[l], i, j, taillePaquets, Color.RED);
+					}
+					grille.addDisqueVegetaux(vegetauxIcons[l], i, j, nbVegetaux[l] % taillePaquets + tailleRestant,
+							Color.BLUE);
 				}
-				grille.addDisqueVegetaux(Arbre.icon, i, j, zones[i][j].getNbArbre() % taillePaquets + tailleRestant,
-						Color.BLACK);
-
-				for (int k = 0; k < zones[i][j].getNbVivace() / taillePaquets; k++) {
-					tailleRestant = (zones[i][j].getNbVivace() > 0) ? 0 : taillePaquets / 2;
-					grille.addDisqueVegetaux(Vivace.icon, i, j, taillePaquets, Color.GRAY);
-				}
-				grille.addDisqueVegetaux(Vivace.icon, i, j, zones[i][j].getNbVivace() % taillePaquets + tailleRestant,
-						Color.GRAY);
 			}
 		}
 		grille.redessine();
@@ -219,27 +210,6 @@ public class Ecosysteme {
 		pastEvents.clear();
 	}
 
-	/*
-	 * private void initRandomNbAnimaux2() { for (int i = 0; i < nbZonesL; i++) {
-	 * for (int j = 0; j < nbZonesH; j++) { if (r.nextInt(100) <= 30) { int
-	 * nbFourmiMax, nbAbeilleMax, nbLoupMax, nbVacheMax, nbPigeonMax, nbCorbeauMax;
-	 * switch (defaultZones[i][j]) { case 1: nbFourmiMax = 30; nbAbeilleMax = 90;
-	 * nbLoupMax = 6; nbVacheMax = 1; nbPigeonMax = 8; nbCorbeauMax = 70; break;
-	 * case 2: nbFourmiMax = 120; nbAbeilleMax = 30; nbLoupMax = 1; nbVacheMax = 10;
-	 * nbPigeonMax = 80; nbCorbeauMax = 6; break; default: continue; } Zone z =
-	 * zones[i][j]; if (z.getTypeZone() instanceof Riviere) continue;
-	 * 
-	 * for (int nbFourmi = 15; nbFourmi < nextIntBounds(15, nbFourmiMax);
-	 * nbFourmi++) z.addAnimal(new Fourmi(z)); for (int nbAbeille = 10; nbAbeille <
-	 * nextIntBounds(10, nbAbeilleMax); nbAbeille++) z.addAnimal(new Abeille(z));
-	 * for (int nbLoup = 0; nbLoup < r.nextInt(nbLoupMax); nbLoup++) z.addAnimal(new
-	 * Loup(z)); for (int nbVache = 0; nbVache < r.nextInt(nbPigeonMax); nbVache++)
-	 * z.addAnimal((Animal) new Vache(z)); for (int nbPigeon = 0; nbPigeon <
-	 * r.nextInt(nbVacheMax); nbPigeon++) z.addAnimal(new Pigeon(z)); for (int
-	 * nbCorbeau = 0; nbCorbeau < r.nextInt(nbCorbeauMax); nbCorbeau++)
-	 * z.addAnimal(new Corbeau(z)); } } } }
-	 */
-
 	private void initRandomNbAnimaux() {
 		for (int i = 0; i < nbZonesL; i++) {
 			for (int j = 0; j < nbZonesH; j++) {
@@ -264,23 +234,6 @@ public class Ecosysteme {
 			}
 		}
 	}
-
-	/*
-	 * public void initRandomNbVegetaux2() { for (int i = 0; i < nbZonesL; i++) {
-	 * for (int j = 0; j < nbZonesH; j++) { if (r.nextInt(100) <= 30) { int
-	 * nbSapinMax, nbCheneMax, nbArtichautMax, nbAbsintheMax; switch
-	 * (defaultZones[i][j]) { case 1: nbSapinMax = 150; nbCheneMax = 200;
-	 * nbArtichautMax = 22; nbAbsintheMax = 35; break; case 2: nbSapinMax = 5;
-	 * nbCheneMax = 6; nbArtichautMax = 250; nbAbsintheMax = 300; break; default:
-	 * continue; } Zone z = zones[i][j]; if (z.getTypeZone() instanceof Riviere)
-	 * continue; for (int nbSapin = 4; nbSapin < nextIntBounds(4, nbSapinMax);
-	 * nbSapin++) z.addVegetal(new Sapin(z)); for (int nbChene = 4; nbChene <
-	 * nextIntBounds(4, nbCheneMax); nbChene++) z.addVegetal(new Chene(z)); for (int
-	 * nbArtichaut = 15; nbArtichaut < nextIntBounds(15, nbArtichautMax);
-	 * nbArtichaut++) z.addVegetal(new Artichaut(z)); for (int nbAbsinthe = 15;
-	 * nbAbsinthe < nextIntBounds(15, nbAbsintheMax); nbAbsinthe++) z.addVegetal(new
-	 * Absinthe(z)); } } } }
-	 */
 
 	private void initRandomNbVegetaux() {
 		for (int i = 0; i < nbZonesL; i++) {
@@ -375,35 +328,41 @@ public class Ecosysteme {
 	}
 
 	public void reproduction(Zone z) {
-		/*
-		 * z.getInsectes().forEach((insecte) -> { if (z.getNbInsecte() > 0) { try { if
-		 * (insecte.getAge() >= insecte.getAgeMinReproduction() &&
-		 * !insecte.isDejaReproduiCecycle() && r.nextInt(100) <=
-		 * insecte.getTauxDeReproduction() && insecte.getZoneFavorable().getClass() ==
-		 * z.getTypeZone().getClass()) insecte.seReproduire(); } catch
-		 * (ReproduireException e) { } } }); z.getOiseaux().forEach((oiseau) -> { if
-		 * (z.getNbOiseau() > 0) { try { if (oiseau.getAge() >=
-		 * oiseau.getAgeMinReproduction() && !oiseau.isDejaReproduiCecycle() &&
-		 * oiseau.getNbCyclesSansEau() == 0 && oiseau.getNbCyclesSansManger() == 0 &&
-		 * r.nextInt(100) <= oiseau.getTauxDeReproduction()) oiseau.seReproduire(); }
-		 * catch (ReproduireException e) { } } }); z.getMammiferes().forEach((mammifere)
-		 * -> { if (z.getNbMammifere() > 0) { try { if (mammifere.getAge() >=
-		 * mammifere.getAgeMinReproduction() && !mammifere.isDejaReproduiCecycle() &&
-		 * mammifere.getNbCyclesSansEau() == 0 && mammifere.getNbCyclesSansManger() == 0
-		 * && r.nextInt(100) <= mammifere.getTauxDeReproduction())
-		 * mammifere.seReproduire(); } catch (ReproduireException e) { } } });
-		 */
-		z.getAnimaux().forEach((animal) -> {
-			if (z.getNbMammifere() > 0) {
+
+		z.getInsectes().forEach((insecte) -> {
+			if (z.getNbInsecte() > 0) {
 				try {
-					if (animal.getAge() >= animal.getAgeMinReproduction() && !animal.isDejaReproduiCecycle()
-							&& animal.getNbCyclesSansEau() == 0 && animal.getNbCyclesSansManger() == 0
-							&& r.nextInt(100) <= animal.getTauxDeReproduction())
-						animal.seReproduire();
+					if (insecte.getAge() >= insecte.getAgeMinReproduction() && !insecte.isDejaReproduiCecycle()
+							&& r.nextInt(100) <= insecte.getTauxDeReproduction()
+							&& insecte.getZoneFavorable().getClass() == z.getTypeZone().getClass())
+						insecte.seReproduire();
 				} catch (ReproduireException e) {
 				}
 			}
 		});
+		z.getOiseaux().forEach((oiseau) -> {
+			if (z.getNbOiseau() > 0) {
+				try {
+					if (oiseau.getAge() >= oiseau.getAgeMinReproduction() && !oiseau.isDejaReproduiCecycle()
+							&& oiseau.getNbCyclesSansEau() == 0 && oiseau.getNbCyclesSansManger() == 0
+							&& r.nextInt(100) <= oiseau.getTauxDeReproduction())
+						oiseau.seReproduire();
+				} catch (ReproduireException e) {
+				}
+			}
+		});
+		z.getMammiferes().forEach((mammifere) -> {
+			if (z.getNbMammifere() > 0) {
+				try {
+					if (mammifere.getAge() >= mammifere.getAgeMinReproduction() && !mammifere.isDejaReproduiCecycle()
+							&& mammifere.getNbCyclesSansEau() == 0 && mammifere.getNbCyclesSansManger() == 0
+							&& r.nextInt(100) <= mammifere.getTauxDeReproduction())
+						mammifere.seReproduire();
+				} catch (ReproduireException e) {
+				}
+			}
+		});
+
 	}
 
 	public void propagation(Zone z) {

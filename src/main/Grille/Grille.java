@@ -104,7 +104,7 @@ public class Grille extends JPanel {
 			for (j = 0; j < nbCasesH; j++)
 				m[i][j] = new CaseGrille();
 	}
-	
+
 	public int nextIntBounds(int min, int max) {
 		return r.nextInt(max - min) + min;
 	}
@@ -144,7 +144,7 @@ public class Grille extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int i, j;
+		Graphics2D g2 = (Graphics2D) g;
 
 		g.setColor(new Color(137, 165, 255));
 		g.fillRect(0, 0, decalageAffichage, decalageAffichage);
@@ -163,6 +163,9 @@ public class Grille extends JPanel {
 		g.setColor(Color.BLACK);
 		g.drawString("Cycle: " + cycle, decalageAffichage * 2 + decalageAffichage / 3, decalageAffichage / 2 + 8);
 
+		g.setColor(new Color(255, 207, 160));
+		g.fillRect(decalageAffichage * 5, 0, nbPixelCoteCase * nbCasesL - decalageAffichage * 5, decalageAffichage);
+		g.setColor(Color.BLACK);
 		g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 5));
 		String sGrille = (contoure) ? "Masquer " : "Afficher ";
 		sGrille += (showCase) ? "la grille (Appuyer sur S) ❌" : "la grille (Appuyer sur S)";
@@ -171,8 +174,9 @@ public class Grille extends JPanel {
 		g.drawString("Vitesse (Appuyer sur ↑ ↓): " + ecosysteme.getVitesseSimulation() + " ms",
 				decalageAffichage * 5 + 4, 54);
 		g.drawString("Relancer la simulation (Appuyer sur R)", decalageAffichage * 5 + 4, 74);
-		g.drawString("Zoomer sur une case (cliquer sur une case)", decalageAffichage * 5 + 4, 94);
+		g.drawString("Cliquer sur une case pour plus d'infos", decalageAffichage * 5 + 4, 94);
 
+		int i, j;
 		if (!showCase) {
 			for (i = 0; i < nbCasesL; i++)
 				for (j = 0; j < nbCasesH; j++) {
@@ -183,7 +187,7 @@ public class Grille extends JPanel {
 						int rayon = d.getRayon();
 						g.drawImage(d.getIcon().getImage(),
 								cellX + nbPixelCoteCase / 2 - rayon / 2
-										+nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
 								cellY + nbPixelCoteCase / 2 - rayon / 2
 										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
 								rayon, rayon, null);
@@ -203,8 +207,8 @@ public class Grille extends JPanel {
 			int cellX = 0;
 			int cellY = decalageAffichage;
 			int showCaseNbPixelCoteCase = nbPixelCoteCase * nbCasesL;
-			g.drawImage(m[caseX][caseY].getIcon().getImage(), cellX, cellY, showCaseNbPixelCoteCase, showCaseNbPixelCoteCase,
-					null);
+			g.drawImage(m[caseX][caseY].getIcon().getImage(), cellX, cellY, showCaseNbPixelCoteCase,
+					showCaseNbPixelCoteCase, null);
 
 			for (Disque d : m[caseY][caseY].lAnimaux) {
 				int rayon = d.getRayon() * nbCasesL;
@@ -225,7 +229,21 @@ public class Grille extends JPanel {
 						rayon, rayon, null);
 				;
 			}
-			g.setColor(Color.WHITE);
+
+			g.setColor(new Color(226, 201, 255));
+			g.fillRect(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, 260, 220);
+			g.setColor(Color.BLACK);
+			g2.setStroke(new BasicStroke(3));
+			g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16,
+					decalageAffichage + nbPixelCoteCase - 32 + 220);
+			g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
+					decalageAffichage + nbPixelCoteCase - 32);
+			g.drawLine(nbPixelCoteCase - 16 + 260, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
+					decalageAffichage + nbPixelCoteCase - 32 + 220);
+			g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32 + 220, nbPixelCoteCase - 16 + 260,
+					decalageAffichage + nbPixelCoteCase - 32 + 220);
+
+			g2.setStroke(new BasicStroke(1));
 			g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 4));
 			g.drawString("Niveau d'eau: " + this.ecosysteme.getZone(caseX, caseY).getEau(), nbPixelCoteCase,
 					decalageAffichage + nbPixelCoteCase);
@@ -244,7 +262,6 @@ public class Grille extends JPanel {
 		}
 
 		g.setColor(Color.BLACK);
-		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(3));
 		g.drawLine(0, decalageAffichage, nbCasesH * nbPixelCoteCase, decalageAffichage);
 		g.drawLine(nbCasesH * nbPixelCoteCase, 0, nbCasesH * nbPixelCoteCase,

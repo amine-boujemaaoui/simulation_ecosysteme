@@ -2,13 +2,13 @@ package main.Vegetaux.Vivaces;
 
 import main.Zone;
 import main.Execeptions.PropagerException;
-import main.TypeZones.Plaine;
+import main.TypeZones.Foret;
 import main.Vegetaux.Vegetal;
 
 public class Artichaut extends Vivace {
 
 	public Artichaut(Zone zone_actuel) {
-		super(zone_actuel, 0.009, 9, 35, 3, new Plaine(), 170);
+		super(zone_actuel, 0.009, 9, 35, 3, new Foret(), 170);
 	}
 
 	@Override
