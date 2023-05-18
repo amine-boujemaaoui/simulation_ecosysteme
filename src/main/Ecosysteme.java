@@ -52,7 +52,7 @@ public class Ecosysteme {
 
 	// Grille rectangulaire
 
-	private int[][] defaultZones = { 
+	private int[][] defaultZones = {
 			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
 			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
 			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
@@ -66,7 +66,7 @@ public class Ecosysteme {
 			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 3, 3 },
 			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 0, 0, 2, 3, 3, 3, 3, 3 },
 			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 }};
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 } };
 
 	// Zones par defaut du sujet
 	/*
@@ -151,7 +151,7 @@ public class Ecosysteme {
 	public int getCycle() {
 		return cycle;
 	}
-	
+
 	public int getNbMaxEntiteParZone() {
 		return nbMaxEntiteParZone;
 	}
@@ -252,7 +252,7 @@ public class Ecosysteme {
 			for (int j = 0; j < nbZonesL; j++) {
 				Zone z = zones[i][j];
 				if (r.nextInt(100) <= 35) {
-					if (z.getTypeZone() instanceof Riviere)
+					if (z.getTypeZone() instanceof Riviere || z.getTypeZone() instanceof Desert)
 						continue;
 					this.typeAnimaux.forEach((typeAnimal) -> {
 						int nbMax;
@@ -277,7 +277,7 @@ public class Ecosysteme {
 			for (int j = 0; j < nbZonesL; j++) {
 				Zone z = zones[i][j];
 				if (r.nextInt(100) <= 45) {
-					if (z.getTypeZone() instanceof Riviere)
+					if (z.getTypeZone() instanceof Riviere || z.getTypeZone() instanceof Desert)
 						continue;
 					this.typeVegetaux.forEach((typeVegetal) -> {
 						int nbMax;
