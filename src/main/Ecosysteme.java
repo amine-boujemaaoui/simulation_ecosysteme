@@ -36,14 +36,38 @@ public class Ecosysteme {
 	private int cycle;
 	public static boolean simulate = false;
 	private int vitesseSimulation;
+	private int nbMaxEntiteParZone;
 
-	private int[][] defaultZones = { { 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 }, { 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
-			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1 }, { 2, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1 },
-			{ 2, 2, 0, 0, 2, 2, 2, 1, 1, 1, 1, 2 }, { 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 2, 2 },
-			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2 }, { 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2 },
-			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 } };
-	
+	// Grille carre
+
+	/*
+	 * private int[][] defaultZones = { { 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 }, { 0,
+	 * 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 }, { 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1 }, {
+	 * 2, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1 }, { 2, 2, 0, 0, 2, 2, 2, 1, 1, 1, 1, 2 },
+	 * { 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 2, 2 }, { 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2
+	 * }, { 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2 }, { 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2,
+	 * 2 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 2,
+	 * 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 } };
+	 */
+
+	// Grille rectangulaire
+
+	private int[][] defaultZones = { 
+			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
+			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
+			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
+			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1, 0, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
+			{ 2, 2, 0, 0, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1 },
+			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1 },
+			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1 },
+			{ 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2 },
+			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2 },
+			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 3, 3 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 0, 0, 2, 3, 3, 3, 3, 3 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 }};
+
 	// Zones par defaut du sujet
 	/*
 	 * private int[][] defaultZones = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 2,
@@ -56,14 +80,15 @@ public class Ecosysteme {
 	 */
 
 	public Ecosysteme(ArrayList<TypeZone> defaultTypeZones, ArrayList<Animal> defaultTypeAnimaux,
-			ArrayList<Vegetal> defaultTypeVegetaux, ArrayList<Event> defaultEvents) {
+			ArrayList<Vegetal> defaultTypeVegetaux, ArrayList<Event> defaultEvents, int nbMaxEntiteParZone) {
 		super();
-		this.nbZonesH = 12;
-		this.nbZonesL = 12;
+		this.nbZonesH = defaultZones.length;
+		this.nbZonesL = defaultZones[0].length;
 		this.grille = new Grille(nbZonesL, nbZonesH, 64, true, this);
-		this.zones = new Zone[nbZonesL][nbZonesH];
+		this.zones = new Zone[nbZonesH][nbZonesL];
 		this.cycle = 0;
 		this.vitesseSimulation = 100;
+		this.setNbMaxEntiteParZone(nbMaxEntiteParZone);
 
 		if (defaultTypeZones.size() > 0)
 			this.typeZones.addAll(defaultTypeZones);
@@ -85,7 +110,7 @@ public class Ecosysteme {
 
 	public void initSimulation() {
 		Ecosysteme.simulate = false;
-		this.zones = new Zone[nbZonesL][nbZonesH];
+		this.zones = new Zone[nbZonesH][nbZonesL];
 		this.cycle = 0;
 		initdefaultZones();
 		initEvents();
@@ -115,12 +140,24 @@ public class Ecosysteme {
 		return zones[i][j];
 	}
 
+	public Zone getZoneForGrille(int j, int i) {
+		return zones[i][j];
+	}
+
 	public Grille getGrille() {
 		return grille;
 	}
 
 	public int getCycle() {
 		return cycle;
+	}
+	
+	public int getNbMaxEntiteParZone() {
+		return nbMaxEntiteParZone;
+	}
+
+	public void setNbMaxEntiteParZone(int nbMaxEntiteParZone) {
+		this.nbMaxEntiteParZone = nbMaxEntiteParZone;
 	}
 
 	public void augmenterVistesseSimulation() {
@@ -154,8 +191,8 @@ public class Ecosysteme {
 
 	public void redessine() {
 		int taillePaquets = 32, tailleRestant = 0;
-		for (int i = 0; i < nbZonesL; i++) {
-			for (int j = 0; j < nbZonesH; j++) {
+		for (int i = 0; i < nbZonesH; i++) {
+			for (int j = 0; j < nbZonesL; j++) {
 				Zone z = zones[i][j];
 				grille.setCycle(cycle);
 				grille.resetlDisques(i, j);
@@ -189,8 +226,8 @@ public class Ecosysteme {
 	}
 
 	public void initdefaultZones() {
-		for (int i = 0; i < nbZonesL; i++) {
-			for (int j = 0; j < nbZonesH; j++) {
+		for (int i = 0; i < nbZonesH; i++) {
+			for (int j = 0; j < nbZonesL; j++) {
 				double minEau, maxEau, minTemperature, maxTemperature;
 				minEau = this.typeZones.get(this.defaultZones[i][j]).getEauMin();
 				maxEau = this.typeZones.get(this.defaultZones[i][j]).getEauMax();
@@ -211,8 +248,8 @@ public class Ecosysteme {
 	}
 
 	private void initRandomNbAnimaux() {
-		for (int i = 0; i < nbZonesL; i++) {
-			for (int j = 0; j < nbZonesH; j++) {
+		for (int i = 0; i < nbZonesH; i++) {
+			for (int j = 0; j < nbZonesL; j++) {
 				Zone z = zones[i][j];
 				if (r.nextInt(100) <= 35) {
 					if (z.getTypeZone() instanceof Riviere)
@@ -236,8 +273,8 @@ public class Ecosysteme {
 	}
 
 	private void initRandomNbVegetaux() {
-		for (int i = 0; i < nbZonesL; i++) {
-			for (int j = 0; j < nbZonesH; j++) {
+		for (int i = 0; i < nbZonesH; i++) {
+			for (int j = 0; j < nbZonesL; j++) {
 				Zone z = zones[i][j];
 				if (r.nextInt(100) <= 45) {
 					if (z.getTypeZone() instanceof Riviere)
@@ -247,7 +284,7 @@ public class Ecosysteme {
 						if (z.getTypeZone().getClass() == typeVegetal.getZoneFavorable().getClass())
 							nbMax = typeVegetal.getNbMinDansZoneFavorableForInit();
 						else
-							nbMax = typeVegetal.getNbMinDansZoneFavorableForInit() / 4;
+							nbMax = typeVegetal.getNbMinDansZoneFavorableForInit() / 6;
 						for (int k = 0; k < nextIntBounds(nbMax / 2, nbMax); k++) {
 							Vegetal vegetal = typeVegetal.getNewVegetal();
 							vegetal.setZone_actuel(z);
@@ -466,8 +503,8 @@ public class Ecosysteme {
 	public void nextCycle() {
 		this.redessine();
 		int i, j;
-		for (i = 0; i < nbZonesL; i++) {
-			for (j = 0; j < nbZonesH; j++) {
+		for (i = 0; i < nbZonesH; i++) {
+			for (j = 0; j < nbZonesL; j++) {
 				Zone z = zones[i][j];
 				this.evolutionEnvironement(z);
 				this.vieillissement(z);
@@ -484,8 +521,7 @@ public class Ecosysteme {
 
 	public void addEvent(int cycle, int x, int y, Animal animal, int nbAnimal, Vegetal vegetal, int nbVegetal,
 			double eau, double temperature) {
-		events.add(new Event(this, cycle, nbVegetal, nbVegetal, animal, nbVegetal, vegetal, nbVegetal, temperature,
-				temperature));
+		events.add(new Event(this, cycle, x, y, animal, nbAnimal, vegetal, nbVegetal, temperature, temperature));
 
 	}
 

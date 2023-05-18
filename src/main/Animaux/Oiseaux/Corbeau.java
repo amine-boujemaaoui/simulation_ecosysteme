@@ -11,7 +11,7 @@ import main.TypeZones.Foret;
 public class Corbeau extends Oiseau implements Vole {
 
 	public Corbeau(Zone zone_actuel) {
-		super(zone_actuel, 0.09, 8, 10, 1, new Foret(), 30);
+		super(zone_actuel, 0.09, 8, 20, 1, new Foret(), 30);
 	}
 
 	@Override

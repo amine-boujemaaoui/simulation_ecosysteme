@@ -82,6 +82,7 @@ public class Grille extends JPanel {
 				if (mouseCode == MouseEvent.BUTTON1) {
 					caseX = e.getX() / nbPixelCoteCase;
 					caseY = e.getY() / nbPixelCoteCase - 128 / nbPixelCoteCase;
+					System.out.println(caseX + " " + caseY);
 					if (caseX >= 0 && caseX < nbCasesL && caseY >= 0 && caseY < nbCasesH) {
 						showCase = !showCase;
 						if (contoure)
@@ -113,23 +114,23 @@ public class Grille extends JPanel {
 		repaint();
 	}
 
-	public void colorieFond(int i, int j, Color c) {
+	public void colorieFond(int j, int i, Color c) {
 		m[i][j].setCouleur(c);
 	}
 
-	public void iconFond(int i, int j, ImageIcon icon) {
+	public void iconFond(int j, int i, ImageIcon icon) {
 		m[i][j].setIcon(icon);
 	}
 
-	public void addDisqueAnimaux(ImageIcon icon, int i, int j, int rayon, Color c) {
+	public void addDisqueAnimaux(ImageIcon icon, int j, int i, int rayon, Color c) {
 		m[i][j].addDisqueAnimaux(rayon, c, icon);
 	}
 
-	public void addDisqueVegetaux(ImageIcon icon, int i, int j, int rayon, Color c) {
+	public void addDisqueVegetaux(ImageIcon icon, int j, int i, int rayon, Color c) {
 		m[i][j].addDisqueVegetaux(rayon, c, icon);
 	}
 
-	public void resetlDisques(int i, int j) {
+	public void resetlDisques(int j, int i) {
 		m[i][j].resetlDisques();
 	}
 
@@ -206,28 +207,30 @@ public class Grille extends JPanel {
 		} else {
 			int cellX = 0;
 			int cellY = decalageAffichage;
-			int showCaseNbPixelCoteCase = nbPixelCoteCase * nbCasesL;
-			g.drawImage(m[caseX][caseY].getIcon().getImage(), cellX, cellY, showCaseNbPixelCoteCase,
-					showCaseNbPixelCoteCase, null);
+			int showCaseNbPixelCoteCaseL = nbPixelCoteCase * nbCasesL;
+			int showCaseNbPixelCoteCaseH = nbPixelCoteCase * nbCasesH;
+			g.drawImage(m[caseX][caseY].getIcon().getImage(), cellX, cellY, showCaseNbPixelCoteCaseL,
+					showCaseNbPixelCoteCaseH, null);
 
-			for (Disque d : m[caseY][caseY].lAnimaux) {
-				int rayon = d.getRayon() * nbCasesL;
+			for (Disque d : m[caseX][caseY].lAnimaux) {
+				int rayon = d.getRayon() * 5;
 				g.drawImage(d.getIcon().getImage(),
-						cellX + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
-						cellY + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
+						cellX + showCaseNbPixelCoteCaseL / 2
+								+ nextIntBounds(-showCaseNbPixelCoteCaseL / 2,
+										showCaseNbPixelCoteCaseL / 2 - rayon / 10),
+						cellY + showCaseNbPixelCoteCaseH / 2 + nextIntBounds(-showCaseNbPixelCoteCaseH / 2,
+								showCaseNbPixelCoteCaseH / 2 - rayon / 10),
 						rayon, rayon, null);
 			}
 			for (Disque d : m[caseX][caseY].lVegetaux) {
-				int rayon = d.getRayon() * nbCasesL;
+				int rayon = d.getRayon() * 5;
 				g.drawImage(d.getIcon().getImage(),
-						cellX + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
-						cellY + showCaseNbPixelCoteCase / 2 - rayon / 2
-								+ nextIntBounds(-showCaseNbPixelCoteCase / 2, showCaseNbPixelCoteCase / 4 + 1),
+						cellX + showCaseNbPixelCoteCaseL / 2
+								+ nextIntBounds(-showCaseNbPixelCoteCaseL / 2,
+										showCaseNbPixelCoteCaseL / 2 - rayon / 10),
+						cellY + showCaseNbPixelCoteCaseH / 2 + nextIntBounds(-showCaseNbPixelCoteCaseH / 2,
+								showCaseNbPixelCoteCaseH / 2 - rayon / 10),
 						rayon, rayon, null);
-				;
 			}
 
 			g.setColor(new Color(226, 201, 255));
@@ -245,31 +248,30 @@ public class Grille extends JPanel {
 
 			g2.setStroke(new BasicStroke(1));
 			g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 4));
-			g.drawString("Niveau d'eau: " + this.ecosysteme.getZone(caseX, caseY).getEau(), nbPixelCoteCase,
+			g.drawString("Niveau d'eau: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getEau(), nbPixelCoteCase,
 					decalageAffichage + nbPixelCoteCase);
-			g.drawString("Temperature: " + this.ecosysteme.getZone(caseX, caseY).getTemperature(), nbPixelCoteCase,
-					decalageAffichage + nbPixelCoteCase + 20);
-			g.drawString("Nombre d'insectes: " + this.ecosysteme.getZone(caseX, caseY).getNbInsecte(), nbPixelCoteCase,
-					decalageAffichage + nbPixelCoteCase + 60);
-			g.drawString("Nombre de mammiferes: " + this.ecosysteme.getZone(caseX, caseY).getNbMammifere(),
+			g.drawString("Temperature: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getTemperature(),
+					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 20);
+			g.drawString("Nombre d'insectes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbInsecte(),
+					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 60);
+			g.drawString("Nombre de mammiferes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbMammifere(),
 					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 80);
-			g.drawString("Nombre d'oiseaux: " + this.ecosysteme.getZone(caseX, caseY).getNbOiseau(), nbPixelCoteCase,
-					decalageAffichage + nbPixelCoteCase + 100);
-			g.drawString("Nombre d'arbres: " + this.ecosysteme.getZone(caseX, caseY).getNbArbre(), nbPixelCoteCase,
-					decalageAffichage + nbPixelCoteCase + 140);
-			g.drawString("Nombre de vivaces: " + this.ecosysteme.getZone(caseX, caseY).getNbVivace(), nbPixelCoteCase,
-					decalageAffichage + nbPixelCoteCase + 160);
+			g.drawString("Nombre d'oiseaux: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbOiseau(),
+					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 100);
+			g.drawString("Nombre d'arbres: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbArbre(),
+					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 140);
+			g.drawString("Nombre de vivaces: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbVivace(),
+					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 160);
 		}
 
 		g.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(3));
-		g.drawLine(0, decalageAffichage, nbCasesH * nbPixelCoteCase, decalageAffichage);
-		g.drawLine(nbCasesH * nbPixelCoteCase, 0, nbCasesH * nbPixelCoteCase,
-				nbCasesH * nbPixelCoteCase + decalageAffichage);
-		g.drawLine(0, 0, 0, nbCasesH * nbPixelCoteCase + decalageAffichage);
-		g.drawLine(0, 0, nbCasesH * nbPixelCoteCase, 0);
-		g.drawLine(0, nbCasesH * nbPixelCoteCase + decalageAffichage, nbCasesH * nbPixelCoteCase,
-				nbCasesH * nbPixelCoteCase + decalageAffichage);
+		g.drawLine(0, decalageAffichage, nbCasesL * nbPixelCoteCase - 1, decalageAffichage);
+		g.drawLine(nbCasesL * nbPixelCoteCase - 1, 0, nbCasesL * nbPixelCoteCase - 1,
+				nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
+		g.drawLine(0, 0, 0, nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
+		g.drawLine(0, nbCasesH * nbPixelCoteCase + decalageAffichage - 1, nbCasesL * nbPixelCoteCase - 1,
+				nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
 
 		g2.setStroke(new BasicStroke(1));
 		if (contoure) {

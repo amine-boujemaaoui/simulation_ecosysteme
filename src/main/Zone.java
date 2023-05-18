@@ -186,13 +186,15 @@ public class Zone {
 	}
 
 	public void addAnimal(Animal animal) {
-		this.animaux.add(animal);
-		if (animal instanceof Oiseau)
-			this.oiseaux.add((Oiseau) animal);
-		else if (animal instanceof Insecte)
-			this.insectes.add((Insecte) animal);
-		else
-			this.mammiferes.add((Mammifere) animal);
+		if (this.vegetaux.size() < this.ecosysteme.getNbMaxEntiteParZone()) {
+			this.animaux.add(animal);
+			if (animal instanceof Oiseau)
+				this.oiseaux.add((Oiseau) animal);
+			else if (animal instanceof Insecte)
+				this.insectes.add((Insecte) animal);
+			else
+				this.mammiferes.add((Mammifere) animal);
+		}
 	}
 
 	public void removeAnimal(Animal animal) {
@@ -254,11 +256,13 @@ public class Zone {
 	}
 
 	public void addVegetal(Vegetal vegetal) {
-		this.vegetaux.add(vegetal);
-		if (vegetal instanceof Arbre)
-			this.arbres.add((Arbre) vegetal);
-		else
-			this.vivaces.add((Vivace) vegetal);
+		if (this.vegetaux.size() < this.ecosysteme.getNbMaxEntiteParZone()) {
+			this.vegetaux.add(vegetal);
+			if (vegetal instanceof Arbre)
+				this.arbres.add((Arbre) vegetal);
+			else
+				this.vivaces.add((Vivace) vegetal);
+		}
 	}
 
 	public void removeVegetal(Vegetal vegetal) {
@@ -312,10 +316,10 @@ public class Zone {
 			if (this.eau >= typeZone.getEauMin()
 					&& this.eau <= typeZone.getEauMax()/* && this.getNbVegetaux() >= typeZone.getNbVegetauxMin() */) {
 				this.setTypeZone(typeZone);
-				this.setTemperature(40 / this.eau *200);
+				this.setTemperature(40 / this.eau * 200);
 			}
 
-			if (this.getNbArbre() > 70 && this.eau + 1 < riviere.getEauMin()) {
+			if (this.getNbArbre() > 90 && this.eau + 1 < riviere.getEauMin()) {
 				this.eau += 1;
 			}
 

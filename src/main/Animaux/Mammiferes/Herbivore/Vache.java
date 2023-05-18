@@ -12,7 +12,7 @@ import main.TypeZones.Plaine;
 public class Vache extends Herbivore implements Marche {
 
 	public Vache(Zone zone_actuel) {
-		super(zone_actuel, 0.8, 17, 35, 3, new Plaine(), 10);
+		super(zone_actuel, 0.08, 17, 35, 3, new Plaine(), 10);
 	}
 
 	@Override
