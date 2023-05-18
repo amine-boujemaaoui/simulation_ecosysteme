@@ -1,13 +1,14 @@
 package main.Grille;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.util.LinkedList;
+
+import javax.swing.ImageIcon;
 
 public class CaseGrille {
 
 	private Color c;
-	private Image icon;
+	private ImageIcon icon;
 	public LinkedList<Disque> lAnimaux;
 	public LinkedList<Disque> lVegetaux;
 
@@ -24,11 +25,11 @@ public class CaseGrille {
 		return c;
 	}
 
-	public void addDisqueAnimaux(int rayon, Color c, Image icon) {
+	public void addDisqueAnimaux(int rayon, Color c, ImageIcon icon) {
 		lAnimaux.add(new Disque(rayon, c, icon));
 	}
 
-	public void addDisqueVegetaux(int rayon, Color c, Image icon) {
+	public void addDisqueVegetaux(int rayon, Color c, ImageIcon icon) {
 		lVegetaux.add(new Disque(rayon, c, icon));
 	}
 
@@ -45,11 +46,11 @@ public class CaseGrille {
 		lVegetaux = new LinkedList<Disque>();
 	}
 
-	public Image getIcon() {
+	public ImageIcon getIcon() {
 		return icon;
 	}
 
-	public void setIcon(Image icon) {
+	public void setIcon(ImageIcon icon) {
 		this.icon = icon;
 	}
 

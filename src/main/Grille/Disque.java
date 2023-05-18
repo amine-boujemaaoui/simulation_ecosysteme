@@ -1,18 +1,18 @@
 package main.Grille;
 
 import java.awt.Color;
-import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Disque {
 
 	private int rayon;
 	private Color c;
-	private Image icon;
+	private ImageIcon icon;
 
 	Disque() {
 	}
 
-	public Disque(int rayon, Color c, Image icon) {
+	public Disque(int rayon, Color c, ImageIcon icon) {
 		this.rayon = rayon;
 		this.c = c;
 		this.icon = icon;
@@ -34,11 +34,11 @@ public class Disque {
 		this.c = c;
 	}
 	
-	public void setIcon(Image icon) {
+	public void setIcon(ImageIcon icon) {
 		this.icon = icon;
 	}
 	
-	public Image getIcon() {
+	public ImageIcon getIcon() {
 		return icon;
 	}
 

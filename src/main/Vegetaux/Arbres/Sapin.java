@@ -3,11 +3,12 @@ package main.Vegetaux.Arbres;
 import main.Zone;
 import main.Execeptions.PropagerException;
 import main.TypeZones.Foret;
+import main.Vegetaux.Vegetal;
 
 public class Sapin extends Arbre {
 
 	public Sapin(Zone zone_actuel) {
-		super(zone_actuel, 0.004, 28, 7, 9, new Foret());
+		super(zone_actuel, 0.004, 28, 7, 9, new Foret(), 40);
 	}
 
 	@Override
@@ -17,5 +18,10 @@ public class Sapin extends Arbre {
 			throw new PropagerException("ERREUR: tentative de propagation en dehors de la grille");
 		else
 			this.getZone_actuel().getEcosysteme().propagerVegetal(new Sapin(this.getZone_actuel()), x, y);
+	}
+	
+	@Override
+	public Vegetal getNewVegetal() {
+		return new Sapin(null);
 	}
 }

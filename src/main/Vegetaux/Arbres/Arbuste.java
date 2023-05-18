@@ -1,14 +1,14 @@
-package main.Vegetaux.Vivaces;
+package main.Vegetaux.Arbres;
 
 import main.Zone;
 import main.Execeptions.PropagerException;
 import main.TypeZones.Plaine;
 import main.Vegetaux.Vegetal;
 
-public class Artichaut extends Vivace {
+public class Arbuste extends Arbre {
 
-	public Artichaut(Zone zone_actuel) {
-		super(zone_actuel, 0.009, 9, 35, 3, new Plaine(), 170);
+	public Arbuste(Zone zone_actuel) {
+		super(zone_actuel, 0.002, 25, 10, 7, new Plaine(), 6);
 	}
 
 	@Override
@@ -16,12 +16,14 @@ public class Artichaut extends Vivace {
 		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new PropagerException("ERREUR: tentative de propagation en dehors de la grille");
-		else
-			this.getZone_actuel().getEcosysteme().propagerVegetal(new Artichaut(this.getZone_actuel()), x, y);
+		else {
+			this.getZone_actuel().getEcosysteme().propagerVegetal(new Arbuste(this.getZone_actuel()), x, y);
+		}
 	}
 	
 	@Override
 	public Vegetal getNewVegetal() {
-		return new Artichaut(null);
+		return new Arbuste(null);
 	}
 }
+

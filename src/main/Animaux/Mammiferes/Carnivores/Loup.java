@@ -13,7 +13,7 @@ import main.TypeZones.Foret;
 public class Loup extends Carnivore implements Marche {
 
 	public Loup(Zone zone_actuel) {
-		super(zone_actuel, 0.3, 12, 17, 2, new Foret());
+		super(zone_actuel, 0.3, 12, 17, 2, new Foret(), 7);
 	}
 
 	@Override
@@ -65,6 +65,11 @@ public class Loup extends Carnivore implements Marche {
 		else
 			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
 				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+	}
+	
+	@Override
+	public Animal getNewAnimal() {
+		return new Loup(null);
 	}
 	
 }

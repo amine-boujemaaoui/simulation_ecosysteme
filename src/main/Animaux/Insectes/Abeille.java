@@ -12,7 +12,7 @@ import main.TypeZones.Foret;
 public class Abeille extends Insecte implements Vole {
 
 	public Abeille(Zone zone_actuel) {
-		super(zone_actuel, 0.004, 3, 50, 1, new Foret());
+		super(zone_actuel, 0.004, 3, 40, 1, new Foret(), 300);
 	}
 
 	@Override
@@ -42,9 +42,9 @@ public class Abeille extends Insecte implements Vole {
 		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new VolerException("ERREUR: tentative de deplacement en dehors de la grille");
-		else
-			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
-				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+		else if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert)
+				&& this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
+			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 
 	@Override
@@ -54,11 +54,17 @@ public class Abeille extends Insecte implements Vole {
 			for (int i = 0; i < r.nextInt(2); i++) {
 				if (z.getNbVivace() == 0)
 					break;
-				else
+				else if (r.nextInt(100) < 30)
 					z.removeVivace(r.nextInt(z.getNbVivace()));
 			}
 			this.setNbCyclesSansManger(0);
 		} else
 			this.augmenterNbCyclesSansManger();
 	}
+
+	@Override
+	public Animal getNewAnimal() {
+		return new Abeille(null);
+	}
+
 }

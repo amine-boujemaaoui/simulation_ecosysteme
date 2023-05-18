@@ -2,12 +2,13 @@ package main.Vegetaux.Vivaces;
 
 import main.Zone;
 import main.Execeptions.PropagerException;
-import main.TypeZones.Plaine;
+import main.TypeZones.Foret;
+import main.Vegetaux.Vegetal;
 
 public class Absinthe extends Vivace {
 
 	public Absinthe(Zone zone_actuel) {
-		super(zone_actuel, 0.0098, 6, 20, 2, new Plaine());
+		super(zone_actuel, 0.0098, 6, 30, 2, new Foret(), 200);
 	}
 
 	@Override
@@ -17,6 +18,11 @@ public class Absinthe extends Vivace {
 			throw new PropagerException("ERREUR: tentative de propagation en dehors de la grille");
 		else
 			this.getZone_actuel().getEcosysteme().propagerVegetal(new Absinthe(this.getZone_actuel()), x, y);
+	}
+	
+	@Override
+	public Vegetal getNewVegetal() {
+		return new Absinthe(null);
 	}
 }
 

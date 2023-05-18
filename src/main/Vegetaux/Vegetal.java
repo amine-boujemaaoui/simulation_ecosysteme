@@ -1,7 +1,6 @@
 package main.Vegetaux;
 
 import java.util.Random;
-
 import interfaces.Boir;
 import interfaces.ReproductionVegetal;
 import main.Zone;
@@ -20,15 +19,17 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	private final int tauxDePropagation;
 	private final int ageMinPropagation;
 	private TypeZone zoneFavorable;
+	private int nbMinDansZoneFavorableForInit;
 	/*
-	private double minEauRequise;
-	private double maxEauRequise;
-	private double minTemperatureRequise;
-	private double maxTemperatureRequise;
-	*/
+	 * private double minEauRequise; private double maxEauRequise; private double
+	 * minTemperatureRequise; private double maxTemperatureRequise;
+	 */
 
-	public Vegetal(Zone zone_actuel, double eauRequise, /*double minEauRequise, double maxEauRequise, double minTemperatureRequise, double maxTemperatureRequise,*/ int ageMax, int tauxDePropagation, int ageMinPropagation,
-			TypeZone zoneFavorable) {
+	public Vegetal(Zone zone_actuel, double eauRequise, /*
+														 * double minEauRequise, double maxEauRequise, double
+														 * minTemperatureRequise, double maxTemperatureRequise,
+														 */ int ageMax, int tauxDePropagation, int ageMinPropagation,
+			TypeZone zoneFavorable, int nbMinDansZoneFavorableForInit) {
 		super();
 		this.zone_actuel = zone_actuel;
 		this.eauRequise = eauRequise;
@@ -39,12 +40,12 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 		this.tauxDePropagation = tauxDePropagation;
 		this.ageMinPropagation = ageMinPropagation;
 		this.zoneFavorable = zoneFavorable;
+		this.nbMinDansZoneFavorableForInit = nbMinDansZoneFavorableForInit;
 		/*
-		this.setMinEauRequise(minEauRequise);
-		this.setMaxEauRequise(maxEauRequise);
-		this.setMinTemperatureRequise(minTemperatureRequise);
-		this.setMaxTemperatureRequise(maxTemperatureRequise);
-		*/
+		 * this.setMinEauRequise(minEauRequise); this.setMaxEauRequise(maxEauRequise);
+		 * this.setMinTemperatureRequise(minTemperatureRequise);
+		 * this.setMaxTemperatureRequise(maxTemperatureRequise);
+		 */
 	}
 
 	@Override
@@ -99,7 +100,7 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	public int getNbCycleTypeZoneNonFavorable() {
 		return nbCycleTypeZoneNonFavorable;
 	}
-	
+
 	public void setNbCycleTypeZoneNonFavorable(int nbCycleTypeZoneNonFavorable) {
 		this.nbCycleTypeZoneNonFavorable = nbCycleTypeZoneNonFavorable;
 	}
@@ -125,37 +126,31 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 		return zoneFavorable;
 	}
 
+	public int getNbMinDansZoneFavorableForInit() {
+		return nbMinDansZoneFavorableForInit;
+	}
+
+	public abstract Vegetal getNewVegetal();
+
 	/*
-	public double getMinEauRequise() {
-		return minEauRequise;
-	}
-
-	public void setMinEauRequise(double minEauRequise) {
-		this.minEauRequise = minEauRequise;
-	}
-
-	public double getMaxEauRequise() {
-		return maxEauRequise;
-	}
-
-	public void setMaxEauRequise(double maxEauRequise) {
-		this.maxEauRequise = maxEauRequise;
-	}
-
-	public double getMinTemperatureRequise() {
-		return minTemperatureRequise;
-	}
-
-	public void setMinTemperatureRequise(double minTemperatureRequise) {
-		this.minTemperatureRequise = minTemperatureRequise;
-	}
-
-	public double getMaxTemperatureRequise() {
-		return maxTemperatureRequise;
-	}
-
-	public void setMaxTemperatureRequise(double maxTemperatureRequise) {
-		this.maxTemperatureRequise = maxTemperatureRequise;
-	}
-	*/
+	 * public double getMinEauRequise() { return minEauRequise; }
+	 * 
+	 * public void setMinEauRequise(double minEauRequise) { this.minEauRequise =
+	 * minEauRequise; }
+	 * 
+	 * public double getMaxEauRequise() { return maxEauRequise; }
+	 * 
+	 * public void setMaxEauRequise(double maxEauRequise) { this.maxEauRequise =
+	 * maxEauRequise; }
+	 * 
+	 * public double getMinTemperatureRequise() { return minTemperatureRequise; }
+	 * 
+	 * public void setMinTemperatureRequise(double minTemperatureRequise) {
+	 * this.minTemperatureRequise = minTemperatureRequise; }
+	 * 
+	 * public double getMaxTemperatureRequise() { return maxTemperatureRequise; }
+	 * 
+	 * public void setMaxTemperatureRequise(double maxTemperatureRequise) {
+	 * this.maxTemperatureRequise = maxTemperatureRequise; }
+	 */
 }

@@ -3,8 +3,6 @@ package main;
 import main.Animaux.Animal;
 import main.Animaux.Insectes.*;
 import main.Animaux.Mammiferes.Mammifere;
-import main.Animaux.Mammiferes.Carnivores.Loup;
-import main.Animaux.Mammiferes.Herbivore.Vache;
 import main.Animaux.Oiseaux.*;
 import main.Execeptions.BoirException;
 import main.Execeptions.ChangerTemperatureException;
@@ -17,14 +15,10 @@ import main.Grille.Grille;
 import main.TypeZones.*;
 import main.Vegetaux.Vegetal;
 import main.Vegetaux.Arbres.Arbre;
-import main.Vegetaux.Arbres.Chene;
-import main.Vegetaux.Arbres.Sapin;
-import main.Vegetaux.Vivaces.Absinthe;
-import main.Vegetaux.Vivaces.Artichaut;
 import main.Vegetaux.Vivaces.Vivace;
-
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Ecosysteme {
@@ -33,25 +27,21 @@ public class Ecosysteme {
 	private Grille grille;
 	private Zone[][] zones;
 	private ArrayList<TypeZone> typeZones = new ArrayList<TypeZone>();
+	private ArrayList<Animal> typeAnimaux = new ArrayList<Animal>();
+	private ArrayList<Vegetal> typeVegetaux = new ArrayList<Vegetal>();
+	private ArrayList<Event> events = new ArrayList<Event>();
+	private ArrayList<Event> pastEvents = new ArrayList<Event>();
 	private Random r = new Random();
 	private int cycle;
 	public static boolean simulate = false;
 	private int vitesseSimulation;
 
-	private int[][] defaultZones = { 
-			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
-			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
-			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1 },
-			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1 },
-			{ 2, 2, 0, 0, 2, 2, 2, 1, 1, 1, 1, 2 }, 
-			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 2, 2 },
-			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2 },
-			{ 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2 },
-			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2 }, 
-			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 }
-			};
+	private int[][] defaultZones = { { 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 }, { 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2 },
+			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1 }, { 2, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1 },
+			{ 2, 2, 0, 0, 2, 2, 2, 1, 1, 1, 1, 2 }, { 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 2, 2 },
+			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2 }, { 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2 },
+			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2 },
+			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2 } };
 
 	/*
 	 * private int[][] defaultZones = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 2,
@@ -63,7 +53,8 @@ public class Ecosysteme {
 	 * 1, 1 }, { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 } };
 	 */
 
-	public Ecosysteme(ArrayList<TypeZone> typeZones) {
+	public Ecosysteme(ArrayList<TypeZone> defaultTypeZones, ArrayList<Animal> defaultTypeAnimaux,
+			ArrayList<Vegetal> defaultTypeVegetaux, ArrayList<Event> defaultEvents) {
 		super();
 		this.nbZonesH = 12;
 		this.nbZonesL = 12;
@@ -72,10 +63,22 @@ public class Ecosysteme {
 		this.cycle = 0;
 		this.vitesseSimulation = 100;
 
-		if (typeZones.size() > 0) {
-			this.typeZones.addAll(typeZones);
-		}
+		if (defaultTypeZones.size() > 0)
+			this.typeZones.addAll(defaultTypeZones);
+		if (defaultTypeAnimaux.size() > 0)
+			this.typeAnimaux.addAll(defaultTypeAnimaux);
+		if (defaultTypeVegetaux.size() > 0)
+			this.typeVegetaux.addAll(defaultTypeVegetaux);
+		if (defaultEvents.size() > 0)
+			defaultEvents.forEach((event) -> {
+				event.setEcosysteme(this);
+				this.pastEvents.add(event);
+			});
 
+	}
+
+	public int nextIntBounds(int min, int max) {
+		return r.nextInt(max - min) + min;
 	}
 
 	public void initSimulation() {
@@ -83,12 +86,19 @@ public class Ecosysteme {
 		this.zones = new Zone[nbZonesL][nbZonesH];
 		this.cycle = 0;
 		initdefaultZones();
+		initEvents();
 		initRandomNbAnimaux();
 		initRandomNbVegetaux();
 	}
 
 	public ArrayList<TypeZone> getTypeZones() {
-		return typeZones;
+		ArrayList<TypeZone> typeZones_copie = new ArrayList<TypeZone>();
+		typeZones_copie.addAll(typeZones);
+		return typeZones_copie;
+	}
+
+	public void removeEvent(Event e) {
+		this.events.remove(e);
 	}
 
 	public int getNbZonesH() {
@@ -148,7 +158,6 @@ public class Ecosysteme {
 				grille.resetlDisques(i, j);
 				grille.colorieFond(i, j, zones[i][j].getTypeZone().getC());
 				grille.iconFond(i, j, zones[i][j].getTypeZone().getTypeZoneIcon());
-				// grille.addDisque(i, j, zones[i][j].getNbInsecte(), Color.BLUE);
 				for (int k = 0; k < zones[i][j].getNbInsecte() / taillePaquets; k++) {
 					tailleRestant = (zones[i][j].getNbInsecte() > 0) ? 0 : taillePaquets / 2;
 					grille.addDisqueAnimaux(Insecte.icon, i, j, taillePaquets, Color.BLUE);
@@ -205,84 +214,94 @@ public class Ecosysteme {
 		}
 	}
 
+	public void initEvents() {
+		events.addAll(pastEvents);
+		pastEvents.clear();
+	}
+
+	/*
+	 * private void initRandomNbAnimaux2() { for (int i = 0; i < nbZonesL; i++) {
+	 * for (int j = 0; j < nbZonesH; j++) { if (r.nextInt(100) <= 30) { int
+	 * nbFourmiMax, nbAbeilleMax, nbLoupMax, nbVacheMax, nbPigeonMax, nbCorbeauMax;
+	 * switch (defaultZones[i][j]) { case 1: nbFourmiMax = 30; nbAbeilleMax = 90;
+	 * nbLoupMax = 6; nbVacheMax = 1; nbPigeonMax = 8; nbCorbeauMax = 70; break;
+	 * case 2: nbFourmiMax = 120; nbAbeilleMax = 30; nbLoupMax = 1; nbVacheMax = 10;
+	 * nbPigeonMax = 80; nbCorbeauMax = 6; break; default: continue; } Zone z =
+	 * zones[i][j]; if (z.getTypeZone() instanceof Riviere) continue;
+	 * 
+	 * for (int nbFourmi = 15; nbFourmi < nextIntBounds(15, nbFourmiMax);
+	 * nbFourmi++) z.addAnimal(new Fourmi(z)); for (int nbAbeille = 10; nbAbeille <
+	 * nextIntBounds(10, nbAbeilleMax); nbAbeille++) z.addAnimal(new Abeille(z));
+	 * for (int nbLoup = 0; nbLoup < r.nextInt(nbLoupMax); nbLoup++) z.addAnimal(new
+	 * Loup(z)); for (int nbVache = 0; nbVache < r.nextInt(nbPigeonMax); nbVache++)
+	 * z.addAnimal((Animal) new Vache(z)); for (int nbPigeon = 0; nbPigeon <
+	 * r.nextInt(nbVacheMax); nbPigeon++) z.addAnimal(new Pigeon(z)); for (int
+	 * nbCorbeau = 0; nbCorbeau < r.nextInt(nbCorbeauMax); nbCorbeau++)
+	 * z.addAnimal(new Corbeau(z)); } } } }
+	 */
+
 	private void initRandomNbAnimaux() {
 		for (int i = 0; i < nbZonesL; i++) {
 			for (int j = 0; j < nbZonesH; j++) {
-				if (r.nextInt(100) <= 30) {
-					int nbFourmiMax, nbAbeilleMax, nbLoupMax, nbVacheMax, nbPigeonMax, nbCorbeauMax;
-					switch (defaultZones[i][j]) {
-					case 1:
-						nbFourmiMax = 30;
-						nbAbeilleMax = 90;
-						nbLoupMax = 6;
-						nbVacheMax = 1;
-						nbPigeonMax = 8;
-						nbCorbeauMax = 70;
-						break;
-					case 2:
-						nbFourmiMax = 120;
-						nbAbeilleMax = 30;
-						nbLoupMax = 1;
-						nbVacheMax = 10;
-						nbPigeonMax = 80;
-						nbCorbeauMax = 6;
-						break;
-					default:
-						continue;
-					}
-					Zone z = zones[i][j];
+				Zone z = zones[i][j];
+				if (r.nextInt(100) <= 35) {
 					if (z.getTypeZone() instanceof Riviere)
 						continue;
+					this.typeAnimaux.forEach((typeAnimal) -> {
+						int nbMax;
+						if (z.getTypeZone().getClass() == typeAnimal.getZoneFavorable().getClass())
+							nbMax = typeAnimal.getNbMinDansZoneFavorableForInit();
+						else
+							nbMax = typeAnimal.getNbMinDansZoneFavorableForInit() / 4;
+						for (int k = 0; k < nextIntBounds(nbMax / 2, nbMax); k++) {
+							Animal animal = typeAnimal.getNewAnimal();
+							animal.setZone_actuel(z);
+							z.addAnimal(animal);
+						}
 
-					for (int nbFourmi = 15; nbFourmi < r.nextInt(15, nbFourmiMax); nbFourmi++)
-						z.addAnimal(new Fourmi(z));
-					for (int nbAbeille = 10; nbAbeille < r.nextInt(10, nbAbeilleMax); nbAbeille++)
-						z.addAnimal(new Abeille(z));
-					for (int nbLoup = 0; nbLoup < r.nextInt(nbLoupMax); nbLoup++)
-						z.addAnimal(new Loup(z));
-					for (int nbVache = 0; nbVache < r.nextInt(nbPigeonMax); nbVache++)
-						z.addAnimal((Animal) new Vache(z));
-					for (int nbPigeon = 0; nbPigeon < r.nextInt(nbVacheMax); nbPigeon++)
-						z.addAnimal(new Pigeon(z));
-					for (int nbCorbeau = 0; nbCorbeau < r.nextInt(nbCorbeauMax); nbCorbeau++)
-						z.addAnimal(new Corbeau(z));
+					});
 				}
 			}
 		}
 	}
 
-	public void initRandomNbVegetaux() {
+	/*
+	 * public void initRandomNbVegetaux2() { for (int i = 0; i < nbZonesL; i++) {
+	 * for (int j = 0; j < nbZonesH; j++) { if (r.nextInt(100) <= 30) { int
+	 * nbSapinMax, nbCheneMax, nbArtichautMax, nbAbsintheMax; switch
+	 * (defaultZones[i][j]) { case 1: nbSapinMax = 150; nbCheneMax = 200;
+	 * nbArtichautMax = 22; nbAbsintheMax = 35; break; case 2: nbSapinMax = 5;
+	 * nbCheneMax = 6; nbArtichautMax = 250; nbAbsintheMax = 300; break; default:
+	 * continue; } Zone z = zones[i][j]; if (z.getTypeZone() instanceof Riviere)
+	 * continue; for (int nbSapin = 4; nbSapin < nextIntBounds(4, nbSapinMax);
+	 * nbSapin++) z.addVegetal(new Sapin(z)); for (int nbChene = 4; nbChene <
+	 * nextIntBounds(4, nbCheneMax); nbChene++) z.addVegetal(new Chene(z)); for (int
+	 * nbArtichaut = 15; nbArtichaut < nextIntBounds(15, nbArtichautMax);
+	 * nbArtichaut++) z.addVegetal(new Artichaut(z)); for (int nbAbsinthe = 15;
+	 * nbAbsinthe < nextIntBounds(15, nbAbsintheMax); nbAbsinthe++) z.addVegetal(new
+	 * Absinthe(z)); } } } }
+	 */
+
+	private void initRandomNbVegetaux() {
 		for (int i = 0; i < nbZonesL; i++) {
 			for (int j = 0; j < nbZonesH; j++) {
-				if (r.nextInt(100) <= 30) {
-					int nbSapinMax, nbCheneMax, nbArtichautMax, nbAbsintheMax;
-					switch (defaultZones[i][j]) {
-					case 1:
-						nbSapinMax = 150;
-						nbCheneMax = 200;
-						nbArtichautMax = 22;
-						nbAbsintheMax = 35;
-						break;
-					case 2:
-						nbSapinMax = 5;
-						nbCheneMax = 6;
-						nbArtichautMax = 250;
-						nbAbsintheMax = 300;
-						break;
-					default:
-						continue;
-					}
-					Zone z = zones[i][j];
+				Zone z = zones[i][j];
+				if (r.nextInt(100) <= 45) {
 					if (z.getTypeZone() instanceof Riviere)
 						continue;
-					for (int nbSapin = 4; nbSapin < r.nextInt(4, nbSapinMax); nbSapin++)
-						z.addVegetal(new Sapin(z));
-					for (int nbChene = 4; nbChene < r.nextInt(4, nbCheneMax); nbChene++)
-						z.addVegetal(new Chene(z));
-					for (int nbArtichaut = 15; nbArtichaut < r.nextInt(15, nbArtichautMax); nbArtichaut++)
-						z.addVegetal(new Artichaut(z));
-					for (int nbAbsinthe = 15; nbAbsinthe < r.nextInt(15, nbAbsintheMax); nbAbsinthe++)
-						z.addVegetal(new Absinthe(z));
+					this.typeVegetaux.forEach((typeVegetal) -> {
+						int nbMax;
+						if (z.getTypeZone().getClass() == typeVegetal.getZoneFavorable().getClass())
+							nbMax = typeVegetal.getNbMinDansZoneFavorableForInit();
+						else
+							nbMax = typeVegetal.getNbMinDansZoneFavorableForInit() / 4;
+						for (int k = 0; k < nextIntBounds(nbMax / 2, nbMax); k++) {
+							Vegetal vegetal = typeVegetal.getNewVegetal();
+							vegetal.setZone_actuel(z);
+							z.addVegetal(vegetal);
+						}
+
+					});
 				}
 			}
 		}
@@ -295,8 +314,8 @@ public class Ecosysteme {
 				boolean END = true, HG = true, HM = true, HD = true, MG = true, MM = true, MD = true, BG = true,
 						BM = true, BD = true;
 				while (END && (HG || HM || HD || MG || MM || MD || BG || BM || BD)) {
-					rx = r.nextInt(-1, 2);
-					ry = r.nextInt(-1, 2);
+					rx = nextIntBounds(-1, 2);
+					ry = nextIntBounds(-1, 2);
 					if (rx == -1 && ry == -1)
 						HG = false;
 					if (rx == -1 && ry == 0)
@@ -331,8 +350,8 @@ public class Ecosysteme {
 								&& !(zones[x][y].getTypeZone() instanceof Riviere))
 							animal.seDeplacer(x, y);
 						else {
-							x = ax + r.nextInt(-1, 2);
-							y = ay + r.nextInt(-1, 2);
+							x = ax + nextIntBounds(-1, 2);
+							y = ay + nextIntBounds(-1, 2);
 							if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
 									&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
 											&& zones[x][y].getTypeZone() instanceof Desert)
@@ -342,8 +361,8 @@ public class Ecosysteme {
 				} catch (VolerException | SeDeplacerException e) {
 				}
 			} else if (r.nextInt(100) < 10) {
-				int x = z.getX() + r.nextInt(-1, 2);
-				int y = z.getY() + r.nextInt(-1, 2);
+				int x = z.getX() + nextIntBounds(-1, 2);
+				int y = z.getY() + nextIntBounds(-1, 2);
 				if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
 						&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
 								&& zones[x][y].getTypeZone() instanceof Desert))
@@ -355,93 +374,32 @@ public class Ecosysteme {
 		});
 	}
 
-	public void deplacement(Zone z) {
-		z.getAnimaux().forEach((animal) -> {
-			int x = 0, y = 0, ax = z.getX(), ay = z.getY();
-			if (zones[ax + 0][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax + 0;
-				y = ay + 0;
-			} else if (ax - 1 >= 0 && ay - 1 >= 0
-					&& zones[ax - 1][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax - 1;
-				y = ay - 1;
-			} else if (ax - 1 >= 0
-					&& zones[ax - 1][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax - 1;
-				y = ay + 0;
-			} else if (ax - 1 >= 0 && ay + 1 < nbZonesL
-					&& zones[ax - 1][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax - 1;
-				y = ay + 1;
-			} else if (ay - 1 >= 0
-					&& zones[ax + 0][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax + 0;
-				y = ay - 1;
-			} else if (ay + 1 < nbZonesL
-					&& zones[ax + 0][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax + 0;
-				y = ay + 1;
-			} else if (ax + 1 < nbZonesH && ay - 1 >= 0
-					&& zones[ax + 1][ay - 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax + 1;
-				y = ay - 1;
-			} else if (ax + 1 < nbZonesH
-					&& zones[ax + 1][ay + 0].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax + 1;
-				y = ay + 0;
-			} else if (ax + 1 < nbZonesH && ay + 1 < nbZonesL
-					&& zones[ax + 1][ay + 1].getTypeZone().getClass() == animal.getZoneFavorable().getClass()) {
-				x = ax + 1;
-				y = ay + 1;
-			} else {
-				int rx = r.nextInt(-1, 2);
-				int ry = r.nextInt(-1, 2);
-				x = ax + rx;
-				y = ay + ry;
-			}
-			try {
-				if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
-						&& !(zones[x][y].getTypeZone() instanceof Riviere)) {
-					if (!(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
-							&& zones[x][y].getTypeZone() instanceof Desert))
-						animal.seDeplacer(x, y);
-				}
-			} catch (VolerException | SeDeplacerException e) {
-			}
-		});
-
-	}
-
 	public void reproduction(Zone z) {
-		z.getInsectes().forEach((insecte) -> {
-			if (z.getNbInsecte() > 0) {
-				try {
-					if (insecte.getAge() >= insecte.getAgeMinReproduction() && !insecte.isDejaReproduiCecycle()
-							&& r.nextInt(100) <= insecte.getTauxDeReproduction()
-							&& insecte.getZoneFavorable().getClass() == z.getTypeZone().getClass())
-						insecte.seReproduire();
-				} catch (ReproduireException e) {
-				}
-			}
-		});
-		z.getOiseaux().forEach((oiseau) -> {
-			if (z.getNbOiseau() > 0) {
-				try {
-					if (oiseau.getAge() >= oiseau.getAgeMinReproduction() && !oiseau.isDejaReproduiCecycle()
-							&& oiseau.getNbCyclesSansEau() == 0 && oiseau.getNbCyclesSansManger() == 0
-							&& r.nextInt(100) <= oiseau.getTauxDeReproduction())
-						oiseau.seReproduire();
-				} catch (ReproduireException e) {
-				}
-			}
-		});
-		z.getMammiferes().forEach((mammifere) -> {
+		/*
+		 * z.getInsectes().forEach((insecte) -> { if (z.getNbInsecte() > 0) { try { if
+		 * (insecte.getAge() >= insecte.getAgeMinReproduction() &&
+		 * !insecte.isDejaReproduiCecycle() && r.nextInt(100) <=
+		 * insecte.getTauxDeReproduction() && insecte.getZoneFavorable().getClass() ==
+		 * z.getTypeZone().getClass()) insecte.seReproduire(); } catch
+		 * (ReproduireException e) { } } }); z.getOiseaux().forEach((oiseau) -> { if
+		 * (z.getNbOiseau() > 0) { try { if (oiseau.getAge() >=
+		 * oiseau.getAgeMinReproduction() && !oiseau.isDejaReproduiCecycle() &&
+		 * oiseau.getNbCyclesSansEau() == 0 && oiseau.getNbCyclesSansManger() == 0 &&
+		 * r.nextInt(100) <= oiseau.getTauxDeReproduction()) oiseau.seReproduire(); }
+		 * catch (ReproduireException e) { } } }); z.getMammiferes().forEach((mammifere)
+		 * -> { if (z.getNbMammifere() > 0) { try { if (mammifere.getAge() >=
+		 * mammifere.getAgeMinReproduction() && !mammifere.isDejaReproduiCecycle() &&
+		 * mammifere.getNbCyclesSansEau() == 0 && mammifere.getNbCyclesSansManger() == 0
+		 * && r.nextInt(100) <= mammifere.getTauxDeReproduction())
+		 * mammifere.seReproduire(); } catch (ReproduireException e) { } } });
+		 */
+		z.getAnimaux().forEach((animal) -> {
 			if (z.getNbMammifere() > 0) {
 				try {
-					if (mammifere.getAge() >= mammifere.getAgeMinReproduction() && !mammifere.isDejaReproduiCecycle()
-							&& mammifere.getNbCyclesSansEau() == 0 && mammifere.getNbCyclesSansManger() == 0
-							&& r.nextInt(100) <= mammifere.getTauxDeReproduction())
-						mammifere.seReproduire();
+					if (animal.getAge() >= animal.getAgeMinReproduction() && !animal.isDejaReproduiCecycle()
+							&& animal.getNbCyclesSansEau() == 0 && animal.getNbCyclesSansManger() == 0
+							&& r.nextInt(100) <= animal.getTauxDeReproduction())
+						animal.seReproduire();
 				} catch (ReproduireException e) {
 				}
 			}
@@ -459,8 +417,8 @@ public class Ecosysteme {
 						boolean END = true, HG = true, HM = true, HD = true, MG = true, MM = true, MD = true, BG = true,
 								BM = true, BD = true;
 						while (END && (HG || HM || HD || MG || MM || MD || BG || BM || BD)) {
-							rx = r.nextInt(-1, 2);
-							ry = r.nextInt(-1, 2);
+							rx = nextIntBounds(-1, 2);
+							ry = nextIntBounds(-1, 2);
 							if (rx == -1 && ry == -1)
 								HG = false;
 							if (rx == -1 && ry == 0)
@@ -541,7 +499,7 @@ public class Ecosysteme {
 	public void evolutionEnvironement(Zone z) {
 		z.verifierTypeZone();
 		try {
-			z.changerTemperature(r.nextInt(-10, 11));
+			z.changerTemperature(nextIntBounds(-4, 5));
 		} catch (ChangerTemperatureException e) {
 		}
 	}
@@ -561,7 +519,26 @@ public class Ecosysteme {
 				this.nourrissage(z);
 			}
 		}
+		this.checkEvents();
 		this.cycle++;
+	}
+
+	public void addEvent(int cycle, int x, int y, Animal animal, int nbAnimal, Vegetal vegetal, int nbVegetal,
+			double eau, double temperature) {
+		events.add(new Event(this, cycle, nbVegetal, nbVegetal, animal, nbVegetal, vegetal, nbVegetal, temperature,
+				temperature));
+
+	}
+
+	public void checkEvents() {
+		Iterator<Event> iter = events.iterator();
+		while (iter.hasNext()) {
+			Event e = iter.next();
+			if (e.checkEvent(cycle)) {
+				pastEvents.add(e);
+				iter.remove();
+			}
+		}
 	}
 
 	public void simulation() {
@@ -582,4 +559,5 @@ public class Ecosysteme {
 			}
 		}
 	}
+
 }

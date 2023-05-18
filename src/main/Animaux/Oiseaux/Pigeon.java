@@ -11,7 +11,7 @@ import main.TypeZones.Plaine;
 public class Pigeon extends Oiseau implements Vole {
 
 	public Pigeon(Zone zone_actuel) {
-		super(zone_actuel, 0.06, 6, 50, 1, new Plaine());
+		super(zone_actuel, 0.06, 6, 10, 1, new Plaine(), 40);
 	}
 
 	@Override
@@ -49,4 +49,9 @@ public class Pigeon extends Oiseau implements Vole {
 				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 
+	@Override
+	public Animal getNewAnimal() {
+		return new Pigeon(null);
+	}
+	
 }

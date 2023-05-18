@@ -1,25 +1,26 @@
-package main.Animaux.Mammiferes.Herbivore;
+package main.Animaux.Mammiferes.Carnivores;
 
 import interfaces.Marche;
 import main.Zone;
 import main.Animaux.Animal;
+import main.Animaux.Insectes.Insecte;
 import main.Execeptions.MangerException;
 import main.Execeptions.ReproduireException;
 import main.Execeptions.SeDeplacerException;
 import main.TypeZones.Desert;
-import main.TypeZones.Plaine;
+import main.TypeZones.Foret;
 
-public class Vache extends Herbivore implements Marche {
+public class Guepard extends Carnivore implements Marche {
 
-	public Vache(Zone zone_actuel) {
-		super(zone_actuel, 0.8, 17, 35, 3, new Plaine(), 10);
+	public Guepard(Zone zone_actuel) {
+		super(zone_actuel, 0.3, 12, 17, 2, new Foret(), 7);
 	}
 
 	@Override
 	public void seReproduire() throws ReproduireException {
 		if (this.getZone_actuel().getNbMammifere() > 0) {
 			Animal animal = this.getZone_actuel().getMammifere(r.nextInt(this.getZone_actuel().getNbMammifere()));
-			if (!(animal instanceof Vache))
+			if (!(animal instanceof Guepard))
 				throw new ReproduireException(this.getClass() + " x " + animal.getClass());
 			else if (this.getZone_actuel() != animal.getZone_actuel())
 				throw new ReproduireException("different zones");
@@ -32,26 +33,30 @@ public class Vache extends Herbivore implements Marche {
 			else {
 				this.setDejaReproduiCecycle(true);
 				animal.setDejaReproduiCecycle(true);
-				animal.getZone_actuel().addAnimal((Animal) new Vache(animal.getZone_actuel()));
+				animal.getZone_actuel().addAnimal((Animal) new Guepard(animal.getZone_actuel()));
 			}
 		}
 	}
-
+	
 	@Override
 	public void manger() throws MangerException {
 		Zone z = this.getZone_actuel();
-		if (z.getNbVivace() > 0) {
-			for (int i = 0; i < r.nextInt(6); i++) {
-				if (z.getNbVivace() == 0)
+		if (z.getNbAnimaux() > 0) {
+			for (int i = 0; i < r.nextInt(4); i++) {
+				if (z.getNbAnimaux() == 0)
 					break;
-				else
-					z.removeVivace(r.nextInt(z.getNbVivace()));
+				else { 
+					Animal animal = z.getAnimal(r.nextInt(z.getNbAnimaux()));
+					if (r.nextInt(100) < 30)
+					if (!(animal instanceof Guepard) && !(animal instanceof Insecte))
+						z.removeAnimal(animal);
+				}
 			}
 			this.setNbCyclesSansManger(0);
 		} else
 			this.augmenterNbCyclesSansManger();
 	}
-
+	
 	@Override
 	public void seDeplacer(int x, int y) throws SeDeplacerException {
 		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
@@ -64,7 +69,7 @@ public class Vache extends Herbivore implements Marche {
 	
 	@Override
 	public Animal getNewAnimal() {
-		return new Vache(null);
+		return new Guepard(null);
 	}
-
+	
 }

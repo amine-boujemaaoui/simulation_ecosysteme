@@ -11,7 +11,7 @@ import main.TypeZones.Foret;
 public class Corbeau extends Oiseau implements Vole {
 
 	public Corbeau(Zone zone_actuel) {
-		super(zone_actuel, 0.09, 8, 67, 1, new Foret());
+		super(zone_actuel, 0.09, 8, 10, 1, new Foret(), 30);
 	}
 
 	@Override
@@ -44,6 +44,11 @@ public class Corbeau extends Oiseau implements Vole {
 		else
 			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
 				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+	}
+	
+	@Override
+	public Animal getNewAnimal() {
+		return new Corbeau(null);
 	}
 }
 

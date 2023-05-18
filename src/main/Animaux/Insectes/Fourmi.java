@@ -12,7 +12,7 @@ import main.TypeZones.Plaine;
 public class Fourmi extends Insecte implements Marche {
 
 	public Fourmi(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 2, 70, 1, new Plaine());
+		super(zone_actuel, 0.002, 3, 45, 1, new Plaine(), 200);
 	}
 
 	@Override
@@ -42,9 +42,9 @@ public class Fourmi extends Insecte implements Marche {
 		if (x >= this.getZone_actuel().getEcosysteme().getNbZonesH() || x < 0
 				|| y >= this.getZone_actuel().getEcosysteme().getNbZonesL() || y < 0)
 			throw new SeDeplacerException("ERREUR: tentative de deplacement en dehors de la grille");
-		else
-			if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert) && this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
-				this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
+		else if (!(!(this.getZone_actuel().getTypeZone() instanceof Desert)
+				&& this.getZone_actuel().getEcosysteme().getZone(x, y).getTypeZone() instanceof Desert))
+			this.getZone_actuel().getEcosysteme().deplacerAnimal(this, x, y);
 	}
 
 	@Override
@@ -54,11 +54,16 @@ public class Fourmi extends Insecte implements Marche {
 			for (int i = 0; i < r.nextInt(2); i++) {
 				if (z.getNbVivace() == 0)
 					break;
-				else
+				else if (r.nextInt(100) < 40)
 					z.removeVivace(r.nextInt(z.getNbVivace()));
 			}
 			this.setNbCyclesSansManger(0);
 		} else
 			this.augmenterNbCyclesSansManger();
+	}
+
+	@Override
+	public Animal getNewAnimal() {
+		return new Fourmi(null);
 	}
 }

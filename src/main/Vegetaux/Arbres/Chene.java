@@ -3,11 +3,12 @@ package main.Vegetaux.Arbres;
 import main.Zone;
 import main.Execeptions.PropagerException;
 import main.TypeZones.Foret;
+import main.Vegetaux.Vegetal;
 
 public class Chene extends Arbre {
 
 	public Chene(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 23, 10, 7, new Foret());
+		super(zone_actuel, 0.002, 25, 10, 7, new Foret(), 50);
 	}
 
 	@Override
@@ -18,5 +19,10 @@ public class Chene extends Arbre {
 		else {
 			this.getZone_actuel().getEcosysteme().propagerVegetal(new Chene(this.getZone_actuel()), x, y);
 		}
+	}
+	
+	@Override
+	public Vegetal getNewVegetal() {
+		return new Chene(null);
 	}
 }

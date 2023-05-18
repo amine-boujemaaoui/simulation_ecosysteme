@@ -1,7 +1,6 @@
 package main.Animaux;
 
 import java.util.Random;
-
 import interfaces.Boir;
 import interfaces.ReproductionAnimal;
 import main.Zone;
@@ -25,9 +24,10 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	private final int tauxDeReproduction;
 	private final int ageMinReproduction;
 	private TypeZone zoneFavorable;
+	private int nbMinDansZoneFavorableForInit;
 
 	public Animal(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction,
-			TypeZone zoneFavorable) {
+			TypeZone zoneFavorable, int nbMinDansZoneFavorableForInit) {
 		super();
 		this.zone_actuel = zone_actuel;
 		this.eauRequise = eauRequise;
@@ -39,6 +39,7 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 		this.tauxDeReproduction = tauxDeReproduction;
 		this.ageMinReproduction = ageMinReproduction;
 		this.zoneFavorable = zoneFavorable;
+		this.nbMinDansZoneFavorableForInit = nbMinDansZoneFavorableForInit;
 	}
 
 	@Override
@@ -137,4 +138,10 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	public void augmenterNbCyclesSansManger() {
 		this.nbCyclesSansManger += 1;
 	}
+
+	public int getNbMinDansZoneFavorableForInit() {
+		return nbMinDansZoneFavorableForInit;
+	}
+	
+	public abstract Animal getNewAnimal();
 }
