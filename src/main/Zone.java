@@ -25,7 +25,6 @@ public class Zone {
 	private TypeZone typeZone;
 	private Ecosysteme ecosysteme;
 	private final int x, y;
-	
 
 	public Zone(int x, int y, double eau, double temperature, Ecosysteme ecosysteme) {
 		super();
@@ -93,7 +92,7 @@ public class Zone {
 	public Vegetal getVegetal(int i) {
 		return this.vegetaux.get(i);
 	}
-	
+
 	public ArrayList<Arbre> getArbres() {
 		ArrayList<Arbre> arbres_copie = new ArrayList<Arbre>();
 		arbres_copie.addAll(this.arbres);
@@ -103,7 +102,7 @@ public class Zone {
 	public Arbre getArbre(int i) {
 		return this.arbres.get(i);
 	}
-	
+
 	public ArrayList<Vivace> getVivaces() {
 		ArrayList<Vivace> vivaces_copie = new ArrayList<Vivace>();
 		vivaces_copie.addAll(this.vivaces);
@@ -129,11 +128,11 @@ public class Zone {
 	public int getY() {
 		return y;
 	}
-	
+
 	public int getNbAnimaux() {
 		return this.animaux.size();
 	}
-	
+
 	public int getNbVegetaux() {
 		return this.vegetaux.size();
 	}
@@ -149,11 +148,11 @@ public class Zone {
 	public int getNbMammifere() {
 		return this.mammiferes.size();
 	}
-	
+
 	public int getNbArbre() {
 		return this.arbres.size();
 	}
-	
+
 	public int getNbVivace() {
 		return this.vivaces.size();
 	}
@@ -268,7 +267,7 @@ public class Zone {
 			this.arbres.remove((Arbre) vegetal);
 		else
 			this.vivaces.remove((Vivace) vegetal);
-		
+
 	}
 
 	public void removeVegetal(int i) throws RemoveEntityException {
@@ -283,7 +282,7 @@ public class Zone {
 			this.vegetaux.remove(i);
 		}
 	}
-	
+
 	public void removeArbre(Arbre arbre) {
 		this.arbres.remove(arbre);
 		this.vegetaux.remove(arbre);
@@ -294,7 +293,7 @@ public class Zone {
 		this.arbres.remove(i);
 		this.vegetaux.remove(arbre);
 	}
-	
+
 	public void removeVivace(Vivace vivace) {
 		this.vivaces.remove(vivace);
 		this.vegetaux.remove(vivace);
@@ -310,15 +309,16 @@ public class Zone {
 	public void verifierTypeZone() {
 		TypeZone riviere = new Riviere();
 		this.ecosysteme.getTypeZones().forEach((typeZone) -> {
-			if (this.eau >= typeZone.getEauMin() && this.eau <= typeZone.getEauMax()/* && this.getNbVegetaux() >= typeZone.getNbVegetauxMin()*/) {
+			if (this.eau >= typeZone.getEauMin()
+					&& this.eau <= typeZone.getEauMax()/* && this.getNbVegetaux() >= typeZone.getNbVegetauxMin() */) {
 				this.setTypeZone(typeZone);
-				this.setTemperature(this.eau/10*0.4);
+				this.setTemperature(40 / this.eau *200);
 			}
-			
-			if(this.getNbArbre()> 70 && this.eau + 1 < riviere.getEauMin()) {
+
+			if (this.getNbArbre() > 70 && this.eau + 1 < riviere.getEauMin()) {
 				this.eau += 1;
 			}
-			
+
 		});
 	}
 
@@ -327,6 +327,5 @@ public class Zone {
 		return "[e:" + eau + "," + " t:" + temperature + ",a:" + animaux.size() + ",v:" + vegetaux.size() + ", n:"
 				+ typeZone.getNomTypeZone() + "]";
 	}
-
 
 }
