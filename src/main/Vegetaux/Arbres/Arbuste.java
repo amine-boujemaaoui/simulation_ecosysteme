@@ -8,7 +8,7 @@ import main.Vegetaux.Vegetal;
 public class Arbuste extends Arbre {
 
 	public Arbuste(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 25, 10, 7, new Plaine(), 6);
+		super(zone_actuel, 0.002, 20, 10, 7, new Plaine(), 6);
 	}
 
 	@Override

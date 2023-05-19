@@ -8,7 +8,7 @@ import main.Vegetaux.Vegetal;
 public class Absinthe extends Vivace {
 
 	public Absinthe(Zone zone_actuel) {
-		super(zone_actuel, 0.00098, 6, 30, 2, new Plaine(), 200);
+		super(zone_actuel, 0.00098, 6, 25, 2, new Plaine(), 200);
 	}
 
 	@Override

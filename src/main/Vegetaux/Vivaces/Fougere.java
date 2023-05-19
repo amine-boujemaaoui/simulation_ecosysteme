@@ -8,7 +8,7 @@ import main.Vegetaux.Vegetal;
 public class Fougere extends Vivace {
 
 	public Fougere(Zone zone_actuel) {
-		super(zone_actuel, 0.009, 6, 25, 3, new Foret(), 80);
+		super(zone_actuel, 0.009, 6, 20, 3, new Foret(), 80);
 	}
 
 	@Override
