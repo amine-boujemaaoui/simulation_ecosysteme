@@ -47,8 +47,7 @@ public class Ecosysteme {
 	 * Ecosysteme class constructor.
 	 * 
 	 * @param map                 The name of the map file that contains the default
-	 *                            zones
-	 *                            information.
+	 *                            zones information.
 	 * @param defaultTypeZones    The default TypeZones for the grid generation.
 	 * @param defaultTypeAnimaux  The deefault animals type for the initial random
 	 *                            generation of animals.
@@ -144,8 +143,7 @@ public class Ecosysteme {
 	 * @param min The minimum value that the method should return.
 	 * @param max The maximum value that the method can return (exclusive).
 	 * @return The method is returning an integer value that is randomly generated
-	 *         within the specified
-	 *         bounds of `min` and `max`.
+	 *         within the specified bounds of `min` and `max`.
 	 */
 	public int nextIntBounds(int min, int max) {
 		return r.nextInt(max - min) + min;
@@ -153,8 +151,8 @@ public class Ecosysteme {
 
 	/**
 	 * The function initializes the simulation by setting certain variables and
-	 * creating zones with default
-	 * settings, events, and random numbers of animals and plants.
+	 * creating zones with default settings, events, and random numbers of animals
+	 * and plants.
 	 */
 	public void initSimulation() {
 		Ecosysteme.simulate = false; // la simulation est mise en pause par defaut
@@ -174,10 +172,9 @@ public class Ecosysteme {
 	 * This function returns a copy of an ArrayList of TypeZone objects.
 	 * 
 	 * @return An ArrayList of TypeZone objects is being returned. The method
-	 *         creates a copy of the
-	 *         original ArrayList called "typeZones_copie" and adds all the elements
-	 *         of the original ArrayList
-	 *         "typeZones" to it. The copy is then returned.
+	 *         creates a copy of the original ArrayList called "typeZones_copie" and
+	 *         adds all the elements of the original ArrayList "typeZones" to it.
+	 *         The copy is then returned.
 	 */
 	public ArrayList<TypeZone> getTypeZones() {
 		ArrayList<TypeZone> typeZones_copie = new ArrayList<TypeZone>();
@@ -189,9 +186,8 @@ public class Ecosysteme {
 	 * This Java function removes an event from a list of events.
 	 * 
 	 * @param e The parameter "e" is an object of the class "Event" that is being
-	 *          passed to the method
-	 *          "removeEvent". The method removes this particular event object from
-	 *          the list of events stored in the
+	 *          passed to the method "removeEvent". The method removes this
+	 *          particular event object from the list of events stored in the
 	 *          current object.
 	 */
 	public void removeEvent(Event e) {
@@ -212,8 +208,7 @@ public class Ecosysteme {
 	 * This function returns the value of the variable nbZonesL.
 	 * 
 	 * @return The method is returning an integer value which represents the number
-	 *         of zones in the L
-	 *         direction.
+	 *         of zones in the L direction.
 	 */
 	public int getNbZonesL() {
 		return nbZonesL;
@@ -229,10 +224,9 @@ public class Ecosysteme {
 	 * @param j The column index of the zone in the 2D array of zones.
 	 * @param i The row index of the zone in the 2D array of zones.
 	 * @return The method `getZoneForGrille` is returning a `Zone` object. The
-	 *         specific `Zone` object being
-	 *         returned is determined by the `i` and `j` parameters passed to the
-	 *         method, which are used to access
-	 *         the `zones` array.
+	 *         specific `Zone` object being returned is determined by the `i` and
+	 *         `j` parameters passed to the method, which are used to access the
+	 *         `zones` array.
 	 */
 	public Zone getZoneForGrille(int j, int i) {
 		return zones[i][j];
@@ -251,8 +245,7 @@ public class Ecosysteme {
 	 * The function returns the value of the variable "cycle".
 	 * 
 	 * @return The method `getCycle()` is returning an integer value which is the
-	 *         value of the variable
-	 *         `cycle`.
+	 *         value of the variable `cycle`.
 	 */
 	public int getCycle() {
 		return cycle;
@@ -262,8 +255,7 @@ public class Ecosysteme {
 	 * This function returns the maximum number of entities allowed per zone.
 	 * 
 	 * @return The method is returning an integer value which represents the maximum
-	 *         number of entities
-	 *         allowed per zone.
+	 *         number of entities allowed per zone.
 	 */
 	public int getNbMaxEntiteParZone() {
 		return nbMaxEntiteParZone;
@@ -273,9 +265,8 @@ public class Ecosysteme {
 	 * This function sets the maximum number of entities per zone in a Java program.
 	 * 
 	 * @param nbMaxEntiteParZone This parameter represents the maximum number of
-	 *                           entities that can be
-	 *                           present in a single zone. The method sets the value
-	 *                           of this parameter.
+	 *                           entities that can be present in a single zone. The
+	 *                           method sets the value of this parameter.
 	 */
 	public void setNbMaxEntiteParZone(int nbMaxEntiteParZone) {
 		this.nbMaxEntiteParZone = nbMaxEntiteParZone;
@@ -316,9 +307,8 @@ public class Ecosysteme {
 	 * @param x      The x-coordinate of the destination zone where the animal is
 	 *               being moved to.
 	 * @param y      The "y" parameter in the "deplacerAnimal" method is an integer
-	 *               representing the
-	 *               y-coordinate of the destination zone where the animal is being
-	 *               moved to.
+	 *               representing the y-coordinate of the destination zone where the
+	 *               animal is being moved to.
 	 */
 	public void deplacerAnimal(Animal animal, int x, int y) {
 		// si la zone ou l'animal va se deplacer n'est pas une riviere alors on le
@@ -339,8 +329,7 @@ public class Ecosysteme {
 	 * @param x       The x-coordinate of the zone where the vegetal is being
 	 *                propagated.
 	 * @param y       The parameter "y" represents the vertical coordinate of the
-	 *                zone where the vegetal will be
-	 *                propagated.
+	 *                zone where the vegetal will be propagated.
 	 */
 	public void propagerVegetal(Vegetal vegetal, int x, int y) {
 		// si la zone ou le vegetal va se deplacer n'est pas une riviere alors on
@@ -353,8 +342,7 @@ public class Ecosysteme {
 
 	/**
 	 * This function redraws a grid with different types of animals and plants
-	 * represented by colored
-	 * discs or icons.
+	 * represented by colored discs or icons.
 	 */
 	public void redessine() {
 		int taillePaquets = 32, tailleRestant = 0; // on definit une taille maximal de l'icon en fonction du nombre
@@ -407,8 +395,7 @@ public class Ecosysteme {
 
 	/**
 	 * This function initializes default zones with random values for water and
-	 * temperature within
-	 * specified ranges.
+	 * temperature within specified ranges.
 	 */
 	public void initdefaultZones() {
 		// pour chaque zones
@@ -447,8 +434,7 @@ public class Ecosysteme {
 
 	/**
 	 * This function initializes a random number of animals in each zone based on
-	 * the type of zone and the
-	 * maximum number of animals allowed in that zone.
+	 * the type of zone and the maximum number of animals allowed in that zone.
 	 */
 	private void initRandomNbAnimaux() {
 		// pour chaque zone
@@ -516,140 +502,151 @@ public class Ecosysteme {
 
 	/**
 	 * This function randomly moves animals within a given zone, taking into account
-	 * their preferred
-	 * habitat and avoiding certain types of zones.
+	 * their preferred habitat and avoiding certain types of zones.
 	 * 
 	 * @param z The parameter "z" is an object of the class "Zone", which represents
-	 *          a specific zone in the
-	 *          simulation. The method "deplacementAleatoire" takes all the animals
-	 *          present in this zone and
-	 *          randomly moves them to a neighboring zone that is favorable to their
-	 *          habitat. If the animal is
-	 *          already in
+	 *          a specific zone in the simulation. The method "deplacementAleatoire"
+	 *          takes all the animals present in this zone and randomly moves them
+	 *          to a neighboring zone that is favorable to their habitat. If the
+	 *          animal is already in
 	 */
 	public void deplacementAleatoire(Zone z) {
 		// pour chaque animal de la zone z
 		z.getAnimaux().forEach((animal) -> {
-			// si l'animal n'est pas dans ca zone favorablea
-			if (!(z.getTypeZone().getClass() == animal.getZoneFavorable().getClass())) {
-				int x = 0, y = 0, rx, ry, ax = z.getX(), ay = z.getY(); // on reccupere la position de la zone actuel
-				boolean END = true, HG = true, HM = true, HD = true, MG = true, MM = true, MD = true, BG = true,
-						BM = true, BD = true; // on definit des indicateur de verification, par exemple HG signifiant en
-												// Haut a Gauche de la zone actuel, et un indicateur pour determiner si
-												// une zone favorable a ete trouver (END)
-				while (END && (HG || HM || HD || MG || MM || MD || BG || BM || BD)) {
-					rx = nextIntBounds(-1, 2);
-					ry = nextIntBounds(-1, 2);
-					// on genere deux variable aleatoirement valant -1, 0 ou 1
-					if (rx == -1 && ry == -1)
-						HG = false; // on redefinis l'indicateur de postion commme verifier
-					if (rx == -1 && ry == 0)
-						HM = false;
-					if (rx == -1 && ry == 1)
-						HD = false;
-					if (rx == 0 && ry == -1)
-						MG = false;
-					if (rx == 0 && ry == 0)
-						MM = false;
-					if (rx == 0 && ry == 1)
-						MD = false;
-					if (rx == 1 && ry == -1)
-						BG = false;
-					if (rx == 1 && ry == 0)
-						BM = false;
-					if (rx == 1 && ry == 1)
-						BD = false;
-					// si on reste bien a l'interieur de la grille et que l'on a trouver une zone
-					// dont le type est le meme que la zone favorable de l'animal, on calcule x et y
-					// pour ce deplacer dans cette zone
-					if (ax + rx >= 0 && ax + rx < nbZonesH && ay + ry >= 0 && ay + ry < nbZonesL
-							&& zones[ax + rx][ay + ry].getTypeZone().getClass() == animal.getZoneFavorable()
-									.getClass()) {
-						x = ax + rx;
-						y = ay + ry;
-						END = false;
+			if (!animal.isDejaTraiterCeCycle()) {
+				// si l'animal n'est pas dans ca zone favorablea
+				if (!(z.getTypeZone().getClass() == animal.getZoneFavorable().getClass())) {
+					int x = 0, y = 0, rx, ry, ax = z.getX(), ay = z.getY(); // on reccupere la position de la zone
+																			// actuel
+					boolean END = true, HG = true, HM = true, HD = true, MG = true, MM = true, MD = true, BG = true,
+							BM = true, BD = true; // on definit des indicateur de verification, par exemple HG
+													// signifiant en
+													// Haut a Gauche de la zone actuel, et un indicateur pour
+													// determiner si
+													// une zone favorable a ete trouver (END)
+					while (END && (HG || HM || HD || MG || MM || MD || BG || BM || BD)) {
+						rx = nextIntBounds(-1, 2);
+						ry = nextIntBounds(-1, 2);
+						// on genere deux variable aleatoirement valant -1, 0 ou 1
+						if (rx == -1 && ry == -1)
+							HG = false; // on redefinis l'indicateur de postion commme verifier
+						if (rx == -1 && ry == 0)
+							HM = false;
+						if (rx == -1 && ry == 1)
+							HD = false;
+						if (rx == 0 && ry == -1)
+							MG = false;
+						if (rx == 0 && ry == 0)
+							MM = false;
+						if (rx == 0 && ry == 1)
+							MD = false;
+						if (rx == 1 && ry == -1)
+							BG = false;
+						if (rx == 1 && ry == 0)
+							BM = false;
+						if (rx == 1 && ry == 1)
+							BD = false;
+						// si on reste bien a l'interieur de la grille et que l'on a trouver une zone
+						// dont le type est le meme que la zone favorable de l'animal, on calcule x et y
+						// pour ce deplacer dans cette zone
+						if (ax + rx >= 0 && ax + rx < nbZonesH && ay + ry >= 0 && ay + ry < nbZonesL
+								&& zones[ax + rx][ay + ry].getTypeZone().getClass() == animal.getZoneFavorable()
+										.getClass()) {
+							x = ax + rx;
+							y = ay + ry;
+							END = false;
+						}
 					}
-				}
-				try {
-					if (END) // si la zone favorable n'a pas ete trouver
-						// si la zone ou on ce trouve est pas un desert et qu on veux ce deplacer vers
-						// un desert, on ne se deplace pas
-						if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
-								&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
-										&& zones[x][y].getTypeZone() instanceof Desert)
-								&& !(zones[x][y].getTypeZone() instanceof Riviere))
-							animal.seDeplacer(x, y); // on se deplace
-						else {
-							// sinon, on se deplace vers une case aleatoirement
-							x = ax + nextIntBounds(-1, 2);
-							y = ay + nextIntBounds(-1, 2);
+					try {
+						if (END) // si la zone favorable n'a pas ete trouver
+							// si la zone ou on ce trouve est pas un desert et qu on veux ce deplacer vers
+							// un desert, on ne se deplace pas
 							if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
 									&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
 											&& zones[x][y].getTypeZone() instanceof Desert)
 									&& !(zones[x][y].getTypeZone() instanceof Riviere))
-								animal.seDeplacer(x, y);
-						}
-				} catch (VolerException | SeDeplacerException e) {
-				}
-			} else if (r.nextInt(100) < 10) { // si l'animal est bien dans ca zone favorable, il y a quand meme 10% de
-												// chance qu'il ce deplace
-				int x = z.getX() + nextIntBounds(-1, 2);
-				int y = z.getY() + nextIntBounds(-1, 2);
-				if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
-						&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
-								&& zones[x][y].getTypeZone() instanceof Desert))
-					try {
-						animal.seDeplacer(x, y);
-					} catch (SeDeplacerException | VolerException e) {
+								animal.seDeplacer(x, y); // on se deplace
+							else {
+								// sinon, on se deplace vers une case aleatoirement
+								x = ax + nextIntBounds(-1, 2);
+								y = ay + nextIntBounds(-1, 2);
+								if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
+										&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
+												&& zones[x][y].getTypeZone() instanceof Desert)
+										&& !(zones[x][y].getTypeZone() instanceof Riviere))
+									animal.seDeplacer(x, y);
+								animal.setDejaTraiterCeCycle(true);
+							}
+					} catch (VolerException | SeDeplacerException e) {
 					}
+				} else if (r.nextInt(100) < 10) { // si l'animal est bien dans ca zone favorable, il y a quand meme
+													// 10% de
+													// chance qu'il ce deplace
+					int x = z.getX() + nextIntBounds(-1, 2);
+					int y = z.getY() + nextIntBounds(-1, 2);
+					if (x >= 0 && x < nbZonesH && y >= 0 && y < nbZonesL
+							&& !(!(animal.getZone_actuel().getTypeZone() instanceof Desert)
+									&& zones[x][y].getTypeZone() instanceof Desert))
+						try {
+							animal.seDeplacer(x, y);
+						} catch (SeDeplacerException | VolerException e) {
+						}
+				}
+				animal.setDejaTraiterCeCycle(true);
 			}
 		});
 	}
 
 	/**
 	 * The function iterates through the insects, birds, and mammals in a given zone
-	 * and attempts to
-	 * reproduce them based on certain conditions.
+	 * and attempts to reproduce them based on certain conditions.
 	 * 
 	 * @param z a Zone object, representing a specific zone in the simulation.
 	 */
 	public void reproduction(Zone z) {
 		// pour chaque insecte de la zone z
 		z.getInsectes().forEach((insecte) -> {
-			if (z.getNbInsecte() > 0) {
-				try {
-					// si l'insecte a deppaser son age minimum de reproduction
-					// et qu'il ne c'est pas deja reproduit ce cycle
-					// et qu'il est bien dans ca zone favorable
-					if (insecte.getAge() >= insecte.getAgeMinReproduction() && !insecte.isDejaReproduiCecycle()
-							&& r.nextInt(100) <= insecte.getTauxDeReproduction()
-							&& insecte.getZoneFavorable().getClass() == z.getTypeZone().getClass())
-						insecte.seReproduire(); // il se reproduit
-				} catch (ReproduireException e) {
+			if (!insecte.isDejaTraiterCeCycle()) {
+				if (z.getNbInsecte() > 0) {
+					try {
+						// si l'insecte a deppaser son age minimum de reproduction
+						// et qu'il ne c'est pas deja reproduit ce cycle
+						// et qu'il est bien dans ca zone favorable
+						if (insecte.getAge() >= insecte.getAgeMinReproduction() && !insecte.isDejaReproduiCecycle()
+								&& r.nextInt(100) <= insecte.getTauxDeReproduction()
+								&& insecte.getZoneFavorable().getClass() == z.getTypeZone().getClass())
+							insecte.seReproduire(); // il se reproduit
+					} catch (ReproduireException e) {
+					}
 				}
 			}
 		});
 		// de meme pour les oiseaux
 		z.getOiseaux().forEach((oiseau) -> {
-			if (z.getNbOiseau() > 0) {
-				try {
-					if (oiseau.getAge() >= oiseau.getAgeMinReproduction() && !oiseau.isDejaReproduiCecycle()
-							&& oiseau.getNbCyclesSansEau() == 0 && oiseau.getNbCyclesSansManger() == 0
-							&& r.nextInt(100) <= oiseau.getTauxDeReproduction())
-						oiseau.seReproduire();
-				} catch (ReproduireException e) {
+			if (!oiseau.isDejaTraiterCeCycle()) {
+				if (z.getNbOiseau() > 0) {
+					try {
+						if (oiseau.getAge() >= oiseau.getAgeMinReproduction() && !oiseau.isDejaReproduiCecycle()
+								&& oiseau.getNbCyclesSansEau() == 0 && oiseau.getNbCyclesSansManger() == 0
+								&& r.nextInt(100) <= oiseau.getTauxDeReproduction())
+							oiseau.seReproduire();
+					} catch (ReproduireException e) {
+					}
 				}
 			}
 		});
 		// de meme pour les mammifere
 		z.getMammiferes().forEach((mammifere) -> {
-			if (z.getNbMammifere() > 0) {
-				try {
-					if (mammifere.getAge() >= mammifere.getAgeMinReproduction() && !mammifere.isDejaReproduiCecycle()
-							&& mammifere.getNbCyclesSansEau() == 0 && mammifere.getNbCyclesSansManger() == 0
-							&& r.nextInt(100) <= mammifere.getTauxDeReproduction())
-						mammifere.seReproduire();
-				} catch (ReproduireException e) {
+			if (!mammifere.isDejaTraiterCeCycle()) {
+				if (z.getNbMammifere() > 0) {
+					try {
+						if (mammifere.getAge() >= mammifere.getAgeMinReproduction()
+								&& !mammifere.isDejaReproduiCecycle() && mammifere.getNbCyclesSansEau() == 0
+								&& mammifere.getNbCyclesSansManger() == 0
+								&& r.nextInt(100) <= mammifere.getTauxDeReproduction())
+							mammifere.seReproduire();
+					} catch (ReproduireException e) {
+					}
 				}
 			}
 		});
@@ -661,93 +658,98 @@ public class Ecosysteme {
 	 * conditions.
 	 * 
 	 * @param z The parameter "z" is an object of the class "Zone" which represents
-	 *          a zone in a simulation.
-	 *          The method "propagation" takes this object as a parameter and
-	 *          performs certain actions on the
-	 *          vegetation present in this zone.
+	 *          a zone in a simulation. The method "propagation" takes this object
+	 *          as a parameter and performs certain actions on the vegetation
+	 *          present in this zone.
 	 */
 	public void propagation(Zone z) {
 		// meme principe que la methode de deplacement des animaux a la differance que
 		// l'on cree un nouveau vegetal a la postionde destination et que les vegetaux
 		// peuvent se propager dans les zones non favorable voisine aux zones favorable
 		z.getVegetaux().forEach((vegetal) -> {
-			if (z.getNbVegetaux() > 0) {
-				try {
-					if (vegetal.getAge() >= vegetal.getAgeMinPropagation()
-							&& vegetal.getZoneFavorable().getClass() == z.getTypeZone().getClass()
-							&& r.nextInt(100) < vegetal.getTauxDePropagation()) {
-						int x = 0, y = 0, rx, ry, vx = z.getX(), vy = z.getY();
-						boolean END = true, HG = true, HM = true, HD = true, MG = true, MM = true, MD = true, BG = true,
-								BM = true, BD = true;
-						while (END && (HG || HM || HD || MG || MM || MD || BG || BM || BD)) {
-							rx = nextIntBounds(-1, 2);
-							ry = nextIntBounds(-1, 2);
-							if (rx == -1 && ry == -1)
-								HG = false;
-							if (rx == -1 && ry == 0)
-								HM = false;
-							if (rx == -1 && ry == 1)
-								HD = false;
-							if (rx == 0 && ry == -1)
-								MG = false;
-							if (rx == 0 && ry == 0)
-								MM = false;
-							if (rx == 0 && ry == 1)
-								MD = false;
-							if (rx == 1 && ry == -1)
-								BG = false;
-							if (rx == 1 && ry == 0)
-								BM = false;
-							if (rx == 1 && ry == 1)
-								BD = false;
-							if (vx + rx >= 0 && vx + rx < nbZonesH && vy + ry >= 0 && vy + ry < nbZonesL
-									&& zones[vx + rx][vy + ry].getEau() > vegetal.getEauRequise()) {
-								x = vx + rx;
-								y = vy + ry;
-								END = false;
+			if (!vegetal.isDejaTraiterCeCycle()) {
+				if (z.getNbVegetaux() > 0) {
+					try {
+						if (vegetal.getAge() >= vegetal.getAgeMinPropagation()
+								&& vegetal.getZoneFavorable().getClass() == z.getTypeZone().getClass()
+								&& r.nextInt(100) < vegetal.getTauxDePropagation()) {
+							int x = 0, y = 0, rx, ry, vx = z.getX(), vy = z.getY();
+							boolean END = true, HG = true, HM = true, HD = true, MG = true, MM = true, MD = true,
+									BG = true, BM = true, BD = true;
+							while (END && (HG || HM || HD || MG || MM || MD || BG || BM || BD)) {
+								rx = nextIntBounds(-1, 2);
+								ry = nextIntBounds(-1, 2);
+								if (rx == -1 && ry == -1)
+									HG = false;
+								if (rx == -1 && ry == 0)
+									HM = false;
+								if (rx == -1 && ry == 1)
+									HD = false;
+								if (rx == 0 && ry == -1)
+									MG = false;
+								if (rx == 0 && ry == 0)
+									MM = false;
+								if (rx == 0 && ry == 1)
+									MD = false;
+								if (rx == 1 && ry == -1)
+									BG = false;
+								if (rx == 1 && ry == 0)
+									BM = false;
+								if (rx == 1 && ry == 1)
+									BD = false;
+								if (vx + rx >= 0 && vx + rx < nbZonesH && vy + ry >= 0 && vy + ry < nbZonesL
+										&& zones[vx + rx][vy + ry].getEau() > vegetal.getEauRequise()) {
+									x = vx + rx;
+									y = vy + ry;
+									END = false;
+								}
 							}
+							vegetal.sePropager(x, y);
 						}
-						vegetal.sePropager(x, y);
+					} catch (PropagerException e) {
 					}
-				} catch (PropagerException e) {
+					if (vegetal.getZone_actuel().getTypeZone().getClass() == vegetal.getZoneFavorable().getClass())
+						vegetal.setNbCycleTypeZoneNonFavorable(0);
 				}
-				if (vegetal.getZone_actuel().getTypeZone().getClass() == vegetal.getZoneFavorable().getClass())
-					vegetal.setNbCycleTypeZoneNonFavorable(0);
+				vegetal.setDejaTraiterCeCycle(true);
 			}
 		});
 	}
 
 	/**
 	 * The function updates the age and removes animals and plants that have reached
-	 * their maximum age or
-	 * have gone without food or water for too long.
+	 * their maximum age or have gone without food or water for too long.
 	 * 
 	 * @param z a Zone object that represents a specific area in the simulation
-	 *          containing both animals and
-	 *          plants.
+	 *          containing both animals and plants.
 	 */
 	public void vieillissement(Zone z) {
 		// pour chauque animal de la zone z
 		z.getAnimaux().forEach((animal) -> {
-			// si l'animal a atteint son age maximal
-			// ou si il n'a pas bu depuis au moins 4 cycle
-			// ou si il n'a pas manger depuis au moins 20 cycle
-			if (animal.getAge() == animal.getAgeMax() || animal.getNbCyclesSansEau() >= 4
-					|| animal.getNbCyclesSansManger() >= 20) {
-				z.removeAnimal(animal); // il meure
-			} else {
-				// sinon, on redefinis qu'il ne c'est pas deja reproduit pour le cycle suivant
-				animal.setDejaReproduiCecycle(false);
-				// et il viellis d'un cycle
-				animal.vieillir();
+			if (!animal.isDejaTraiterCeCycle()) {
+				// si l'animal a atteint son age maximal
+				// ou si il n'a pas bu depuis au moins 4 cycle
+				// ou si il n'a pas manger depuis au moins 20 cycle
+				if (animal.getAge() == animal.getAgeMax() || animal.getNbCyclesSansEau() >= 3
+						|| animal.getNbCyclesSansManger() >= 6) {
+					z.removeAnimal(animal); // il meure
+				} else {
+					// sinon, on redefinis qu'il ne c'est pas deja reproduit pour le cycle suivant
+					animal.setDejaReproduiCecycle(false);
+					// et il viellis d'un cycle
+					animal.vieillir();
+				}
 			}
 		});
 		// de meme pour les vegetaux
 		z.getVegetaux().forEach((vegetal) -> {
-			if (vegetal.getAge() == vegetal.getAgeMax() || vegetal.getZone_actuel().getTypeZone() instanceof Desert) {
-				z.removeVegetal(vegetal);
-			} else
-				vegetal.vieillir();
+			if (!vegetal.isDejaTraiterCeCycle()) {
+				if (vegetal.getAge() == vegetal.getAgeMax()
+						|| vegetal.getZone_actuel().getTypeZone() instanceof Desert) {
+					z.removeVegetal(vegetal);
+				} else
+					vegetal.vieillir();
+			}
 		});
 	}
 
@@ -756,34 +758,36 @@ public class Ecosysteme {
 	 * in a given zone.
 	 * 
 	 * @param z The parameter "z" is an object of the class "Zone", which represents
-	 *          a zone in a zoo where
-	 *          animals and plants are kept. The method "nourrissage" takes this
-	 *          zone as input and performs feeding
+	 *          a zone in a zoo where animals and plants are kept. The method
+	 *          "nourrissage" takes this zone as input and performs feeding
 	 *          operations on all the animals and plants present in the zone.
 	 */
 	public void nourrissage(Zone z) {
 		// pour chaque animal de la zone z
 		z.getAnimaux().forEach((animal) -> {
-			try {
-				animal.boir(); // on le fait boir
-				animal.manger(); // et manger
-			} catch (BoirException e) {
-			} catch (MangerException e) {
+			if (!animal.isDejaTraiterCeCycle()) {
+				try {
+					animal.boir(); // on le fait boir
+					animal.manger(); // et manger
+				} catch (BoirException e) {
+				} catch (MangerException e) {
+				}
 			}
 		});
 		// pour chaque vegetal de la zone z
 		z.getVegetaux().forEach((vegetal) -> {
-			try {
-				vegetal.boir(); // on le fait boir
-			} catch (BoirException e) {
+			if (!vegetal.isDejaTraiterCeCycle()) {
+				try {
+					vegetal.boir(); // on le fait boir
+				} catch (BoirException e) {
+				}
 			}
 		});
 	}
 
 	/**
 	 * This function evolves the environment of a given zone by verifying its type
-	 * and changing its
-	 * temperature within a certain range.
+	 * and changing its temperature within a certain range.
 	 * 
 	 * @param z The parameter "z" is an object of the class "Zone".
 	 */
@@ -799,8 +803,8 @@ public class Ecosysteme {
 
 	/**
 	 * The function updates the simulation environment by iterating through each
-	 * zone and performing
-	 * various actions such as evolution, aging, reproduction, and feeding.
+	 * zone and performing various actions such as evolution, aging, reproduction,
+	 * and feeding.
 	 */
 	public void nextCycle() {
 		// a chaque cycle
@@ -824,43 +828,49 @@ public class Ecosysteme {
 		this.redessine();
 	}
 
+	public void resetDejaTraiter() {
+		// a chaque cycle
+		int i, j;
+		for (i = 0; i < nbZonesH; i++) {
+			for (j = 0; j < nbZonesL; j++) {
+				Zone z = zones[i][j];
+				z.getAnimaux().forEach((animal) -> animal.setDejaTraiterCeCycle(false));
+				z.getVegetaux().forEach((vegetal) -> vegetal.setDejaTraiterCeCycle(false));
+			}
+		}
+	}
+
 	/**
 	 * This function adds an event to a list of events with various parameters such
-	 * as cycle, coordinates,
-	 * animal and vegetal information, water and temperature levels.
+	 * as cycle, coordinates, animal and vegetal information, water and temperature
+	 * levels.
 	 * 
 	 * @param cycle       The cycle at which the event occurred. It refer to a
-	 *                    specific
-	 *                    iteration in the simulation.
+	 *                    specific iteration in the simulation.
 	 * @param x           The x-coordinate of the location where the event occurred.
 	 * @param y           The "y" parameter in the "addEvent" method is an integer
-	 *                    representing the y-coordinate of
-	 *                    the location where the event occurred.
+	 *                    representing the y-coordinate of the location where the
+	 *                    event occurred.
 	 * @param animal      The animal parameter is an object of the Animal class,
-	 *                    which represents an animal in
-	 *                    the simulation. It may contain information such as the
-	 *                    animal's species, age, gender, and other
-	 *                    characteristics.
+	 *                    which represents an animal in the simulation. It may
+	 *                    contain information such as the animal's species, age,
+	 *                    gender, and other characteristics.
 	 * @param nbAnimal    nbAnimal stands for the number of animals of the specified
-	 *                    type (represented by the
-	 *                    "animal" parameter) present at the specified location
-	 *                    (x,y) during the event.
+	 *                    type (represented by the "animal" parameter) present at
+	 *                    the specified location (x,y) during the event.
 	 * @param vegetal     The "vegetal" parameter is an object of the class
-	 *                    "Vegetal", which likely represents
-	 *                    a type of plant or vegetation in the simulation. It is
-	 *                    used to specify the type of vegetation
-	 *                    present at the location where the event is being added.
+	 *                    "Vegetal", which likely represents a type of plant or
+	 *                    vegetation in the simulation. It is used to specify the
+	 *                    type of vegetation present at the location where the event
+	 *                    is being added.
 	 * @param nbVegetal   nbVegetal refers to the number of instances of the Vegetal
-	 *                    object present in the
-	 *                    event being added.
+	 *                    object present in the event being added.
 	 * @param eau         The "eau" parameter is not included in the method
-	 *                    signature, so it is not a parameter for
-	 *                    this method.
+	 *                    signature, so it is not a parameter for this method.
 	 * @param temperature The temperature parameter is a double value representing
-	 *                    the temperature at which
-	 *                    the event occurred. It could be the temperature of the
-	 *                    environment or the temperature of a specific
-	 *                    location where the event took place.
+	 *                    the temperature at which the event occurred. It could be
+	 *                    the temperature of the environment or the temperature of a
+	 *                    specific location where the event took place.
 	 */
 	public void addEvent(int cycle, int x, int y, Animal animal, int nbAnimal, Vegetal vegetal, int nbVegetal,
 			double eau, double temperature) {
@@ -870,8 +880,7 @@ public class Ecosysteme {
 
 	/**
 	 * The function checks events and moves them from the events list to the
-	 * pastEvents list if they have
-	 * already occurred.
+	 * pastEvents list if they have already occurred.
 	 */
 	public void checkEvents() {
 		Iterator<Event> iter = events.iterator();
@@ -886,8 +895,7 @@ public class Ecosysteme {
 
 	/**
 	 * This function runs a simulation indefinitely, updating the state of the
-	 * ecosystem and redrawing it
-	 * at a given speed.
+	 * ecosystem and redrawing it at a given speed.
 	 */
 	public void simulation() {
 		initSimulation();
@@ -897,6 +905,7 @@ public class Ecosysteme {
 			if (Ecosysteme.simulate) {
 				b = true;
 				this.nextCycle();
+				resetDejaTraiter();
 			} else if (b) {
 				b = false;
 				grille.redessine();

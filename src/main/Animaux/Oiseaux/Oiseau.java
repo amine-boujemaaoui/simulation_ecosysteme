@@ -21,9 +21,11 @@ public abstract class Oiseau extends Animal implements Manger {
 	public void manger() throws MangerException {
 		Zone z = this.getZone_actuel();
 		if (z.getNbInsecte() > 0) {
-			for (int i = 0; i < r.nextInt(4); i++) {
-				if (z.getNbInsecte() == 0)
+			for (int i = 0; i < r.nextInt(6); i++) {
+				if (z.getNbInsecte() == 0) {
+					this.augmenterNbCyclesSansManger();
 					break;
+				}
 				else if (r.nextInt(100) < 40)
 					z.removeInsecte(r.nextInt(z.getNbInsecte()));
 			}

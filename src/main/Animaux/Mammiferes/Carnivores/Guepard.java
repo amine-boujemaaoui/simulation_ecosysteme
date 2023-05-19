@@ -13,7 +13,8 @@ import main.TypeZones.Foret;
 public class Guepard extends Carnivore implements Marche {
 
 	public Guepard(Zone zone_actuel) {
-		super(zone_actuel, 0.3, 12, 17, 2, new Foret(), 7);
+		super(zone_actuel, 0.3,        12,     20,                 7,                  new Foret(),   7);
+		//    zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class Guepard extends Carnivore implements Marche {
 	public void manger() throws MangerException {
 		Zone z = this.getZone_actuel();
 		if (z.getNbAnimaux() > 0) {
-			for (int i = 0; i < r.nextInt(4); i++) {
+			for (int i = 0; i < r.nextInt(10); i++) {
 				if (z.getNbAnimaux() == 0)
 					break;
 				else { 

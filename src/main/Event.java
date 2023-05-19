@@ -17,7 +17,7 @@ public class Event {
 	private double eau;
 	private double temperature;
 
-	public Event(Ecosysteme ecosysteme, int cycle, int x, int y, Animal animal, int nbAnimal, Vegetal vegetal,
+	public Event(Ecosysteme ecosysteme, int cycle, int y, int x, Animal animal, int nbAnimal, Vegetal vegetal,
 			int nbVegetal, double eau, double temperature) {
 		super();
 		this.cycle = cycle;

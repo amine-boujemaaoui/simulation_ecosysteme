@@ -13,7 +13,8 @@ import main.TypeZones.Foret;
 public class Loup extends Carnivore implements Marche {
 
 	public Loup(Zone zone_actuel) {
-		super(zone_actuel, 0.3, 12, 17, 2, new Foret(), 7);
+		super(zone_actuel, 0.3,        12,     17,                 4,                  new Foret(),   7);
+		//    zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 
 	@Override

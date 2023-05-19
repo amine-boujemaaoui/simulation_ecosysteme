@@ -8,7 +8,8 @@ import main.Vegetaux.Vegetal;
 public class Artichaut extends Vivace {
 
 	public Artichaut(Zone zone_actuel) {
-		super(zone_actuel, 0.0009, 7, 25, 3, new Plaine(), 170);
+		super(zone_actuel, 0.0009,     5,      25,                 3,                  new Plaine(),  170);
+		//    zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 
 	@Override

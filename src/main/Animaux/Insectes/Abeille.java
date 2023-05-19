@@ -12,7 +12,8 @@ import main.TypeZones.Foret;
 public class Abeille extends Insecte implements Vole {
 
 	public Abeille(Zone zone_actuel) {
-		super(zone_actuel, 0.004, 3, 40, 1, new Foret(), 300);
+		super(zone_actuel, 0.004,      3,      42,                 1,                  new Foret(),   300);
+		//	  zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class Abeille extends Insecte implements Vole {
 	public void manger() throws MangerException {
 		Zone z = this.getZone_actuel();
 		if (z.getNbVivace() > 0) {
-			for (int i = 0; i < r.nextInt(2); i++) {
+			for (int i = 0; i < r.nextInt(3); i++) {
 				if (z.getNbVivace() == 0)
 					break;
 				else if (r.nextInt(100) < 30)

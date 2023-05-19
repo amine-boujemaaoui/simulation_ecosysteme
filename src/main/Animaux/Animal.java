@@ -25,6 +25,7 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	private final int ageMinReproduction;
 	private TypeZone zoneFavorable;
 	private int nbMinDansZoneFavorableForInit;
+	private boolean dejaTraiterCeCycle = false;
 
 	public Animal(Zone zone_actuel, double eauRequise, int ageMax, int tauxDeReproduction, int ageMinReproduction,
 			TypeZone zoneFavorable, int nbMinDansZoneFavorableForInit) {
@@ -144,4 +145,12 @@ public abstract class Animal implements Boir, ReproductionAnimal {
 	}
 	
 	public abstract Animal getNewAnimal();
+
+	public boolean isDejaTraiterCeCycle() {
+		return dejaTraiterCeCycle;
+	}
+
+	public void setDejaTraiterCeCycle(boolean dejaTraiterCeCycle) {
+		this.dejaTraiterCeCycle = dejaTraiterCeCycle;
+	}
 }

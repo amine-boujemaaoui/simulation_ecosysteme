@@ -20,6 +20,7 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	private final int ageMinPropagation;
 	private TypeZone zoneFavorable;
 	private int nbMinDansZoneFavorableForInit;
+	private boolean dejaTraiterCeCycle = false;
 	/*
 	 * private double minEauRequise; private double maxEauRequise; private double
 	 * minTemperatureRequise; private double maxTemperatureRequise;
@@ -131,6 +132,14 @@ public abstract class Vegetal implements Boir, ReproductionVegetal {
 	}
 
 	public abstract Vegetal getNewVegetal();
+
+	public boolean isDejaTraiterCeCycle() {
+		return dejaTraiterCeCycle;
+	}
+
+	public void setDejaTraiterCeCycle(boolean dejaTraiterCeCycle) {
+		this.dejaTraiterCeCycle = dejaTraiterCeCycle;
+	}
 
 	/*
 	 * public double getMinEauRequise() { return minEauRequise; }

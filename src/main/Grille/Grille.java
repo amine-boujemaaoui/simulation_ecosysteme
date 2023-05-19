@@ -58,8 +58,10 @@ public class Grille extends JPanel {
 					setContoure(!isContoure());
 					ecosysteme.redessine();
 				}
-				if (keyCode == KeyEvent.VK_ENTER)
+				if (keyCode == KeyEvent.VK_ENTER) {
 					ecosysteme.nextCycle();
+					ecosysteme.resetDejaTraiter();
+				}
 				if (keyCode == KeyEvent.VK_UP) {
 					ecosysteme.augmenterVistesseSimulation();
 					ecosysteme.redessine();

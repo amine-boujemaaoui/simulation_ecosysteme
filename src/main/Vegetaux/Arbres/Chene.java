@@ -8,7 +8,8 @@ import main.Vegetaux.Vegetal;
 public class Chene extends Arbre {
 
 	public Chene(Zone zone_actuel) {
-		super(zone_actuel, 0.002, 22, 10, 7, new Foret(), 50);
+		super(zone_actuel, 0.002,      22,     12,                 12,                 new Foret(),   50);
+		//    zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 
 	@Override

@@ -12,7 +12,8 @@ import main.TypeZones.Plaine;
 public class Vache extends Herbivore implements Marche {
 
 	public Vache(Zone zone_actuel) {
-		super(zone_actuel, 0.08, 17, 35, 3, new Plaine(), 10);
+		super(zone_actuel, 0.08,       20,     15,                 12,                 new Plaine(),  10);
+		//	  zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class Vache extends Herbivore implements Marche {
 	public void manger() throws MangerException {
 		Zone z = this.getZone_actuel();
 		if (z.getNbVivace() > 0) {
-			for (int i = 0; i < r.nextInt(6); i++) {
+			for (int i = 0; i < r.nextInt(20); i++) {
 				if (z.getNbVivace() == 0)
 					break;
 				else

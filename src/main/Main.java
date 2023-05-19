@@ -42,20 +42,10 @@ public class Main {
 		typeVegetaux.add(new Fougere(null));
 
 		ArrayList<Event> events = new ArrayList<Event>();
-		events.add(new Event(null, 70, 2, 8, new Fourmi(null), 400, new Absinthe(null), 400, 100, 30));
-		events.add(new Event(null, 70, 3, 8, new Fourmi(null), 400, new Absinthe(null), 400, 100, 30));
-		events.add(new Event(null, 70, 2, 9, new Fourmi(null), 400, new Absinthe(null), 400, 100, 30));
-		events.add(new Event(null, 70, 3, 9, new Fourmi(null), 400, new Absinthe(null), 400, 100, 30));
-		events.add(new Event(null, 70, 2, 11, new Guepard(null), 200, null, 0, 100, 30));
-		events.add(new Event(null, 400, 5, 1, null, 0, new Chene(null), 200, 100, 30));
-		events.add(new Event(null, 400, 1, 5, null, 0, new Chene(null), 200, 100, 30));
-		events.add(new Event(null, 75, 3, 8, new Pigeon(null), 400, null, 0, 100, 30));
-		events.add(new Event(null, 75, 4, 8, new Pigeon(null), 400, null, 0, 100, 30));
-		events.add(new Event(null, 75, 3, 9, new Pigeon(null), 400, null, 0, 100, 30));
-		events.add(new Event(null, 75, 4, 9, new Pigeon(null), 400, null, 0, 100, 30));
-		events.add(new Event(null, 75, 7, 1, null, 0, new Absinthe(null), 100, 100, 30));
+		events.add(new Event(null, 150, 12, 8, new Fourmi(null), 400, new Absinthe(null), 800, 100, 30));
+		events.add(new Event(null, 150, 12, 8, new Pigeon(null), 40, new Artichaut(null), 400, 100, 30));
 
-		Ecosysteme e = new Ecosysteme("map1.txt", typeZones, typeAnimaux, typeVegetaux, events, 6000);
+		Ecosysteme e = new Ecosysteme("map1.txt", typeZones, typeAnimaux, typeVegetaux, events, 1000);
 		e.simulation();
 
 	}
