@@ -12,7 +12,7 @@ import main.TypeZones.Plaine;
 public class Fourmi extends Insecte implements Marche {
 
 	public Fourmi(Zone zone_actuel) {
-		super(zone_actuel, 0.002,      3,      43,                 1,                  new Plaine(),  200);
+		super(zone_actuel, 0.002,      3,      40,                 1,                  new Plaine(),  200);
 		//    zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 
@@ -52,10 +52,10 @@ public class Fourmi extends Insecte implements Marche {
 	public void manger() throws MangerException {
 		Zone z = this.getZone_actuel();
 		if (z.getNbVivace() > 0) {
-			for (int i = 0; i < r.nextInt(2); i++) {
+			for (int i = 0; i < r.nextInt(4); i++) {
 				if (z.getNbVivace() == 0)
 					break;
-				else if (r.nextInt(100) < 40)
+				else if (r.nextInt(100) < 80)
 					z.removeVivace(r.nextInt(z.getNbVivace()));
 			}
 			this.setNbCyclesSansManger(0);

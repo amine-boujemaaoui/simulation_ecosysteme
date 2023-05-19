@@ -44,6 +44,13 @@ public class Main {
 		ArrayList<Event> events = new ArrayList<Event>();
 		events.add(new Event(null, 150, 12, 8, new Fourmi(null), 400, new Absinthe(null), 800, 100, 30));
 		events.add(new Event(null, 150, 12, 8, new Pigeon(null), 40, new Artichaut(null), 400, 100, 30));
+		
+		events.add(new Event(null, 500, 5, 1, null, 0, new Artichaut(null), 400, 100, 30));
+		events.add(new Event(null, 500, 5, 2, null, 0, new Artichaut(null), 400, 100, 30));
+		events.add(new Event(null, 500, 5, 3, null, 0, new Artichaut(null), 400, 100, 30));
+		events.add(new Event(null, 500, 6, 1, null, 0, new Artichaut(null), 400, 100, 30));
+		events.add(new Event(null, 500, 6, 2, null, 0, new Artichaut(null), 400, 100, 30));
+		events.add(new Event(null, 500, 6, 3, null, 0, new Artichaut(null), 400, 100, 30));
 
 		Ecosysteme e = new Ecosysteme("map1.txt", typeZones, typeAnimaux, typeVegetaux, events, 1000);
 		e.simulation();

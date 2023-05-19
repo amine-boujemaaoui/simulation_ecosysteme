@@ -8,7 +8,7 @@ import main.Vegetaux.Vegetal;
 public class Absinthe extends Vivace {
 
 	public Absinthe(Zone zone_actuel) { 
-		super(zone_actuel, 0.00098,    3,      36,                 1,                  new Plaine(),  200);
+		super(zone_actuel, 0.00098,    3,      47,                 1,                  new Plaine(),  200);
 		//	  zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 

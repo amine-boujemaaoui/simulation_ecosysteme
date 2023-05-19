@@ -11,7 +11,7 @@ import main.TypeZones.Plaine;
 public class Pigeon extends Oiseau implements Vole {
 
 	public Pigeon(Zone zone_actuel) {
-		super(zone_actuel, 0.06,       6,     27,                 2,                  new Plaine(),  30);
+		super(zone_actuel, 0.06,       6,      16,                 2,                  new Plaine(),  9);
 		//    zone_actuel, eauRequise, ageMax, tauxDeReproduction, ageMinReproduction, zoneFavorable, nbMinDansZoneFavorableForInit
 	}
 

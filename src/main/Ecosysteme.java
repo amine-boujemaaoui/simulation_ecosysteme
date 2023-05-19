@@ -731,7 +731,7 @@ public class Ecosysteme {
 				// ou si il n'a pas bu depuis au moins 4 cycle
 				// ou si il n'a pas manger depuis au moins 20 cycle
 				if (animal.getAge() == animal.getAgeMax() || animal.getNbCyclesSansEau() >= 3
-						|| animal.getNbCyclesSansManger() >= 6) {
+						|| animal.getNbCyclesSansManger() >= 10) {
 					z.removeAnimal(animal); // il meure
 				} else {
 					// sinon, on redefinis qu'il ne c'est pas deja reproduit pour le cycle suivant
@@ -816,8 +816,8 @@ public class Ecosysteme {
 				this.vieillissement(z); // les etre vivant villeilssent
 				this.propagation(z); // les vegetaux se propage
 				this.reproduction(z); // les animaux se reproduisent
-				this.deplacementAleatoire(z); // les aninaux se deplace
 				this.nourrissage(z); // les etre vivant se nourisse en eau et autres etre vivant
+				this.deplacementAleatoire(z); // les aninaux se deplace
 			}
 		}
 		// on verifie si un evenement doit arriver

@@ -10,6 +10,7 @@ import main.Animaux.Oiseaux.*;
 import main.Animaux.Insectes.*;
 import main.Animaux.Mammiferes.*;
 import main.TypeZones.TypeZone;
+import main.TypeZones.Desert;
 import main.TypeZones.Riviere;
 
 public class Zone {
@@ -186,7 +187,7 @@ public class Zone {
 	}
 
 	public void addAnimal(Animal animal) {
-		if (this.vegetaux.size() < this.ecosysteme.getNbMaxEntiteParZone()) {
+		if (this.animaux.size() < this.ecosysteme.getNbMaxEntiteParZone()) {
 			this.animaux.add(animal);
 			if (animal instanceof Oiseau)
 				this.oiseaux.add((Oiseau) animal);
@@ -319,7 +320,7 @@ public class Zone {
 				this.setTemperature(40 / this.eau * 200);
 			}
 
-			if (this.getNbArbre() > 90 && this.eau + 1 < riviere.getEauMin()) {
+			if (!(this.getTypeZone() instanceof Desert) && this.getNbArbre() > 30 && this.eau + 1 < riviere.getEauMin()) {
 				this.eau += 1;
 			}
 
