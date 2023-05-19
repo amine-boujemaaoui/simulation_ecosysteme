@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="assets/|assets/animals/|assets/biomes/|assets/vegetals/" kind="src" path="src"/>
-	<classpathentry kind="src" path="src/assets/animals"/>
-	<classpathentry kind="src" path="src/assets/biomes"/>
-	<classpathentry kind="src" path="src/assets/vegetals"/>
 	<classpathentry excluding="animals/|biomes/|vegetals/" kind="src" path="src/assets"/>
-	<classpathentry excluding="src/|src/assets/|src/assets/animals/|src/assets/biomes/|src/assets/vegetals/" kind="src" path=""/>
+	<classpathentry excluding="src/|src/assets/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>

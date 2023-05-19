@@ -75,7 +75,6 @@ public class Event {
 	public boolean checkEvent(int cycle) {
 		Zone z = ecosysteme.getZone(x, y);
 		if (this.cycle == cycle) {
-			System.out.println("EVENT !");
 			if (animal != null) {
 				for (int i = 0; i <= nbAnimal; i++) {
 					Animal new_animal = animal.getNewAnimal();

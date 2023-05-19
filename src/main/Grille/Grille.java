@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -45,7 +46,7 @@ public class Grille extends JPanel {
 		window.add(this);
 		window.setTitle("Simulation ecosysteme");
 		window.setLocationRelativeTo(null);
-		// window.setResizable(false);
+		window.setResizable(false);
 		window.setVisible(true);
 		window.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
@@ -82,7 +83,6 @@ public class Grille extends JPanel {
 				if (mouseCode == MouseEvent.BUTTON1) {
 					caseX = e.getX() / nbPixelCoteCase;
 					caseY = e.getY() / nbPixelCoteCase - 128 / nbPixelCoteCase;
-					System.out.println(caseX + " " + caseY);
 					if (caseX >= 0 && caseX < nbCasesL && caseY >= 0 && caseY < nbCasesH) {
 						showCase = !showCase;
 						if (contoure)
@@ -142,11 +142,7 @@ public class Grille extends JPanel {
 		return window;
 	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-
+	public void paintInfosBar(Graphics g) {
 		g.setColor(new Color(137, 165, 255));
 		g.fillRect(0, 0, decalageAffichage, decalageAffichage);
 		g.setColor(Color.BLACK);
@@ -176,33 +172,99 @@ public class Grille extends JPanel {
 				decalageAffichage * 5 + 4, 54);
 		g.drawString("Relancer la simulation (Appuyer sur R)", decalageAffichage * 5 + 4, 74);
 		g.drawString("Cliquer sur une case pour plus d'infos", decalageAffichage * 5 + 4, 94);
+	}
 
-		int i, j;
+	public void paintCaseDisques(Graphics g, LinkedList<Disque> l, int cellX, int cellY) {
+		for (Disque d : l) {
+			int rayon = d.getRayon();
+			g.drawImage(d.getIcon().getImage(),
+					cellX + nbPixelCoteCase / 2 - rayon / 2
+							+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+					cellY + nbPixelCoteCase / 2 - rayon / 2
+							+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
+					rayon, rayon, null);
+		}
+	}
+
+	public void paintCaseDisquesZoom(Graphics g, LinkedList<Disque> l, int cellX, int cellY, int offsetX, int offsetY) {
+
+		for (Disque d : l) {
+			int rayon = d.getRayon() * 5;
+			g.drawImage(d.getIcon().getImage(),
+					cellX + offsetX / 2 + nextIntBounds(-offsetX / 2, offsetX / 2 - rayon / 10),
+					cellY + offsetY / 2 + nextIntBounds(-offsetY / 2, offsetY / 2 - rayon / 10), rayon, rayon, null);
+		}
+	}
+
+	public void paintCaseInfos(Graphics g, int caseX, int caseY) {
+		Graphics2D g2 = (Graphics2D) g;
+		g.setColor(new Color(226, 201, 255));
+		g.fillRect(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, 260, 220);
+		g.setColor(Color.BLACK);
+		g2.setStroke(new BasicStroke(3));
+		g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16,
+				decalageAffichage + nbPixelCoteCase - 32 + 220);
+		g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
+				decalageAffichage + nbPixelCoteCase - 32);
+		g.drawLine(nbPixelCoteCase - 16 + 260, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
+				decalageAffichage + nbPixelCoteCase - 32 + 220);
+		g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32 + 220, nbPixelCoteCase - 16 + 260,
+				decalageAffichage + nbPixelCoteCase - 32 + 220);
+
+		g2.setStroke(new BasicStroke(1));
+		g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 4));
+		g.drawString("Niveau d'eau: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getEau(), nbPixelCoteCase,
+				decalageAffichage + nbPixelCoteCase);
+		g.drawString("Temperature: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getTemperature(), nbPixelCoteCase,
+				decalageAffichage + nbPixelCoteCase + 20);
+		g.drawString("Nombre d'insectes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbInsecte(),
+				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 60);
+		g.drawString("Nombre de mammiferes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbMammifere(),
+				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 80);
+		g.drawString("Nombre d'oiseaux: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbOiseau(),
+				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 100);
+		g.drawString("Nombre d'arbres: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbArbre(), nbPixelCoteCase,
+				decalageAffichage + nbPixelCoteCase + 140);
+		g.drawString("Nombre de vivaces: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbVivace(),
+				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 160);
+	}
+
+	public void paintBorder(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g.setColor(Color.BLACK);
+		g2.setStroke(new BasicStroke(3));
+		g.drawLine(0, decalageAffichage, nbCasesL * nbPixelCoteCase - 1, decalageAffichage);
+		g.drawLine(nbCasesL * nbPixelCoteCase - 1, 0, nbCasesL * nbPixelCoteCase - 1,
+				nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
+		g.drawLine(0, 0, 0, nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
+		g.drawLine(0, nbCasesH * nbPixelCoteCase + decalageAffichage - 1, nbCasesL * nbPixelCoteCase - 1,
+				nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
+		g2.setStroke(new BasicStroke(1));
+	}
+
+	public void paintGrille(Graphics g) {
+		if (contoure) {
+			for (int i = 0; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
+				g.drawLine(i, decalageAffichage, i, nbCasesH * nbPixelCoteCase + decalageAffichage);
+			}
+			for (int j = 0; j <= nbCasesH * nbPixelCoteCase; j += nbPixelCoteCase) {
+				g.drawLine(0, j + decalageAffichage, nbCasesL * nbPixelCoteCase, j + decalageAffichage);
+			}
+		}
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		paintInfosBar(g);
 		if (!showCase) {
-			for (i = 0; i < nbCasesL; i++)
-				for (j = 0; j < nbCasesH; j++) {
+			for (int i = 0; i < nbCasesL; i++)
+				for (int j = 0; j < nbCasesH; j++) {
 					int cellX = (i * nbPixelCoteCase);
 					int cellY = decalageAffichage + (j * nbPixelCoteCase);
 					g.drawImage(m[i][j].getIcon().getImage(), cellX, cellY, nbPixelCoteCase, nbPixelCoteCase, null);
-					for (Disque d : m[i][j].lAnimaux) {
-						int rayon = d.getRayon();
-						g.drawImage(d.getIcon().getImage(),
-								cellX + nbPixelCoteCase / 2 - rayon / 2
-										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
-								cellY + nbPixelCoteCase / 2 - rayon / 2
-										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
-								rayon, rayon, null);
-					}
-					for (Disque d : m[i][j].lVegetaux) {
-						int rayon = d.getRayon();
-						g.drawImage(d.getIcon().getImage(),
-								cellX + nbPixelCoteCase / 2 - rayon / 2
-										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
-								cellY + nbPixelCoteCase / 2 - rayon / 2
-										+ nextIntBounds(-nbPixelCoteCase / 2, nbPixelCoteCase / 4 + 1),
-								rayon, rayon, null);
-						;
-					}
+					paintCaseDisques(g, m[i][j].lAnimaux, cellX, cellY);
+					paintCaseDisques(g, m[i][j].lVegetaux, cellX, cellY);
 				}
 		} else {
 			int cellX = 0;
@@ -212,77 +274,15 @@ public class Grille extends JPanel {
 			g.drawImage(m[caseX][caseY].getIcon().getImage(), cellX, cellY, showCaseNbPixelCoteCaseL,
 					showCaseNbPixelCoteCaseH, null);
 
-			for (Disque d : m[caseX][caseY].lAnimaux) {
-				int rayon = d.getRayon() * 5;
-				g.drawImage(d.getIcon().getImage(),
-						cellX + showCaseNbPixelCoteCaseL / 2
-								+ nextIntBounds(-showCaseNbPixelCoteCaseL / 2,
-										showCaseNbPixelCoteCaseL / 2 - rayon / 10),
-						cellY + showCaseNbPixelCoteCaseH / 2 + nextIntBounds(-showCaseNbPixelCoteCaseH / 2,
-								showCaseNbPixelCoteCaseH / 2 - rayon / 10),
-						rayon, rayon, null);
-			}
-			for (Disque d : m[caseX][caseY].lVegetaux) {
-				int rayon = d.getRayon() * 5;
-				g.drawImage(d.getIcon().getImage(),
-						cellX + showCaseNbPixelCoteCaseL / 2
-								+ nextIntBounds(-showCaseNbPixelCoteCaseL / 2,
-										showCaseNbPixelCoteCaseL / 2 - rayon / 10),
-						cellY + showCaseNbPixelCoteCaseH / 2 + nextIntBounds(-showCaseNbPixelCoteCaseH / 2,
-								showCaseNbPixelCoteCaseH / 2 - rayon / 10),
-						rayon, rayon, null);
-			}
+			paintCaseDisquesZoom(g, m[caseX][caseY].lAnimaux, cellX, cellY, showCaseNbPixelCoteCaseL,
+					showCaseNbPixelCoteCaseH);
+			paintCaseDisquesZoom(g, m[caseX][caseY].lVegetaux, cellX, cellY, showCaseNbPixelCoteCaseL,
+					showCaseNbPixelCoteCaseH);
+			paintCaseInfos(g, caseX, caseY);
 
-			g.setColor(new Color(226, 201, 255));
-			g.fillRect(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, 260, 220);
-			g.setColor(Color.BLACK);
-			g2.setStroke(new BasicStroke(3));
-			g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16,
-					decalageAffichage + nbPixelCoteCase - 32 + 220);
-			g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
-					decalageAffichage + nbPixelCoteCase - 32);
-			g.drawLine(nbPixelCoteCase - 16 + 260, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
-					decalageAffichage + nbPixelCoteCase - 32 + 220);
-			g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32 + 220, nbPixelCoteCase - 16 + 260,
-					decalageAffichage + nbPixelCoteCase - 32 + 220);
-
-			g2.setStroke(new BasicStroke(1));
-			g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 4));
-			g.drawString("Niveau d'eau: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getEau(), nbPixelCoteCase,
-					decalageAffichage + nbPixelCoteCase);
-			g.drawString("Temperature: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getTemperature(),
-					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 20);
-			g.drawString("Nombre d'insectes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbInsecte(),
-					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 60);
-			g.drawString("Nombre de mammiferes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbMammifere(),
-					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 80);
-			g.drawString("Nombre d'oiseaux: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbOiseau(),
-					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 100);
-			g.drawString("Nombre d'arbres: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbArbre(),
-					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 140);
-			g.drawString("Nombre de vivaces: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbVivace(),
-					nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 160);
 		}
-
-		g.setColor(Color.BLACK);
-		g2.setStroke(new BasicStroke(3));
-		g.drawLine(0, decalageAffichage, nbCasesL * nbPixelCoteCase - 1, decalageAffichage);
-		g.drawLine(nbCasesL * nbPixelCoteCase - 1, 0, nbCasesL * nbPixelCoteCase - 1,
-				nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
-		g.drawLine(0, 0, 0, nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
-		g.drawLine(0, nbCasesH * nbPixelCoteCase + decalageAffichage - 1, nbCasesL * nbPixelCoteCase - 1,
-				nbCasesH * nbPixelCoteCase + decalageAffichage - 1);
-
-		g2.setStroke(new BasicStroke(1));
-		if (contoure) {
-			for (i = 0; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
-				g.drawLine(i, decalageAffichage, i, nbCasesH * nbPixelCoteCase + decalageAffichage);
-			}
-			for (j = 0; j <= nbCasesH * nbPixelCoteCase; j += nbPixelCoteCase) {
-				g.drawLine(0, j + decalageAffichage, nbCasesL * nbPixelCoteCase, j + decalageAffichage);
-			}
-		}
-
+		paintBorder(g);
+		paintGrille(g);
 	}
 
 	public boolean isContoure() {
