@@ -17,6 +17,9 @@ import main.Vegetaux.Vegetal;
 import main.Vegetaux.Arbres.Arbre;
 import main.Vegetaux.Vivaces.Vivace;
 import java.awt.Color;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -37,6 +40,8 @@ public class Ecosysteme {
 	public static boolean simulate = false;
 	private int vitesseSimulation;
 	private int nbMaxEntiteParZone;
+	private final int maxNbCasesL = 27, maxNbCasesH = 14;
+	private int[][] defaultZones;
 
 	// Grille carre
 
@@ -52,21 +57,25 @@ public class Ecosysteme {
 
 	// Grille rectangulaire
 
-	private int[][] defaultZones = {
-			{ 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
-			{ 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
-			{ 2, 0, 3, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
-			{ 2, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1, 0, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 },
-			{ 2, 2, 0, 0, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1 },
-			{ 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1 },
-			{ 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1 },
-			{ 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2 },
-			{ 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2 },
-			{ 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 3, 3 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 0, 0, 2, 3, 3, 3, 3, 3 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 },
-			{ 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 } };
+	/*
+	 * private int[][] defaultZones = { { 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1,
+	 * 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 }, { 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2,
+	 * 0, 1, 1, 2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 }, { 2, 0, 3, 2, 2, 2, 2, 2,
+	 * 2, 2, 1, 0, 0, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 }, { 2, 0, 0, 2, 2,
+	 * 2, 2, 2, 2, 1, 1, 1, 0, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 }, { 2, 2,
+	 * 0, 0, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1 },
+	 * { 2, 2, 2, 0, 0, 0, 1, 1, 1, 1, 0, 0, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 1, 1,
+	 * 1, 1 }, { 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2,
+	 * 2, 2, 1, 1, 1 }, { 2, 2, 2, 2, 1, 1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+	 * 0, 2, 2, 2, 2, 2, 2, 2 }, { 2, 2, 1, 1, 1, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2,
+	 * 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2 }, { 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 2, 2, 2,
+	 * 2, 2, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2 }, { 1, 1, 1, 1, 0, 1, 1, 1, 1, 2,
+	 * 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 3, 3 }, { 1, 1, 1, 1, 0, 1, 1,
+	 * 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 2, 0, 0, 2, 3, 3, 3, 3, 3 }, { 1, 1, 1, 1,
+	 * 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3 }, { 1,
+	 * 1, 1, 1, 0, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 0, 3, 3, 3, 3, 3, 3
+	 * } };
+	 */
 
 	// Zones par defaut du sujet
 	/*
@@ -79,11 +88,10 @@ public class Ecosysteme {
 	 * 1, 1 }, { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 } };
 	 */
 
-	public Ecosysteme(ArrayList<TypeZone> defaultTypeZones, ArrayList<Animal> defaultTypeAnimaux,
+	public Ecosysteme(String map, ArrayList<TypeZone> defaultTypeZones, ArrayList<Animal> defaultTypeAnimaux,
 			ArrayList<Vegetal> defaultTypeVegetaux, ArrayList<Event> defaultEvents, int nbMaxEntiteParZone) {
 		super();
-		this.nbZonesH = defaultZones.length;
-		this.nbZonesL = defaultZones[0].length;
+		chargerdefaultZones(map);
 		this.grille = new Grille(nbZonesL, nbZonesH, 64, true, this);
 		this.zones = new Zone[nbZonesH][nbZonesL];
 		this.cycle = 0;
@@ -102,6 +110,43 @@ public class Ecosysteme {
 				this.pastEvents.add(event);
 			});
 
+	}
+
+	public void chargerdefaultZones(String map) {
+		try {
+			InputStream is = getClass().getResourceAsStream("/maps/" + map);
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			int[][] tempDefaultZones = new int[maxNbCasesH][maxNbCasesL];
+			String line = br.readLine();
+			this.nbZonesL = line.length() / 2;
+			this.nbZonesL += (line.length()%2 == 0) ? 0 : 1;
+			int col = 0, row = 0;
+			while (line != null) {
+				while (col < nbZonesL) {
+					String idDefaultZones[] = line.split(" ");
+					int id = Integer.parseInt(idDefaultZones[col]);
+					tempDefaultZones[row][col] = id;
+					col++;
+				}
+				if (col == nbZonesL) {
+					col = 0;
+					row++;
+				}
+				line = br.readLine();
+			}
+			this.nbZonesH = row;
+			br.close();
+			this.defaultZones = new int[nbZonesH][nbZonesL];
+			for (int i = 0; i < nbZonesH; i++)
+				for (int j = 0; j < nbZonesL; j++)
+					this.defaultZones[i][j] = tempDefaultZones[i][j];
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+		}
 	}
 
 	public int nextIntBounds(int min, int max) {

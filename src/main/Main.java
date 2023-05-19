@@ -55,7 +55,7 @@ public class Main {
 		events.add(new Event(null, 75, 4, 9, new Pigeon(null), 400, null, 0, 100, 30));
 		events.add(new Event(null, 75, 7, 1, null, 0, new Absinthe(null), 100, 100, 30));
 
-		Ecosysteme e = new Ecosysteme(typeZones, typeAnimaux, typeVegetaux, events, 6000);
+		Ecosysteme e = new Ecosysteme("map1.txt", typeZones, typeAnimaux, typeVegetaux, events, 6000);
 		e.simulation();
 
 	}
