@@ -214,8 +214,8 @@ public class Grille extends JPanel {
 		g2.setStroke(new BasicStroke(1));
 		g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 4));
 		g.drawString("Zone " + caseX + " " + caseY, nbPixelCoteCase, decalageAffichage + nbPixelCoteCase);
-		g.drawString("Niveau d'eau: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getEau(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase+ 40);
-		g.drawString("Temperature: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getTemperature(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 60);
+		g.drawString("Niveau d'eau: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getEau() + " L", nbPixelCoteCase, decalageAffichage + nbPixelCoteCase+ 40);
+		g.drawString("Temperature: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getTemperature() + " °C", nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 60);
 		g.drawString("Nombre d'insectes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbInsecte(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 100);
 		g.drawString("Nombre de mammiferes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbMammifere(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 120);
 		g.drawString("Nombre d'oiseaux: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbOiseau(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 160);
