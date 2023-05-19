@@ -199,34 +199,28 @@ public class Grille extends JPanel {
 	public void paintCaseInfos(Graphics g, int caseX, int caseY) {
 		Graphics2D g2 = (Graphics2D) g;
 		g.setColor(new Color(226, 201, 255));
-		g.fillRect(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, 260, 220);
+		g.fillRect(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, 260, 260);
 		g.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(3));
 		g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16,
-				decalageAffichage + nbPixelCoteCase - 32 + 220);
+				decalageAffichage + nbPixelCoteCase - 32 + 260);
 		g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
 				decalageAffichage + nbPixelCoteCase - 32);
 		g.drawLine(nbPixelCoteCase - 16 + 260, decalageAffichage + nbPixelCoteCase - 32, nbPixelCoteCase - 16 + 260,
-				decalageAffichage + nbPixelCoteCase - 32 + 220);
-		g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32 + 220, nbPixelCoteCase - 16 + 260,
-				decalageAffichage + nbPixelCoteCase - 32 + 220);
+				decalageAffichage + nbPixelCoteCase - 32 + 260);
+		g.drawLine(nbPixelCoteCase - 16, decalageAffichage + nbPixelCoteCase - 32 + 260, nbPixelCoteCase - 16 + 260,
+				decalageAffichage + nbPixelCoteCase - 32 + 260);
 
 		g2.setStroke(new BasicStroke(1));
 		g.setFont(new Font("Sans-serif", Font.BOLD, nbPixelCoteCase / 4));
-		g.drawString("Niveau d'eau: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getEau(), nbPixelCoteCase,
-				decalageAffichage + nbPixelCoteCase);
-		g.drawString("Temperature: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getTemperature(), nbPixelCoteCase,
-				decalageAffichage + nbPixelCoteCase + 20);
-		g.drawString("Nombre d'insectes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbInsecte(),
-				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 60);
-		g.drawString("Nombre de mammiferes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbMammifere(),
-				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 80);
-		g.drawString("Nombre d'oiseaux: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbOiseau(),
-				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 100);
-		g.drawString("Nombre d'arbres: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbArbre(), nbPixelCoteCase,
-				decalageAffichage + nbPixelCoteCase + 140);
-		g.drawString("Nombre de vivaces: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbVivace(),
-				nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 160);
+		g.drawString("Zone " + caseX + " " + caseY, nbPixelCoteCase, decalageAffichage + nbPixelCoteCase);
+		g.drawString("Niveau d'eau: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getEau(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase+ 40);
+		g.drawString("Temperature: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getTemperature(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 60);
+		g.drawString("Nombre d'insectes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbInsecte(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 100);
+		g.drawString("Nombre de mammiferes: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbMammifere(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 120);
+		g.drawString("Nombre d'oiseaux: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbOiseau(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 160);
+		g.drawString("Nombre d'arbres: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbArbre(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 180);
+		g.drawString("Nombre de vivaces: " + this.ecosysteme.getZoneForGrille(caseX, caseY).getNbVivace(), nbPixelCoteCase, decalageAffichage + nbPixelCoteCase + 200);
 	}
 
 	public void paintBorder(Graphics g) {
